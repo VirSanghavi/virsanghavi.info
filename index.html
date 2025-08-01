@@ -1,109 +1,1320 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Vir Sanghavi's Personal Website - A showcase of my work, projects, and passions in AI, startups, and social impact. - virsanghavi.info -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vir Sanghavi</title>
+  <title>Vir Sanghavi - AI Founder & Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <meta property="og:title" content="Vir Sanghavi" />
-  <meta property="og:description" content="AI founder. Nonprofit leader. Building Tilt and scaling Up the Ratios." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Vir Sanghavi - AI Founder & Engineer" />
+  <meta property="og:description" content="Building the future with AI. Founder of Tilt and Up the Ratios." />
   <meta property="og:image" content="https://virsanghavi.info/og-image.jpg" />
   <meta property="og:url" content="https://virsanghavi.info" />
   <link rel="icon" href="/favicon.ico" />
   <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --bg-primary: #020617;
+      --bg-secondary: #0f172a;
+      --bg-card: #1e293b;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9f9f9;
-      color: #222;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Animated background */
+    .bg-animated {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #020617, #0f172a, #1e293b);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Grid overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+      background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 2rem;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--accent-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Main content */
+    main {
+      padding-top: 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--accent-light);
+      margin-bottom: 2rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .typed-text {
+      color: var(--accent-light);
+      font-weight: 600;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.875rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card);
+      border-color: var(--accent);
+    }
+
+    /* Sections */
+    .section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    .card p {
+      color: var(--text-secondary);
       line-height: 1.6;
     }
-    h1, h2, h3 {
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .stat:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Experience timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-light));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-left: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3rem;
+      top: 2rem;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg-primary);
+    }
+
+    .timeline-item:hover {
+      transform: translateX(4px);
+      border-color: var(--accent);
+    }
+
+    .timeline-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
-    .section {
-      max-width: 900px;
-      margin: 3rem auto;
+
+    .timeline-period {
+      color: var(--accent-light);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
     }
-    .section p, .section li {
-      color: #444;
+
+    .timeline-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .skill-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-level {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      border-radius: 2px;
+      transition: width 1s ease;
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      color: var(--text-muted);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+
+      .section {
+        padding: 4rem 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        padding-left: 1rem;
+      }
+
+      .timeline-item {
+        margin-left: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header class="section">
-    <h1>Vir Sanghavi</h1>
-    <p>CEO @ Tilt & Up the Ratios | Startups + AI + ML + Engineering | NSDA, TFA & HUDL Debater | Robotics & Rocketry</p>
-  </header>
+  <div class="bg-animated"></div>
+  <div class="grid-overlay"></div>
 
-  <section class="section">
-    <h2>About</h2>
-    <p>I build things that start as ideas and become movements. Whether it’s launching an AI-powered debate platform (Tilt), building a real-time bird strike prevention system (RAPTOR), or founding a global nonprofit (Up the Ratios), I believe tech should solve real-world problems — not just optimize ad clicks.</p>
-    <ul>
-      <li>Founder & CEO of Tilt — Reddit meets ChatGPT. Users post takes, vote, and get AI-powered consensus summaries in real time.</li>
-      <li>Creator of RAPTOR — a machine learning system that detects birds near aircraft and plays directional predator calls to prevent collisions.</li>
-      <li>Founder of Up the Ratios — a nonprofit bridging the STEM divide through robotics part donations and workshops.</li>
-      <li>Teaching free programming workshops internationally (Indonesia, Vietnam, India, more).</li>
-    </ul>
-    <p><strong>Quick Stats:</strong> 4.00 GPA | 1560 SAT | 1600+ day Duolingo streak (5 languages)</p>
-    <p><strong>Currently Seeking:</strong> Funding for Tilt, mentorships and internships in AI, engineering, or social impact tech.</p>
-  </section>
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Vir Sanghavi</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <section class="section">
-    <h2>Experience Highlights</h2>
-    <ul>
-      <li><strong>Founder & CEO – Tilt</strong> (2025–Present): Built MVP with AI summaries, voting, logic scoring, Supabase, and Tailwind. Now in private beta, preparing for pre-seed.</li>
-      <li><strong>Executive Director – Up the Ratios</strong> (2024–Present): Distributed $10K+ robotics parts, launched consulting and education services.</li>
-      <li><strong>Lead Engineer – RAPTOR</strong> (2025–Present): Full lifecycle R&D for AI-powered birdstrike prevention system with detection + deterrence.</li>
-      <li><strong>Congressional Debate Captain – CVHS</strong>: Coached new debaters, ran mock sessions, organized materials and training.</li>
-      <li><strong>Founder – CVHS Rocketry Team</strong>: Built and led team to ARC competition. Managed all fundraising, design, and mentor outreach.</li>
-    </ul>
-  </section>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <div class="status-dot"></div>
+            <span>Carnegie Vanguard HS, Class of 2028</span>
+          </div>
+          <h1>Building the future with AI</h1>
+          <p class="hero-subtitle">
+            I'm <span class="typed-text" id="typed"></span>, creating AI-powered solutions that solve real-world problems.
+          </p>
+          <div class="cta-buttons">
+            <a href="#projects" class="btn btn-primary">
+              <span>View Projects</span>
+              <span>→</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>Get in Touch</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Projects</h2>
-    <ul>
-      <li><strong>Intro to Python – International Outreach:</strong> Led week-long course in Jakarta and HCMC for underserved students. Developed curriculum, taught 30 students, and donated robotics equipment.</li>
-      <li><strong>R.A.P.T.O.R. – Testing Phase:</strong> Built ground validation platforms for avian threat detection and predictive deterrence. Preparing aerial testing in real bird corridors.</li>
-    </ul>
-  </section>
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">
+            Passionate about leveraging technology to create meaningful impact through AI, startups, and social initiatives.
+          </p>
+        </div>
 
-  <section class="section">
-    <h2>Honors & Awards</h2>
-    <ul>
-      <li><strong>NSDA National Finalist – Congressional Debate:</strong> Top-ranked middle school debater nationally, recognized for rhetoric and ethics.</li>
-      <li><strong>TJSDA State Champion – Congressional Debate:</strong> Won state after consistent performance and original legislation.</li>
-    </ul>
-  </section>
+        <div class="stats-grid fade-in">
+          <div class="stat">
+            <div class="stat-number" data-target="4.0">0</div>
+            <div class="stat-label">Unweighted GPA</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="4.7">0</div>
+            <div class="stat-label">Weighted GPA</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="100">0</div>
+            <div class="stat-label">Students Taught</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="15000">0</div>
+            <div class="stat-label">Website Visitors</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="10">0</div>
+            <div class="stat-label">K+ Donations ($)</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="9000">0</div>
+            <div class="stat-label">Site Interactions</div>
+          </div>
+        </div>
 
-  <section class="section">
-    <h2>Skills</h2>
-    <ul>
-      <li>Startup Development</li>
-      <li>Full-Stack Development</li>
-      <li>AI/ML – YOLOv8, OpenAI, LLMs</li>
-      <li>Leadership & Communication</li>
-      <li>Nonprofit Strategy</li>
-    </ul>
-  </section>
+        <div class="cards-grid">
+          <div class="card fade-in">
+            <div class="card-icon">🚀</div>
+            <h3>Founder & CEO - Tilt</h3>
+            <p>Real-time debate platform with AI-powered summaries. Built with TypeScript, React, and Supabase. 100+ users across 3 continents in closed beta.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">📈</div>
+            <h3>CEO - BestBuds Shop</h3>
+            <p>Fully automated e-commerce platform with dropshipping model. Reached 25K+ customers with 10% conversion rate and 98% satisfaction.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🎯</div>
+            <h3>Executive Director - Up the Ratios</h3>
+            <p>Nonprofit bridging STEM divide. $10K+ in donations, 10+ school partnerships, 80% cost reduction for new robotics teams.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🦅</div>
+            <h3>Lead Engineer - RAPTOR</h3>
+            <p>AI bird strike prevention system using YOLOv8 and predatory call deterrents. Preparing field tests at small airfields.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">💰</div>
+            <h3>Director of Finance - Jain Fellowship</h3>
+            <p>Managed $4K+ in annual transactions for 300+ member youth group. Increased YOY funds by $800+ through strategic planning.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🎨</div>
+            <h3>Lead Researcher - ShirtColorAI</h3>
+            <p>ML classifier for shirt color prediction from raw images. 740-image curated dataset with high accuracy for embedded deployment.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🎭</div>
+            <h3>Machine Learning Developer - Celebrity Face Recognition</h3>
+            <p>Built browser-based celebrity face scanner using Google Teachable Machine with 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed offline via TensorFlow.js.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:virrsanghavi@gmail.com">virrsanghavi@gmail.com</a></p>
-    <p>LinkedIn: <a href="https://linkedin.com/in/vir-sanghavi" target="_blank">linkedin.com/in/vir-sanghavi</a></p>
-    <p>Instagram: <a href="https://instagram.com/virsanghavi" target="_blank">@virsanghavi</a></p>
-    <p>GitHub: <a href="https://github.com/virrsanghavi" target="_blank">github.com/virrsanghavi</a></p>
-  </section>
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Experience</h2>
+          <p class="section-subtitle">
+            A journey through leadership, innovation, and impact across multiple domains.
+          </p>
+        </div>
 
-  <footer class="section">
-    <p>&copy; 2025 Vir Sanghavi. Built from scratch. Powered by real ambition.</p>
+        <div class="timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-title">Founder & CEO - Tilt</div>
+            <div class="timeline-period">2025 - Present</div>
+            <div class="timeline-description">
+              Founded real-time debate platform with TypeScript, React, and Supabase. Implemented AI-powered summaries, logic-based voting, and friend-only modes. Scaled to 100+ users across 3 continents with 9,000+ interactions in pre-launch. Preparing for pre-seed fundraising.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Machine Learning Developer - Celebrity Face Recognition Model</div>
+            <div class="timeline-period">2025</div>
+            <div class="timeline-description">
+              Built a local, browser-based celebrity face scanner using Google Teachable Machine, trained on a custom dataset of 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed fully offline via TensorFlow.js for privacy and speed. Explored model bias, confidence thresholds, and UX design to create an engaging, interactive experience.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Project Lead - RAPTOR (AI Bird Strike Prevention)</div>
+            <div class="timeline-period">2025 - Present</div>
+            <div class="timeline-description">
+              Leading AI-based bird strike prevention system using YOLOv8 for real-time detection and species classification. Integrated predatory call deterrents with automated CSV export pipeline. Coordinating field testing at small airfields.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">CEO & Founder - BestBuds Shop</div>
+            <div class="timeline-period">2024 - Present</div>
+            <div class="timeline-description">
+              Built fully automated dropshipping e-commerce platform. Executed targeted marketing campaigns reaching 25K+ customers with 10% conversion rate. Managed team of 4 virtual assistants, achieving 98% customer satisfaction and 20% reduced cart abandonment.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Executive Director - Up the Ratios</div>
+            <div class="timeline-period">2024 - Present</div>
+            <div class="timeline-description">
+              Founded nonprofit increasing STEM access for underprivileged students. Secured $10K+ in donations, partnered with 10+ schools across 3 districts. Taught coding to 100+ students in India. Built SEO-optimized website drawing 15K+ annual visitors.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Director of Finance - Jain Fellowship of Houston</div>
+            <div class="timeline-period">2023 - Present</div>
+            <div class="timeline-description">
+              Managed $4K+ in annual transactions for 300+ member youth group. Increased YOY funds by $800+ through strategic expense management and fundraising. Oversaw financial planning for events and community activities.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Lead Researcher - ShirtColorAI</div>
+            <div class="timeline-period">2024</div>
+            <div class="timeline-description">
+              Developed ML classifier predicting shirt colors from raw images using LAB color space. Curated 740-image dataset across 10 color classes. Engineered preprocessing pipeline for embedded deployment in accessibility tools.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">
+            Innovative solutions at the intersection of AI, social impact, and engineering excellence.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card fade-in">
+            <div class="card-icon">🚀</div>
+            <h3>CVHS Rocketry Team - Captain & Founder</h3>
+            <p>Founded 10-member team, raised $3.5K+ through sponsorships. Built and tested 4 rockets, placed top 15% in American Rocketry Challenge regional qualifiers.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🤖</div>
+            <h3>CVHS Robotics Team - Scouting Lead</h3>
+            <p>Led 4-student scouting team for data-driven match strategies. Built regional championship-qualifying robot with optimized mechanical design and coding.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🛡️</div>
+            <h3>White-Hat Hacking Club - Co-Founder & President</h3>
+            <p>Led 15-member cybersecurity club. Secured 3 refurbished laptops for hands-on practice, increased member proficiency by 60% through weekly labs.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🎓</div>
+            <h3>International Programming Outreach</h3>
+            <p>Led HTML and QBasic courses for 100+ students in India. Developed curriculum, taught week-long programs, and donated robotics equipment to underserved communities.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🎤</div>
+            <h3>Speech & Debate Excellence</h3>
+            <p>2023 TJSDA State Champion, NSDA National 5th place. Won 4 tournaments, qualified for state championships in Congressional and Public Forum Debate.</p>
+          </div>
+          <div class="card fade-in">
+            <div class="card-icon">🌍</div>
+            <h3>World Affairs Club</h3>
+            <p>Competed in Academic WorldQuest, ranking 4th out of 64 Houston-area teams. Demonstrated expertise in global affairs and international relations.</p>
+          </div>
+        </div>
+
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 2rem;">Awards & Honors</h3>
+        </div>
+
+        <div class="cards-grid fade-in">
+          <div class="card">
+            <div class="card-icon">🏆</div>
+            <h3>TJSDA Congressional Debate State Champion</h3>
+            <p>2023 champion with 3x State Finalist recognition in Texas Junior State Debate Association competitions.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🥉</div>
+            <h3>NSDA National 5th Place</h3>
+            <p>Top 5 finish at 2023 National Middle School Congressional Debate Tournament with 2x National Finalist status.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3>VEX Robotics Regional Finalist</h3>
+            <p>Texas Region 3 Finalist in VEX IQ (2023, 2024) and VEX V5 (2025) competitions demonstrating consistent excellence.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">💡</div>
+            <h3>Houston EdTalk Innovation Challenge</h3>
+            <p>Ranked 2nd out of 50 teams in City of Houston Youth Innovation Challenge showcasing entrepreneurial solutions.</p>
+          </div>
+        </div>
+
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 2rem;">Technical Skills</h3>
+        </div>
+
+        <div class="skills-grid fade-in">
+          <div class="skill-item">
+            <div class="skill-name">Python (PyTorch, NumPy, Pandas)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="95%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">JavaScript & TypeScript</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="90%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">React & Full-Stack Development</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="88%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">AI/ML (TensorFlow, SciKit-Learn)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="92%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">YOLOv8 & Computer Vision</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="85%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Java & C++</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="82%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">HTML/CSS Web Development</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="90%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Entrepreneurship & Leadership</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="96%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Public Speaking & Debate</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="98%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 2rem;">Languages</h3>
+        </div>
+
+        <div class="skills-grid fade-in">
+          <div class="skill-item">
+            <div class="skill-name">English (Native)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="100%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Gujarati (Native)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="100%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Hindi (Fluent)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="90%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Spanish (AP Level)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="85%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">French (Intermediate)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="70%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Russian (Learning)</div>
+            <div class="skill-level">
+              <div class="skill-progress" data-width="45%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Let's Connect</h2>
+          <p class="section-subtitle">
+            Currently seeking funding for Tilt, mentorships, and internships in AI, engineering, or social impact tech.
+          </p>
+        </div>
+
+        <div class="contact-grid fade-in">
+          <a href="mailto:Virrsanghavi@gmail.com" class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div style="font-weight: 600;">Email</div>
+              <div style="color: var(--text-secondary); font-size: 0.875rem;">Virrsanghavi@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="tel:+18329074410" class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div>
+              <div style="font-weight: 600;">Phone</div>
+              <div style="color: var(--text-secondary); font-size: 0.875rem;">(832) 907-4410</div>
+            </div>
+          </a>
+
+          <a href="https://linkedin.com/in/vir-sanghavi" target="_blank" class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div>
+              <div style="font-weight: 600;">LinkedIn</div>
+              <div style="color: var(--text-secondary); font-size: 0.875rem;">Professional Network</div>
+            </div>
+          </a>
+
+          <a href="https://github.com/VirSanghavi" target="_blank" class="contact-item">
+            <div class="contact-icon">💻</div>
+            <div>
+              <div style="font-weight: 600;">GitHub</div>
+              <div style="color: var(--text-secondary); font-size: 0.875rem;">Code Portfolio</div>
+            </div>
+          </a>
+
+          <a href="https://instagram.com/vir.sanghavi13" target="_blank" class="contact-item">
+            <div class="contact-icon">📸</div>
+            <div>
+              <div style="font-weight: 600;">Instagram</div>
+              <div style="color: var(--text-secondary); font-size: 0.875rem;">Behind the Scenes</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Vir Sanghavi. Engineered with precision. Powered by ambition.</p>
+      </div>
+    </div>
   </footer>
 
+  <script>
+    // Typed.js effect
+    const typedStrings = [
+      "an AI founder",
+      "a full-stack engineer", 
+      "a nonprofit leader",
+      "a state debate champion",
+      "a problem solver",
+      "an entrepreneur",
+      "a cybersecurity enthusiast",
+      "a rocketry captain"
+    ];
+    
+    let currentString = 0;
+    let currentChar = 0;
+    let isDeleting = false;
+    const typedElement = document.getElementById('typed');
+    
+    function typeEffect() {
+      const current = typedStrings[currentString];
+      
+      if (isDeleting) {
+        typedElement.textContent = current.substring(0, currentChar - 1);
+        currentChar--;
+      } else {
+        typedElement.textContent = current.substring(0, currentChar + 1);
+        currentChar++;
+      }
+      
+      let speed = isDeleting ? 50 : 100;
+      
+      if (!isDeleting && currentChar === current.length) {
+        speed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && currentChar === 0) {
+        isDeleting = false;
+        currentString = (currentString + 1) % typedStrings.length;
+        speed = 500;
+      }
+      
+      setTimeout(typeEffect, speed);
+    }
+    
+    typeEffect();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Animated counters for stats
+    function animateValue(element, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        
+        let currentValue;
+        if (end === 4.0) {
+          currentValue = (progress * (end - start) + start).toFixed(1);
+        } else if (end >= 1000) {
+          currentValue = Math.floor(progress * (end - start) + start).toLocaleString();
+        } else {
+          currentValue = Math.floor(progress * (end - start) + start);
+        }
+        
+        element.textContent = currentValue;
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Trigger counter animations when stats come into view
+    const statsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.getAttribute('data-target'));
+          animateValue(entry.target, 0, target, 2000);
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number').forEach(el => {
+      statsObserver.observe(el);
+    });
+
+    // Skill progress bars animation
+    const skillsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const progressBar = entry.target.querySelector('.skill-progress');
+          const width = progressBar.getAttribute('data-width');
+          setTimeout(() => {
+            progressBar.style.width = width;
+          }, 200);
+          skillsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.skill-item').forEach(el => {
+      skillsObserver.observe(el);
+    });
+
+    // Add some interactive hover effects
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(-4px) scale(1)';
+      });
+    });
+
+    // Contact items interaction
+    document.querySelectorAll('.contact-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-4px) scale(1.05)';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(-2px) scale(1)';
+      });
+    });
+
+    // Timeline items stagger animation
+    const timelineObserver = new IntersectionObserver(function(entries) {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateX(0)';
+          }, index * 200);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.timeline-item').forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateX(-50px)';
+      item.style.transition = 'all 0.6s ease';
+      timelineObserver.observe(item);
+    });
+
+    // Add cursor following effect for hero section
+    const hero = document.querySelector('.hero');
+    let mouseX = 0, mouseY = 0;
+    let ballX = 0, ballY = 0;
+    const speed = 0.1;
+
+    function animate() {
+      ballX += (mouseX - ballX) * speed;
+      ballY += (mouseY - ballY) * speed;
+      
+      hero.style.background = `radial-gradient(600px at ${ballX}px ${ballY}px, rgba(59, 130, 246, 0.15), transparent 80%)`;
+      
+      requestAnimationFrame(animate);
+    }
+
+    hero.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    animate();
+
+    // Add particle effect (subtle)
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.style.position = 'absolute';
+      particle.style.width = '2px';
+      particle.style.height = '2px';
+      particle.style.background = 'rgba(59, 130, 246, 0.5)';
+      particle.style.borderRadius = '50%';
+      particle.style.pointerEvents = 'none';
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.top = window.innerHeight + 'px';
+      particle.style.zIndex = '-1';
+      
+      document.body.appendChild(particle);
+      
+      const duration = Math.random() * 3000 + 2000;
+      const drift = (Math.random() - 0.5) * 100;
+      
+      particle.animate([
+        { transform: 'translateY(0px) translateX(0px)', opacity: 0 },
+        { transform: `translateY(-${window.innerHeight + 100}px) translateX(${drift}px)`, opacity: 1 },
+        { transform: `translateY(-${window.innerHeight + 200}px) translateX(${drift * 2}px)`, opacity: 0 }
+      ], {
+        duration: duration,
+        easing: 'linear'
+      }).onfinish = () => particle.remove();
+    }
+
+    // Create particles occasionally
+    setInterval(createParticle, 2000);
+
+    // Add loading animation
+    window.addEventListener('load', function() {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease';
+      
+      setTimeout(() => {
+        document.body.style.opacity = '1';
+      }, 100);
+    });
+
+    // Add mobile menu toggle (for future expansion)
+    const createMobileMenu = () => {
+      if (window.innerWidth <= 768) {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks && !document.querySelector('.mobile-menu-toggle')) {
+          const toggle = document.createElement('button');
+          toggle.className = 'mobile-menu-toggle';
+          toggle.innerHTML = '☰';
+          toggle.style.cssText = `
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: block;
+          `;
+          
+          document.querySelector('.nav-container').appendChild(toggle);
+          
+          toggle.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'var(--bg-secondary)';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.padding = '1rem';
+            navLinks.style.borderTop = '1px solid var(--border)';
+          });
+        }
+      }
+    };
+
+    window.addEventListener('resize', createMobileMenu);
+    createMobileMenu();
+  </script>
 </body>
 </html>
