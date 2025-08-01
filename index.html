@@ -701,24 +701,24 @@
             <div class="stat-label">AP Exams Taken</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="100">0</div>
-            <div class="stat-label">Students Taught+</div>
+            <div class="stat-number" data-target="100" data-suffix="+">0</div>
+            <div class="stat-label">Students Taught</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="15000">0</div>
-            <div class="stat-label">Website Visitors+</div>
+            <div class="stat-number" data-target="15000" data-suffix="+">0</div>
+            <div class="stat-label">Website Visitors</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="10">0</div>
-            <div class="stat-label">K+ Donations ($)+</div>
+            <div class="stat-number" data-target="10" data-suffix="K+">0</div>
+            <div class="stat-label">Donations ($)</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="9000">0</div>
-            <div class="stat-label">Site Interactions+</div>
+            <div class="stat-number" data-target="9000" data-suffix="+">0</div>
+            <div class="stat-label">Site Interactions</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="1600">0</div>
-            <div class="stat-label">Day Duolingo Streak+</div>
+            <div class="stat-number" data-target="1600" data-suffix="+">0</div>
+            <div class="stat-label">Day Duolingo Streak</div>
           </div>
           <div class="stat">
             <div class="stat-number" data-target="3">0</div>
@@ -1181,6 +1181,8 @@
     // Animated counters for stats
     function animateValue(element, start, end, duration) {
       let startTimestamp = null;
+      const suffix = element.getAttribute('data-suffix') || '';
+      
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
@@ -1196,7 +1198,7 @@
           currentValue = Math.floor(progress * (end - start) + start);
         }
         
-        element.textContent = currentValue;
+        element.textContent = currentValue + suffix;
         
         if (progress < 1) {
           window.requestAnimationFrame(step);
