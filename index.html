@@ -663,8 +663,12 @@
             <div class="stat-label">Unweighted GPA</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="4.7">0</div>
+            <div class="stat-number" data-target="4.66">0</div>
             <div class="stat-label">Weighted GPA</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="2">0</div>
+            <div class="stat-label">AP Exams Taken</div>
           </div>
           <div class="stat">
             <div class="stat-number" data-target="100">0</div>
@@ -743,10 +747,10 @@
           </div>
 
           <div class="timeline-item">
-            <div class="timeline-title">Machine Learning Developer - Celebrity Face Recognition Model</div>
-            <div class="timeline-period">2025</div>
+            <div class="timeline-title">Executive Director - Up the Ratios</div>
+            <div class="timeline-period">2024 - Present</div>
             <div class="timeline-description">
-              Built a local, browser-based celebrity face scanner using Google Teachable Machine, trained on a custom dataset of 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed fully offline via TensorFlow.js for privacy and speed. Explored model bias, confidence thresholds, and UX design to create an engaging, interactive experience.
+              Founded nonprofit increasing STEM access for underprivileged students. Secured $10K+ in donations, partnered with 10+ schools across 3 districts. Taught coding to 100+ students in India. Built SEO-optimized website drawing 15K+ annual visitors.
             </div>
           </div>
 
@@ -767,18 +771,18 @@
           </div>
 
           <div class="timeline-item">
-            <div class="timeline-title">Executive Director - Up the Ratios</div>
-            <div class="timeline-period">2024 - Present</div>
-            <div class="timeline-description">
-              Founded nonprofit increasing STEM access for underprivileged students. Secured $10K+ in donations, partnered with 10+ schools across 3 districts. Taught coding to 100+ students in India. Built SEO-optimized website drawing 15K+ annual visitors.
-            </div>
-          </div>
-
-          <div class="timeline-item">
             <div class="timeline-title">Director of Finance - Jain Fellowship of Houston</div>
             <div class="timeline-period">2023 - Present</div>
             <div class="timeline-description">
               Managed $4K+ in annual transactions for 300+ member youth group. Increased YOY funds by $800+ through strategic expense management and fundraising. Oversaw financial planning for events and community activities.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-title">Machine Learning Developer - Celebrity Face Recognition Model</div>
+            <div class="timeline-period">2025</div>
+            <div class="timeline-description">
+              Built a local, browser-based celebrity face scanner using Google Teachable Machine, trained on a custom dataset of 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed fully offline via TensorFlow.js for privacy and speed. Explored model bias, confidence thresholds, and UX design to create an engaging, interactive experience.
             </div>
           </div>
 
@@ -859,6 +863,11 @@
             <div class="card-icon">💡</div>
             <h3>Houston EdTalk Innovation Challenge</h3>
             <p>Ranked 2nd out of 50 teams in City of Houston Youth Innovation Challenge showcasing entrepreneurial solutions.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📚</div>
+            <h3>AP Scholar Achievement</h3>
+            <p>5 on AP Human Geography, 4 on AP Spanish Language and Culture (self-taught through 1600-day Duolingo streak).</p>
           </div>
         </div>
 
@@ -1127,6 +1136,8 @@
         let currentValue;
         if (end === 4.0) {
           currentValue = (progress * (end - start) + start).toFixed(1);
+        } else if (end === 4.66) {
+          currentValue = (progress * (end - start) + start).toFixed(2);
         } else if (end >= 1000) {
           currentValue = Math.floor(progress * (end - start) + start).toLocaleString();
         } else {
