@@ -693,7 +693,7 @@
             <div class="stat-label">Unweighted GPA</div>
           </div>
           <div class="stat">
-            <div class="stat-number" data-target="4.6">0</div>
+            <div class="stat-number" data-target="4.66">0</div>
             <div class="stat-label">Weighted GPA</div>
           </div>
           <div class="stat">
@@ -1209,7 +1209,7 @@
     const statsObserver = new IntersectionObserver(function(entries) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const target = parseInt(entry.target.getAttribute('data-target'));
+          const target = parseFloat(entry.target.getAttribute('data-target'));
           animateValue(entry.target, 0, target, 2000);
           statsObserver.unobserve(entry.target);
         }
