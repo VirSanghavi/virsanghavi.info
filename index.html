@@ -1860,17 +1860,53 @@
         button.disabled = true;
         status.textContent = 'Thinking…';
         output.innerHTML = '';
+        let controller = null;
         try {
+          // Streaming fetch (if supported by backend)
+          controller = new AbortController();
           const res = await fetch('/api/ask', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: q, profile, systemPrompt })
+            body: JSON.stringify({ question: q, profile, systemPrompt, stream: true }),
+            signal: controller.signal
           });
-          const data = await res.json();
-          if (!res.ok) throw new Error(data.error || 'Request failed');
-          const answer = (data.answer || '').trim();
-          // Render safely (no raw markdown shown)
-          output.innerHTML = renderPlainOrMarkdownToHTML(answer);
+          if (res.body && res.headers.get('content-type')?.includes('text/event-stream')) {
+            // SSE streaming
+            const reader = res.body.getReader();
+            let buffer = '';
+            let done = false;
+            let lastFlush = 0;
+            while (!done) {
+              const { value, done: d } = await reader.read();
+              done = d;
+              if (value) {
+                buffer += new TextDecoder().decode(value);
+                // Parse SSE lines
+                let lines = buffer.split('\n');
+                buffer = lines.pop();
+                for (let line of lines) {
+                  if (line.startsWith('data:')) {
+                    let chunk = line.slice(5).trim();
+                    if (chunk === '[DONE]') { done = true; break; }
+                    if (chunk) {
+                      // Append chunk and render
+                      let prev = output.dataset.raw || '';
+                      prev += chunk;
+                      output.dataset.raw = prev;
+                      output.innerHTML = renderPlainOrMarkdownToHTML(prev);
+                    }
+                  }
+                }
+              }
+            }
+            delete output.dataset.raw;
+          } else {
+            // Fallback: non-streaming
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Request failed');
+            const answer = (data.answer || '').trim();
+            output.innerHTML = renderPlainOrMarkdownToHTML(answer);
+          }
         } catch (err) {
           output.innerHTML = '<p>Sorry, I could not answer right now.</p>';
           console.error(err);
@@ -1881,14 +1917,34 @@
         }
       }
 
-      if (button) button.addEventListener('click', ask);
+  if (button) button.addEventListener('click', ask);
       if (input) input.addEventListener('keydown', (e) => {
-        // Shift+Enter sends
-        if (e.key === 'Enter' && (e.shiftKey)) {
+        // Enter sends, Shift+Enter for newline
+        if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           ask();
         }
+        // Auto-resize textarea
+        setTimeout(() => {
+          input.style.height = 'auto';
+          input.style.height = (input.scrollHeight) + 'px';
+        }, 0);
       });
+      // Copy-to-clipboard button
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'send-btn';
+      copyBtn.style.marginTop = '1rem';
+      copyBtn.style.alignSelf = 'center';
+      copyBtn.innerHTML = '📋';
+      copyBtn.title = 'Copy answer';
+      copyBtn.onclick = () => {
+        const text = output.textContent || '';
+        navigator.clipboard.writeText(text).then(() => {
+          copyBtn.innerHTML = '✅';
+          setTimeout(() => { copyBtn.innerHTML = '📋'; }, 1200);
+        });
+      };
+      output.parentNode && output.parentNode.appendChild(copyBtn);
       suggest.forEach(chip => chip.addEventListener('click', () => { if (!input) return; input.value = chip.getAttribute('data-q') || ''; input.focus(); }));
     })();
   </script>
