@@ -895,6 +895,9 @@
       outline: 1px solid rgba(59,130,246,0.15);
     }
     .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
+  .ask-output .ai-list { margin: 0.25rem 0 0.25rem 1.25rem; padding: 0; }
+  .ask-output .ai-list li { margin: 0.25rem 0; }
+  .ask-output .ai-spacer { height: 0.5rem; }
 
     /* ChatGPT-like input */
     .ask-input-wrap { position: sticky; bottom: 0; background: transparent; padding-top: 0.5rem; }
@@ -1818,7 +1821,37 @@
       let profile = {};
       try { if (profileEl) profile = JSON.parse(profileEl.textContent || '{}'); } catch {}
 
-  const systemPrompt = `You are a super friendly, kind assistant answering questions about the person in the provided JSON profile.\n\nTone:\n- Warm, encouraging, down-to-earth, and humble. Frame Vir as ambitious, a builder, entrepreneur, and leader — and super grounded (repeat: super, super grounded).\n\nFacts to reflect (if relevant):\n- Vir aims to attend Stanford or Rice.\n- Vir has applied to YC.\n- Tilt is in public beta with 2,000+ users across 6 continents and is raising a pre-seed.\n\nRules:\n- Only use facts from the profile JSON or very obvious implications. If something isn’t in the profile, say you don’t have that info.\n- Keep answers concise; use bullet points when listing.\n- If asked for contact, prefer the email in the profile.\n`;
+  const systemPrompt = `You are a helpful assistant answering questions about the person in the provided JSON profile.\n\nTone:\n- Friendly but neutral and factual. Do NOT use subjective traits or value judgments (e.g., grounded, amazing, ambitious, inspiring, exceptional, etc.).\n\nFacts to reflect (if relevant):\n- Vir aims to attend Stanford or Rice.\n- Vir has applied to YC.\n- Tilt is in public beta with 2,000+ users across 6 continents and is raising a pre-seed.\n\nOutput format:\n- Plain text only. No Markdown, no formatting symbols. Use simple hyphen bullets for lists if needed.\n\nRules:\n- Only use facts from the profile JSON or very obvious implications. If something isn’t in the profile, say you don’t have that info.\n- Keep answers concise; use short sentences; prefer bullets for lists.\n- If asked for contact, prefer the email in the profile.\n`;
+
+      function escapeHTML(s) {
+        return (s || '').replace(/[&<>"]|'/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+      }
+      function renderPlainOrMarkdownToHTML(mdText) {
+        // Render minimal markdown (lists/paragraphs) to clean HTML; strip other markers.
+        const text = mdText || '';
+        const lines = text.split('\n');
+        let html = '';
+        let inList = false;
+        const flushList = () => { if (inList) { html += '</ul>'; inList = false; } };
+        for (let raw of lines) {
+          // strip code fences/backticks visually
+          if (/^\s*```/.test(raw)) { continue; }
+          const li = raw.match(/^\s*[-*]\s+(.*)/);
+          if (li) {
+            if (!inList) { html += '<ul class="ai-list">'; inList = true; }
+            html += '<li>' + escapeHTML(li[1]) + '</li>';
+            continue;
+          }
+          flushList();
+          const trimmed = raw.trim();
+          if (!trimmed) { html += '<div class="ai-spacer"></div>'; continue; }
+          // Remove leftover markdown emphasis markers
+          const cleaned = trimmed.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/^#+\s*/,'');
+          html += '<p>' + escapeHTML(cleaned) + '</p>';
+        }
+        flushList();
+        return html || '<p></p>';
+      }
 
       async function ask() {
         const q = (input?.value || '').trim();
@@ -1826,7 +1859,7 @@
         button.classList.add('btn-disabled');
         button.disabled = true;
         status.textContent = 'Thinking…';
-        output.textContent = '';
+        output.innerHTML = '';
         try {
           const res = await fetch('/api/ask', {
             method: 'POST',
@@ -1835,9 +1868,11 @@
           });
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Request failed');
-          output.textContent = data.answer?.trim() || '(No answer)';
+          const answer = (data.answer || '').trim();
+          // Render safely (no raw markdown shown)
+          output.innerHTML = renderPlainOrMarkdownToHTML(answer);
         } catch (err) {
-          output.textContent = 'Sorry, I could not answer right now.';
+          output.innerHTML = '<p>Sorry, I could not answer right now.</p>';
           console.error(err);
         } finally {
           status.textContent = '';
