@@ -154,6 +154,22 @@
       width: 100%;
     }
 
+    /* Mobile menu overlay */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.6);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 900;
+    }
+    .menu-overlay.show { opacity: 1; pointer-events: auto; }
+
+    /* Improve anchor offset for fixed navbar */
+    section { scroll-margin-top: 90px; }
+
     /* Main content */
     main {
       padding-top: 80px;
@@ -606,8 +622,45 @@
 
     /* Mobile responsiveness */
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
+      .nav-links { display: none; }
+
+      .mobile-menu-toggle {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+      }
+      .mobile-menu-toggle:hover { background: var(--bg-card); border-color: var(--accent); transform: translateY(-1px); }
+
+      /* Mobile dropdown panel */
+      .nav-links.active {
+        display: flex;
+        position: fixed;
+        top: 64px; /* approx navbar height */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg-secondary);
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 1.25rem 2rem;
+        border-top: 1px solid var(--border);
+        z-index: 950;
+        transform: translateY(-8px);
+        opacity: 0;
+        animation: menuSlideDown 220ms ease forwards;
+      }
+
+      @keyframes menuSlideDown {
+        to { transform: translateY(0); opacity: 1; }
       }
 
       .hero {
@@ -780,6 +833,22 @@
         padding: 0 0.75rem;
       }
     }
+
+    /* Focus visibility */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    /* Performance hints for animated elements */
+    .card, .timeline-item, .stat, .skill-item, .contact-item { will-change: transform; }
+
+    /* Respect user reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .bg-animated { animation: none; }
+    }
   </style>
 </head>
 
@@ -790,7 +859,7 @@
   <nav id="navbar">
     <div class="nav-container">
       <a href="#" class="logo">Vir Sanghavi</a>
-      <ul class="nav-links">
+    <ul class="nav-links" id="primary-navigation" role="menubar">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -798,6 +867,7 @@
       </ul>
     </div>
   </nav>
+  <div class="menu-overlay" id="menu-overlay" hidden></div>
 
   <main>
     <section class="hero">
@@ -1233,6 +1303,9 @@
   </footer>
 
   <script>
+  // Helpers
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Typed.js effect
     const typedStrings = [
       "an AI founder",
@@ -1278,14 +1351,14 @@
     typeEffect();
 
     // Navbar scroll effect
-    window.addEventListener('scroll', function() {
+  window.addEventListener('scroll', function() {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
+  }, { passive: true });
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1424,25 +1497,25 @@
 
     // Add cursor following effect for hero section
     const hero = document.querySelector('.hero');
-    let mouseX = 0, mouseY = 0;
-    let ballX = 0, ballY = 0;
-    const speed = 0.1;
+    if (!prefersReducedMotion && hero) {
+      let mouseX = 0, mouseY = 0;
+      let ballX = 0, ballY = 0;
+      const speed = 0.1;
 
-    function animate() {
-      ballX += (mouseX - ballX) * speed;
-      ballY += (mouseY - ballY) * speed;
-      
-      hero.style.background = `radial-gradient(600px at ${ballX}px ${ballY}px, rgba(59, 130, 246, 0.15), transparent 80%)`;
-      
-      requestAnimationFrame(animate);
+      function animate() {
+        ballX += (mouseX - ballX) * speed;
+        ballY += (mouseY - ballY) * speed;
+        hero.style.background = `radial-gradient(600px at ${ballX}px ${ballY}px, rgba(59, 130, 246, 0.15), transparent 80%)`;
+        requestAnimationFrame(animate);
+      }
+
+      hero.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }, { passive: true });
+
+      animate();
     }
-
-    hero.addEventListener('mousemove', function(e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    animate();
 
     // Add particle effect (subtle)
     function createParticle() {
@@ -1473,7 +1546,14 @@
     }
 
     // Create particles occasionally
-    setInterval(createParticle, 2000);
+    if (!prefersReducedMotion) {
+      let particleTimer = null;
+      const startParticles = () => { particleTimer = setInterval(createParticle, (window.innerWidth <= 480 ? 5000 : 3000)); };
+      const stopParticles = () => { if (particleTimer) { clearInterval(particleTimer); particleTimer = null; } };
+      startParticles();
+      window.addEventListener('visibilitychange', () => document.hidden ? stopParticles() : startParticles());
+      window.addEventListener('resize', () => { stopParticles(); startParticles(); }, { passive: true });
+    }
 
     // Add loading animation
     window.addEventListener('load', function() {
@@ -1485,42 +1565,66 @@
       }, 100);
     });
 
-    // Add mobile menu toggle (for future expansion)
-    const createMobileMenu = () => {
-      if (window.innerWidth <= 768) {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks && !document.querySelector('.mobile-menu-toggle')) {
-          const toggle = document.createElement('button');
-          toggle.className = 'mobile-menu-toggle';
-          toggle.innerHTML = '☰';
-          toggle.style.cssText = `
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: block;
-          `;
-          
-          document.querySelector('.nav-container').appendChild(toggle);
-          
-          toggle.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'var(--bg-secondary)';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.padding = '1rem';
-            navLinks.style.borderTop = '1px solid var(--border)';
-          });
-        }
-      }
-    };
+    // Accessible Mobile Menu
+    (function initMobileMenu() {
+      const navContainer = document.querySelector('.nav-container');
+      const navLinks = document.getElementById('primary-navigation');
+      const overlay = document.getElementById('menu-overlay');
+      if (!navContainer || !navLinks || !overlay) return;
 
-    window.addEventListener('resize', createMobileMenu);
-    createMobileMenu();
+      // Create toggle if not present
+      let toggle = document.querySelector('.mobile-menu-toggle');
+      if (!toggle) {
+        toggle = document.createElement('button');
+        toggle.className = 'mobile-menu-toggle';
+        toggle.setAttribute('aria-controls', 'primary-navigation');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Toggle navigation');
+        toggle.innerHTML = '☰';
+        navContainer.appendChild(toggle);
+      }
+
+      const openMenu = () => {
+        navLinks.classList.add('active');
+        document.body.classList.add('nav-open');
+        overlay.hidden = false;
+        overlay.classList.add('show');
+        toggle.setAttribute('aria-expanded', 'true');
+        const firstLink = navLinks.querySelector('a');
+        if (firstLink) firstLink.focus();
+      };
+      const closeMenu = () => {
+        navLinks.classList.remove('active');
+        document.body.classList.remove('nav-open');
+        overlay.classList.remove('show');
+        // delay hiding to allow fade-out
+        setTimeout(() => { overlay.hidden = true; }, 200);
+        toggle.setAttribute('aria-expanded', 'false');
+      };
+      const toggleMenu = () => {
+        const isOpen = navLinks.classList.contains('active');
+        isOpen ? closeMenu() : openMenu();
+      };
+
+      toggle.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+      navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+      const handleResize = () => {
+        if (window.innerWidth > 768) {
+          // Ensure desktop state
+          closeMenu();
+          navLinks.style.display = 'flex';
+        } else {
+          navLinks.style.display = '';
+        }
+      };
+      window.addEventListener('resize', handleResize, { passive: true });
+      handleResize();
+    })();
   </script>
 </body>
 </html>
