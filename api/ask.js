@@ -30,16 +30,55 @@ module.exports = async function handler(req, res) {
       })
     });
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const logToSupabase = async (payload) => {
+      if (!supabaseUrl || !supabaseKey) return;
+      try {
+        await fetch(`${supabaseUrl}/rest/v1/ai_queries`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (_) { /* swallow logging errors */ }
+    };
+
     if (!resp.ok) {
       const text = await resp.text();
+      await logToSupabase({ query: question, ai_response: text, source: 'virsanghavi.info', status: 'error' });
       return res.status(502).json({ error: 'Upstream error', details: text });
     }
 
     const json = await resp.json();
     const answer = json?.candidates?.[0]?.content?.parts?.[0]?.text || 'No answer available.';
+
+    // Log success
+    await logToSupabase({ query: question, ai_response: answer, source: 'virsanghavi.info', status: 'success' });
     return res.status(200).json({ answer });
   } catch (err) {
     console.error(err);
+    // Log error
+    try {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (supabaseUrl && supabaseKey) {
+        await fetch(`${supabaseUrl}/rest/v1/ai_queries`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ query: req?.body?.question || '', ai_response: 'server_error', source: 'virsanghavi.info', status: 'error' })
+        });
+      }
+    } catch (_) {}
     return res.status(500).json({ error: 'Server error' });
   }
 }

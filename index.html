@@ -879,20 +879,38 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .ask-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: start; }
+    .ask-grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 1.5rem; align-items: start; }
     .ask-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(30,41,59,0.9), rgba(15,23,42,0.9));
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 16px;
       padding: 1rem;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.4);
     }
-    .ask-input { width: 100%; background: transparent; color: var(--text-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.875rem 1rem; resize: vertical; min-height: 54px; font: inherit; }
-    .ask-actions { display: flex; gap: 0.75rem; margin-top: 0.75rem; align-items: center; }
+    .ask-panel.output { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 320px; }
+    .ask-output-shell {
+      width: 100%; max-width: 800px; margin: 0 auto; padding: 1rem; border-radius: 16px;
+      background: rgba(2,6,23,0.45);
+      border: 1px solid rgba(96,165,250,0.25);
+      outline: 1px solid rgba(59,130,246,0.15);
+    }
+    .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
+
+    /* ChatGPT-like input */
+    .ask-input-wrap { position: sticky; bottom: 0; background: transparent; padding-top: 0.5rem; }
+    .ask-input-shell {
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 999px;
+      background: rgba(15,23,42,0.9); border: 1px solid rgba(148,163,184,0.25);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+  .ask-input { flex: 1; background: transparent; color: var(--text-primary); border: none; outline: none; padding: 0.75rem 1rem; font: inherit; resize: none; max-height: 180px; }
+    .send-btn { width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(59,130,246,0.4); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(59,130,246,0.4); cursor: pointer; }
+    .send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .ask-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .ask-chip { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); color: var(--accent-light); padding: 0.4rem 0.6rem; border-radius: 999px; font-size: 0.85rem; cursor: pointer; }
-    .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.7; }
+    .ask-chip { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: var(--accent-light); padding: 0.45rem 0.7rem; border-radius: 999px; font-size: 0.85rem; cursor: pointer; }
+    .ask-status { color: var(--text-muted); font-size: 0.9rem; text-align: center; margin-top: 0.5rem; }
     .btn-disabled { opacity: 0.6; cursor: not-allowed; }
-    @media (max-width: 900px) { .ask-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .ask-grid { grid-template-columns: 1fr; } .ask-panel.output { min-height: 260px; } }
   </style>
 </head>
 
@@ -938,13 +956,17 @@
         </div>
 
         <div class="ask-grid fade-in">
-          <div class="ask-panel">
-            <textarea id="ask-input" class="ask-input" placeholder="e.g., What is Tilt and what stage is it at?" rows="3"></textarea>
-            <div class="ask-actions">
-              <button id="ask-button" class="btn btn-primary">Ask</button>
-              <div id="ask-status" style="color: var(--text-muted); font-size: 0.9rem;"></div>
+          <div class="ask-panel output">
+            <div class="ask-output-shell">
+              <div id="ask-output" class="ask-output">Ask a question to get started.</div>
             </div>
-            <div id="ask-output" class="ask-output" style="margin-top: 1rem;"></div>
+            <div id="ask-status" class="ask-status"></div>
+            <div class="ask-input-wrap" style="width: 100%; max-width: 800px; margin-top: 1rem;">
+              <div class="ask-input-shell">
+                <textarea id="ask-input" class="ask-input" placeholder="Message AI about Vir… (Enter to send, Shift+Enter for newline)" rows="1"></textarea>
+                <button id="ask-button" class="send-btn" title="Send" aria-label="Send">➤</button>
+              </div>
+            </div>
           </div>
           <div class="ask-panel">
             <div class="skill-name" style="text-align: left; margin-bottom: 0.5rem;">Try one of these:</div>
@@ -1388,6 +1410,7 @@
       "github": "https://github.com/VirSanghavi",
       "instagram": "https://instagram.com/vir.sanghavi13"
     },
+  "goals": { "universities": ["Stanford", "Rice"], "ycApplied": true },
     "highlights": [
       "Building the future with AI",
       "Founder & CEO of Tilt (AI-powered debate platform) — 2,000+ users across 6 continents, public beta, raising pre-seed",
@@ -1795,7 +1818,7 @@
       let profile = {};
       try { if (profileEl) profile = JSON.parse(profileEl.textContent || '{}'); } catch {}
 
-      const systemPrompt = `You are a helpful, concise assistant answering questions about the person described in the provided JSON profile.\n\nRules:\n- Only answer using facts present in the profile JSON or obvious implications.\n- If asked for something not in the profile, say you don’t have that info.\n- Be brief and direct; use bullets when listing.\n- If asked for contact, prefer the email in profile.\n- If asked about Tilt, note it is in public beta with 2,000+ users across 6 continents and raising a pre-seed.\n`;
+  const systemPrompt = `You are a super friendly, kind assistant answering questions about the person in the provided JSON profile.\n\nTone:\n- Warm, encouraging, down-to-earth, and humble. Frame Vir as ambitious, a builder, entrepreneur, and leader — and super grounded (repeat: super, super grounded).\n\nFacts to reflect (if relevant):\n- Vir aims to attend Stanford or Rice.\n- Vir has applied to YC.\n- Tilt is in public beta with 2,000+ users across 6 continents and is raising a pre-seed.\n\nRules:\n- Only use facts from the profile JSON or very obvious implications. If something isn’t in the profile, say you don’t have that info.\n- Keep answers concise; use bullet points when listing.\n- If asked for contact, prefer the email in the profile.\n`;
 
       async function ask() {
         const q = (input?.value || '').trim();
@@ -1824,7 +1847,13 @@
       }
 
       if (button) button.addEventListener('click', ask);
-      if (input) input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey || e.shiftKey)) ask(); });
+      if (input) input.addEventListener('keydown', (e) => {
+        // Shift+Enter sends
+        if (e.key === 'Enter' && (e.shiftKey)) {
+          e.preventDefault();
+          ask();
+        }
+      });
       suggest.forEach(chip => chip.addEventListener('click', () => { if (!input) return; input.value = chip.getAttribute('data-q') || ''; input.focus(); }));
     })();
   </script>
