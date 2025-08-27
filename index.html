@@ -893,6 +893,7 @@
       background: rgba(2,6,23,0.45);
       border: 1px solid rgba(96,165,250,0.25);
       outline: 1px solid rgba(59,130,246,0.15);
+      position: relative;
     }
     .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
   .ask-output .ai-list { margin: 0.25rem 0 0.25rem 1.25rem; padding: 0; }
@@ -914,6 +915,21 @@
     .ask-status { color: var(--text-muted); font-size: 0.9rem; text-align: center; margin-top: 0.5rem; }
     .btn-disabled { opacity: 0.6; cursor: not-allowed; }
     @media (max-width: 900px) { .ask-grid { grid-template-columns: 1fr; } .ask-panel.output { min-height: 260px; } }
+
+    /* Copy button (subtle) */
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      width: 34px; height: 34px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(2,6,23,0.4);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      opacity: 0.8;
+      transition: opacity 0.15s ease, border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+    .copy-btn:hover { opacity: 1; border-color: var(--accent); color: var(--text-primary); background: rgba(15,23,42,0.6); }
+    .copy-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
   </style>
 </head>
 
@@ -1930,21 +1946,34 @@
           input.style.height = (input.scrollHeight) + 'px';
         }, 0);
       });
-      // Copy-to-clipboard button
+      // Copy-to-clipboard button (subtle icon)
       const copyBtn = document.createElement('button');
-      copyBtn.className = 'send-btn';
-      copyBtn.style.marginTop = '1rem';
-      copyBtn.style.alignSelf = 'center';
-      copyBtn.innerHTML = '📋';
+      copyBtn.className = 'copy-btn';
       copyBtn.title = 'Copy answer';
+      copyBtn.setAttribute('aria-label', 'Copy answer');
+      copyBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <rect x="2" y="2" width="13" height="13" rx="2" ry="2"></rect>
+        </svg>`;
       copyBtn.onclick = () => {
         const text = output.textContent || '';
         navigator.clipboard.writeText(text).then(() => {
-          copyBtn.innerHTML = '✅';
-          setTimeout(() => { copyBtn.innerHTML = '📋'; }, 1200);
+          copyBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>`;
+          setTimeout(() => {
+            copyBtn.innerHTML = `
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <rect x="2" y="2" width="13" height="13" rx="2" ry="2"></rect>
+              </svg>`;
+          }, 1200);
         });
       };
-      output.parentNode && output.parentNode.appendChild(copyBtn);
+      const outputShell = document.querySelector('.ask-output-shell');
+      outputShell && outputShell.appendChild(copyBtn);
       suggest.forEach(chip => chip.addEventListener('click', () => { if (!input) return; input.value = chip.getAttribute('data-q') || ''; input.focus(); }));
     })();
   </script>
