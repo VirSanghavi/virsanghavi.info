@@ -48,6 +48,9 @@
       scroll-behavior: smooth;
     }
 
+  /* Lock background scroll when nav/menu is open */
+  body.nav-open { overflow: hidden; }
+
     /* Animated background */
     .bg-animated {
       position: fixed;
@@ -628,9 +631,8 @@
         background: none;
         border: 1px solid var(--border);
         color: var(--text-primary);
-        font-size: 1.25rem;
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         border-radius: 8px;
         cursor: pointer;
         display: inline-flex;
@@ -639,6 +641,14 @@
         transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
       }
       .mobile-menu-toggle:hover { background: var(--bg-card); border-color: var(--accent); transform: translateY(-1px); }
+      .mobile-menu-toggle .bars { position: relative; width: 22px; height: 16px; }
+      .mobile-menu-toggle .bar { position: absolute; left: 0; width: 100%; height: 2px; background: var(--text-primary); border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease; }
+      .mobile-menu-toggle .bar:nth-child(1) { top: 0; }
+      .mobile-menu-toggle .bar:nth-child(2) { top: 7px; }
+      .mobile-menu-toggle .bar:nth-child(3) { top: 14px; }
+      .mobile-menu-toggle.open .bar:nth-child(1) { transform: rotate(45deg); top: 7px; }
+      .mobile-menu-toggle.open .bar:nth-child(2) { opacity: 0; }
+      .mobile-menu-toggle.open .bar:nth-child(3) { transform: rotate(-45deg); top: 7px; }
 
       /* Mobile dropdown panel */
       .nav-links.active {
@@ -844,11 +854,45 @@
     /* Performance hints for animated elements */
     .card, .timeline-item, .stat, .skill-item, .contact-item { will-change: transform; }
 
+    /* Tap ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      background: rgba(96, 165, 250, 0.35);
+      animation: ripple 600ms ease-out;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(3); opacity: 0; }
+    }
+
     /* Respect user reduced motion preferences */
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
       .bg-animated { animation: none; }
     }
+
+    /* Ask AI section */
+    .ask-ai {
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(96, 165, 250, 0.06), transparent 60%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .ask-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: start; }
+    .ask-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .ask-input { width: 100%; background: transparent; color: var(--text-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.875rem 1rem; resize: vertical; min-height: 54px; font: inherit; }
+    .ask-actions { display: flex; gap: 0.75rem; margin-top: 0.75rem; align-items: center; }
+    .ask-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .ask-chip { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); color: var(--accent-light); padding: 0.4rem 0.6rem; border-radius: 999px; font-size: 0.85rem; cursor: pointer; }
+    .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.7; }
+    .btn-disabled { opacity: 0.6; cursor: not-allowed; }
+    @media (max-width: 900px) { .ask-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 
@@ -859,10 +903,11 @@
   <nav id="navbar">
     <div class="nav-container">
       <a href="#" class="logo">Vir Sanghavi</a>
-    <ul class="nav-links" id="primary-navigation" role="menubar">
+      <ul class="nav-links" id="primary-navigation" role="menubar">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#ask-ai">Ask AI</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -881,6 +926,36 @@
           <p class="hero-subtitle">
             I'm <span class="typed-text" id="typed"></span>, creating AI-powered solutions that solve real-world problems. Currently scaling <a href="#tilt-experience" style="color: var(--accent-light); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--accent-light); transition: all 0.3s ease;">Tilt</a> — the AI-powered debate platform with 2,000+ users across 6 continents, now in public beta and raising a pre-seed — and leading <a href="#uptheratios-experience" style="color: var(--accent-light); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--accent-light); transition: all 0.3s ease;">Up the Ratios</a> — a nonprofit bridging the STEM divide with $10K+ in donations.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="ask-ai" class="section ask-ai">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Ask about me (AI)</h2>
+          <p class="section-subtitle">Curious about my background, projects, or goals? Ask a question and an AI will answer using the info on this site.</p>
+        </div>
+
+        <div class="ask-grid fade-in">
+          <div class="ask-panel">
+            <textarea id="ask-input" class="ask-input" placeholder="e.g., What is Tilt and what stage is it at?" rows="3"></textarea>
+            <div class="ask-actions">
+              <button id="ask-button" class="btn btn-primary">Ask</button>
+              <div id="ask-status" style="color: var(--text-muted); font-size: 0.9rem;"></div>
+            </div>
+            <div id="ask-output" class="ask-output" style="margin-top: 1rem;"></div>
+          </div>
+          <div class="ask-panel">
+            <div class="skill-name" style="text-align: left; margin-bottom: 0.5rem;">Try one of these:</div>
+            <div class="ask-suggest">
+              <button class="ask-chip" data-q="Give me a concise overview of Vir Sanghavi in 3 bullet points.">Overview in 3 bullets</button>
+              <button class="ask-chip" data-q="What is Tilt? Who uses it, and what stage is it at?">What is Tilt?</button>
+              <button class="ask-chip" data-q="Summarize Vir's leadership and nonprofit work.">Leadership & nonprofit</button>
+              <button class="ask-chip" data-q="List Vir's major awards and what they represent.">Awards</button>
+              <button class="ask-chip" data-q="What technical skills does Vir have and how are they applied?">Technical skills</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1302,6 +1377,69 @@
     </div>
   </footer>
 
+  <!-- Structured profile data for the AI to ground responses -->
+  <script id="profile-data" type="application/json">
+  {
+    "name": "Vir Sanghavi",
+    "education": {"highSchool": "Carnegie Vanguard HS", "classOf": 2028},
+    "contact": {
+      "email": "Virrsanghavi@gmail.com",
+      "linkedin": "https://linkedin.com/in/vir-sanghavi",
+      "github": "https://github.com/VirSanghavi",
+      "instagram": "https://instagram.com/vir.sanghavi13"
+    },
+    "highlights": [
+      "Building the future with AI",
+      "Founder & CEO of Tilt (AI-powered debate platform) — 2,000+ users across 6 continents, public beta, raising pre-seed",
+      "Executive Director of Up the Ratios — nonprofit bridging the STEM divide ($10K+ donations, 10+ school partnerships, 100+ students taught)"
+    ],
+    "stats": {
+      "gpaUnweighted": 4.0,
+      "gpaWeighted": 4.66,
+      "apExams": 2,
+      "studentsTaught": 100,
+      "websiteVisitors": 90000,
+      "siteInteractions": 50000,
+      "duolingoStreakDays": 1600,
+      "continentsReached": 6,
+      "languagesSpoken": 6
+    },
+    "roles": [
+      {"title": "Founder & CEO", "org": "Tilt", "years": "2025–Present", "summary": "Real-time debate platform; AI summaries, logic-based voting, friend-only modes; 2,000+ users across 6 continents; public beta; raising pre-seed", "link": "https://tilt.vote"},
+      {"title": "Executive Director", "org": "Up the Ratios", "years": "2024–Present", "summary": "$10K+ donations; 10+ school partnerships across 3 districts; 100+ students taught in India", "link": "https://uptheratios.org"},
+      {"title": "CEO & Founder", "org": "BestBuds Shop", "years": "2024–Present", "summary": "Automated e-commerce; reached 25K+ customers; 10% conversion; 98% satisfaction"},
+      {"title": "Lead Engineer", "org": "RAPTOR", "years": "2025–Present", "summary": "AI bird strike prevention with YOLOv8; predatory call deterrents; field tests planned"},
+      {"title": "Director of Finance", "org": "Jain Fellowship of Houston", "years": "2023–Present", "summary": "$4K+ annual transactions; 300+ members; +$800 YOY"},
+      {"title": "Lead Researcher", "org": "ShirtColorAI", "years": "2024", "summary": "ML classifier; 740-image dataset; embedded pipeline"},
+      {"title": "ML Developer", "org": "Celebrity Face Recognition", "years": "2025", "summary": "30,000+ face images; offline TensorFlow.js; bias/confidence explored"},
+      {"title": "Rocketry Captain & Founder", "org": "CVHS Rocketry Team", "years": "—", "summary": "$3.5K+ sponsorships; 4 rockets; top 15% in ARC regionals"},
+      {"title": "Scouting Lead", "org": "CVHS Robotics Team", "years": "—", "summary": "Data-driven match strategies; regional championship-qualifying robot"},
+      {"title": "Co-Founder & President", "org": "White-Hat Hacking Club", "years": "—", "summary": "15 members; 3 laptops secured; +60% proficiency via labs"}
+    ],
+    "awards": [
+      "TJSDA Congressional Debate State Champion (2023); 3x State Finalist",
+      "NSDA National 5th Place (2023 Middle School); 2x National Finalist",
+      "VEX Robotics Regional Finalist (VEX IQ 2023, 2024; VEX V5 2025)",
+      "Houston EdTalk Innovation Challenge — 2nd of 50 teams",
+      "AP Scholar: 5 (AP Human Geography), 4 (AP Spanish)"
+    ],
+    "skills": [
+      "Python (PyTorch, NumPy, Pandas)",
+      "JavaScript & TypeScript",
+      "React & Full-Stack Development",
+      "AI/ML (TensorFlow, SciKit-Learn)",
+      "YOLOv8 & Computer Vision",
+      "Java & C++",
+      "HTML/CSS Web Development",
+      "Entrepreneurship & Leadership",
+      "Public Speaking & Debate"
+    ],
+    "languages": [
+      "English (Native)", "Gujarati (Native)", "Hindi (Fluent)", "Spanish (AP Level)", "French (Intermediate)", "Russian (Learning)"
+    ]
+  }
+  </script>
+
   <script>
   // Helpers
   const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1360,7 +1498,7 @@
       }
   }, { passive: true });
 
-    // Smooth scrolling for navigation links
+  // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1454,15 +1592,30 @@
       skillsObserver.observe(el);
     });
 
-    // Add some interactive hover effects
+    // Card hover and tap ripple effects
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-8px) scale(1.02)';
       });
-      
       card.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(-4px) scale(1)';
       });
+      card.style.position = 'relative';
+      card.style.overflow = 'hidden';
+      card.addEventListener('pointerdown', function(e) {
+        try {
+          if (prefersReducedMotion) return;
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height) * 0.6;
+          const ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+          ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+          this.appendChild(ripple);
+          ripple.addEventListener('animationend', () => ripple.remove());
+        } catch {}
+      }, { passive: true });
     });
 
     // Contact items interaction
@@ -1566,7 +1719,7 @@
     });
 
     // Accessible Mobile Menu
-    (function initMobileMenu() {
+  (function initMobileMenu() {
       const navContainer = document.querySelector('.nav-container');
       const navLinks = document.getElementById('primary-navigation');
       const overlay = document.getElementById('menu-overlay');
@@ -1580,7 +1733,10 @@
         toggle.setAttribute('aria-controls', 'primary-navigation');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Toggle navigation');
-        toggle.innerHTML = '☰';
+    const bars = document.createElement('div');
+    bars.className = 'bars';
+    bars.innerHTML = '<span class="bar"></span><span class="bar"></span><span class="bar"></span>';
+    toggle.appendChild(bars);
         navContainer.appendChild(toggle);
       }
 
@@ -1590,6 +1746,7 @@
         overlay.hidden = false;
         overlay.classList.add('show');
         toggle.setAttribute('aria-expanded', 'true');
+        toggle.classList.add('open');
         const firstLink = navLinks.querySelector('a');
         if (firstLink) firstLink.focus();
       };
@@ -1600,6 +1757,7 @@
         // delay hiding to allow fade-out
         setTimeout(() => { overlay.hidden = true; }, 200);
         toggle.setAttribute('aria-expanded', 'false');
+        toggle.classList.remove('open');
       };
       const toggleMenu = () => {
         const isOpen = navLinks.classList.contains('active');
@@ -1624,6 +1782,50 @@
       };
       window.addEventListener('resize', handleResize, { passive: true });
       handleResize();
+    })();
+
+    // Ask AI logic
+    (function initAskAI() {
+      const input = document.getElementById('ask-input');
+      const button = document.getElementById('ask-button');
+      const output = document.getElementById('ask-output');
+      const status = document.getElementById('ask-status');
+      const suggest = document.querySelectorAll('.ask-chip');
+      const profileEl = document.getElementById('profile-data');
+      let profile = {};
+      try { if (profileEl) profile = JSON.parse(profileEl.textContent || '{}'); } catch {}
+
+      const systemPrompt = `You are a helpful, concise assistant answering questions about the person described in the provided JSON profile.\n\nRules:\n- Only answer using facts present in the profile JSON or obvious implications.\n- If asked for something not in the profile, say you don’t have that info.\n- Be brief and direct; use bullets when listing.\n- If asked for contact, prefer the email in profile.\n- If asked about Tilt, note it is in public beta with 2,000+ users across 6 continents and raising a pre-seed.\n`;
+
+      async function ask() {
+        const q = (input?.value || '').trim();
+        if (!q) return;
+        button.classList.add('btn-disabled');
+        button.disabled = true;
+        status.textContent = 'Thinking…';
+        output.textContent = '';
+        try {
+          const res = await fetch('/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: q, profile, systemPrompt })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Request failed');
+          output.textContent = data.answer?.trim() || '(No answer)';
+        } catch (err) {
+          output.textContent = 'Sorry, I could not answer right now.';
+          console.error(err);
+        } finally {
+          status.textContent = '';
+          button.disabled = false;
+          button.classList.remove('btn-disabled');
+        }
+      }
+
+      if (button) button.addEventListener('click', ask);
+      if (input) input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey || e.shiftKey)) ask(); });
+      suggest.forEach(chip => chip.addEventListener('click', () => { if (!input) return; input.value = chip.getAttribute('data-q') || ''; input.focus(); }));
     })();
   </script>
 </body>
