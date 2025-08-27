@@ -3,7 +3,7 @@
 // This uses Google Generative AI (Gemini) for responses, but the key
 // must be provided at deploy-time via env var.
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
