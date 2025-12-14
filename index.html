@@ -1,1987 +1,414 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vir Sanghavi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <meta property="og:title" content="Vir Sanghavi - AI Founder & Engineer" />
-  <meta property="og:description" content="Building the future with AI. Founder of Tilt and Up the Ratios." />
-  <meta property="og:image" content="https://virsanghavi.info/og-image.jpg" />
-  <meta property="og:url" content="https://virsanghavi.info" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=2" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=2" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=2" />
-  <style>
-    :root {
-      --primary: #0f172a;
-      --secondary: #1e293b;
-      --accent: #3b82f6;
-      --accent-light: #60a5fa;
-      --text-primary: #f8fafc;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --bg-primary: #020617;
-      --bg-secondary: #0f172a;
-      --bg-card: #1e293b;
-      --success: #10b981;
-      --warning: #f59e0b;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vir Sanghavi</title>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta name="description" content="Founder & Engineer" />
+    <meta property="og:title" content="Vir Sanghavi" />
+    <meta property="og:description" content="Founder & Engineer" />
+    <meta property="og:url" content="https://virsanghavi.info" />
+    <meta property="og:image" content="https://virsanghavi.info/vir2.png" />
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  /* Lock background scroll when nav/menu is open */
-  body.nav-open { overflow: hidden; }
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=2" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=2" />
 
-    /* Animated background */
-    .bg-animated {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(45deg, #020617, #0f172a, #1e293b);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-    }
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #0b0f14;
+        --muted: #5b6472;
+        --border: rgba(11, 15, 20, 0.12);
+        --hover: rgba(11, 15, 20, 0.04);
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Grid overlay */
-    .grid-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.1;
-      background-image: 
-        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
-      background-size: 50px 50px;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 1rem 2rem;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    nav.scrolled {
-      background: rgba(15, 23, 42, 0.95);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--text-primary);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .logo:hover {
-      color: var(--accent-light);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Mobile menu overlay */
-    .menu-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(2, 6, 23, 0.6);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-      z-index: 900;
-    }
-    .menu-overlay.show { opacity: 1; pointer-events: auto; }
-
-    /* Improve anchor offset for fixed navbar */
-    section { scroll-margin-top: 90px; }
-
-    /* Main content */
-    main {
-      padding-top: 80px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Hero section */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 600px;
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--accent-light);
-      margin-bottom: 2rem;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.25rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-
-    .typed-text {
-      color: var(--accent-light);
-      font-weight: 600;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 0.875rem 2rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-card);
-      border-color: var(--accent);
-    }
-
-    /* Sections */
-    .section {
-      padding: 4rem 0;
-      position: relative;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .section-subtitle {
-      color: var(--text-secondary);
-      font-size: 1.125rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Cards */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 1200px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
+        --maxw: 760px;
       }
-    }
 
-    @media (max-width: 768px) {
-      .cards-grid {
-        grid-template-columns: 1fr;
+      * {
+        box-sizing: border-box;
       }
-    }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-light));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-    }
-
-    .card h3 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text-primary);
-    }
-
-    .card p {
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1.5rem;
-      margin: 3rem 0;
-    }
-
-    @media (max-width: 1200px) {
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
-    }
 
-    @media (max-width: 900px) {
-      .stats-grid {
-        grid-template-columns: repeat(3, 1fr);
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.55;
       }
-    }
 
-    @media (max-width: 600px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.18em;
       }
-    }
 
-    .stat {
-      text-align: center;
-      padding: 1.5rem 0.75rem;
-      background: rgba(59, 130, 246, 0.05);
-      border: 1px solid rgba(59, 130, 246, 0.1);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .stat:hover {
-      background: rgba(59, 130, 246, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent-light);
-      margin-bottom: 0.25rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .stat-label {
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    /* Experience timeline */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--accent-light));
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-left: 2rem;
-      transition: all 0.3s ease;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -3rem;
-      top: 1.5rem;
-      width: 12px;
-      height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      border: 3px solid var(--bg-primary);
-    }
-
-    .timeline-item:hover {
-      transform: translateX(4px);
-      border-color: var(--accent);
-    }
-
-    .timeline-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-period {
-      color: var(--accent-light);
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-    }
-
-    .timeline-description {
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Skills */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .skill-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .skill-item:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .skill-name {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .skill-level {
-      height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .skill-progress {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-      border-radius: 2px;
-      transition: width 1s ease;
-    }
-
-    /* Contact */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.25rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-
-    .contact-item:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .contact-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-light));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-    }
-
-    /* Footer */
-    footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border);
-      padding: 2rem 0;
-      text-align: center;
-    }
-
-    .footer-content {
-      color: var(--text-muted);
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      a:hover {
+        text-decoration-thickness: 2px;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-
-      .mobile-menu-toggle {
-        background: none;
-        border: 1px solid var(--border);
-        color: var(--text-primary);
-        width: 44px;
-        height: 44px;
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--text);
+        outline-offset: 3px;
         border-radius: 8px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
       }
-      .mobile-menu-toggle:hover { background: var(--bg-card); border-color: var(--accent); transform: translateY(-1px); }
-      .mobile-menu-toggle .bars { position: relative; width: 22px; height: 16px; }
-      .mobile-menu-toggle .bar { position: absolute; left: 0; width: 100%; height: 2px; background: var(--text-primary); border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease; }
-      .mobile-menu-toggle .bar:nth-child(1) { top: 0; }
-      .mobile-menu-toggle .bar:nth-child(2) { top: 7px; }
-      .mobile-menu-toggle .bar:nth-child(3) { top: 14px; }
-      .mobile-menu-toggle.open .bar:nth-child(1) { transform: rotate(45deg); top: 7px; }
-      .mobile-menu-toggle.open .bar:nth-child(2) { opacity: 0; }
-      .mobile-menu-toggle.open .bar:nth-child(3) { transform: rotate(-45deg); top: 7px; }
 
-      /* Mobile dropdown panel */
-      .nav-links.active {
+      .wrap {
+        min-height: 100svh;
         display: flex;
-        position: fixed;
-        top: 64px; /* approx navbar height */
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--bg-secondary);
         flex-direction: column;
-        gap: 1rem;
-        padding: 1rem 1.25rem 2rem;
-        border-top: 1px solid var(--border);
-        z-index: 950;
-        transform: translateY(-8px);
-        opacity: 0;
-        animation: menuSlideDown 220ms ease forwards;
-      }
-
-      @keyframes menuSlideDown {
-        to { transform: translateY(0); opacity: 1; }
-      }
-
-      .hero {
-        min-height: 80vh;
-      }
-
-      .hero h1 {
-        font-size: 2.25rem;
-        margin-bottom: 1rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.075rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .hero-badge {
-        margin-bottom: 1.5rem;
-        padding: 0.375rem 0.75rem;
-        font-size: 0.8rem;
-      }
-
-      .section {
-        padding: 2.5rem 0;
-      }
-
-      .section-header {
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .section-subtitle {
-        font-size: 1rem;
-      }
-
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-
-      .card {
-        padding: 1.25rem;
-      }
-
-      .card h3 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .card p {
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin: 2rem 0;
-      }
-
-      .stat {
-        padding: 1rem 0.5rem;
-      }
-
-      .stat-number {
-        font-size: 1.5rem;
-        margin-bottom: 0.2rem;
-      }
-
-      .stat-label {
-        font-size: 0.85rem;
-      }
-
-      .timeline {
-        padding-left: 0.75rem;
-      }
-
-      .timeline-item {
-        margin-left: 1rem;
-        padding: 1.25rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .timeline-item::before {
-        left: -2.25rem;
-        top: 1.25rem;
-        width: 10px;
-        height: 10px;
-      }
-
-      .timeline-title {
-        font-size: 1rem;
-      }
-
-      .timeline-description {
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
-
-      .skill-item {
-        padding: 1rem;
-      }
-
-      .skill-name {
-        font-size: 0.9rem;
-      }
-
-      .contact-grid {
-        gap: 1rem;
-      }
-
-      .contact-item {
-        padding: 1rem;
       }
 
       .container {
-        padding: 0 1rem;
+        width: 100%;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 28px 18px;
       }
 
-      .cta-buttons {
-        gap: 0.75rem;
+      header {
+        text-align: center;
+      }
+
+      .avatar {
+        width: 92px;
+        height: 92px;
+        border-radius: 999px;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto 20px;
+        border: 1px solid var(--border);
+        background: #ffffff;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.05rem, 5.2vw, 3.05rem);
+        line-height: 1.05;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .subtitle {
+        margin: 14px 0 0;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .contact {
+        margin: 10px 0 0;
+        font-size: 0.92rem;
+        color: var(--muted);
+        font-style: normal;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+      }
+
+      .contact a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+      }
+
+      .contact a:hover {
+        border-bottom-color: currentColor;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      .section {
+        margin-top: 26px;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-align: left;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        text-align: left;
+      }
+
+      li {
+        margin: 0.45rem 0;
+      }
+
+      .links-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      @media (max-width: 520px) {
+        .links-row {
+          flex-direction: column;
+        }
+
+        .links-row .btn {
+          width: 100%;
+        }
       }
 
       .btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.8rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .section {
-        padding: 2rem 0;
-      }
-
-      .hero {
-        min-height: 70vh;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
+        appearance: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--text);
+        font: inherit;
+        font-weight: 600;
+        text-decoration: none;
       }
 
-      .section-title {
-        font-size: 1.5rem;
+      .btn:hover {
+        background: var(--hover);
       }
 
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
+      footer {
+        padding: 26px 0 8px;
       }
 
-      .stat {
-        padding: 0.75rem 0.5rem;
+      .social {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
       }
 
-      .stat-number {
-        font-size: 1.25rem;
+      .icon {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
       }
 
-      .card, .timeline-item, .skill-item, .contact-item {
-        padding: 1rem;
+      .social a {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+        text-decoration: none;
       }
 
-      .container {
-        padding: 0 0.75rem;
+      .social a:hover {
+        background: var(--hover);
+        border-color: var(--border);
       }
-    }
 
-    /* Focus visibility */
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 6px;
-    }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
 
-    /* Performance hints for animated elements */
-    .card, .timeline-item, .stat, .skill-item, .contact-item { will-change: transform; }
+      @media (min-width: 720px) {
+        .container {
+          padding: 56px 24px;
+        }
 
-    /* Tap ripple effect */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      background: rgba(96, 165, 250, 0.35);
-      animation: ripple 600ms ease-out;
-      pointer-events: none;
-    }
-    @keyframes ripple {
-      to { transform: scale(3); opacity: 0; }
-    }
+        .avatar {
+          width: 104px;
+          height: 104px;
+        }
 
-    /* Respect user reduced motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .bg-animated { animation: none; }
-    }
+        h1 {
+          letter-spacing: 0.28em;
+        }
 
-    /* Ask AI section */
-    .ask-ai {
-      background: radial-gradient(1200px 400px at 10% 10%, rgba(96, 165, 250, 0.06), transparent 60%);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .ask-grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 1.5rem; align-items: start; }
-    .ask-panel {
-      background: linear-gradient(180deg, rgba(30,41,59,0.9), rgba(15,23,42,0.9));
-      border: 1px solid rgba(148,163,184,0.2);
-      border-radius: 16px;
-      padding: 1rem;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.4);
-    }
-    .ask-panel.output { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 320px; }
-    .ask-output-shell {
-      width: 100%; max-width: 800px; margin: 0 auto; padding: 1rem; border-radius: 16px;
-      background: rgba(2,6,23,0.45);
-      border: 1px solid rgba(96,165,250,0.25);
-      outline: 1px solid rgba(59,130,246,0.15);
-      position: relative;
-    }
-    .ask-output { white-space: pre-wrap; color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
-  .ask-output .ai-list { margin: 0.25rem 0 0.25rem 1.25rem; padding: 0; }
-  .ask-output .ai-list li { margin: 0.25rem 0; }
-  .ask-output .ai-spacer { height: 0.5rem; }
+        .section {
+          margin-top: 34px;
+        }
 
-    /* ChatGPT-like input */
-    .ask-input-wrap { position: sticky; bottom: 0; background: transparent; padding-top: 0.5rem; }
-    .ask-input-shell {
-      display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 999px;
-      background: rgba(15,23,42,0.9); border: 1px solid rgba(148,163,184,0.25);
-      box-shadow: 0 8px 22px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
-    }
-  .ask-input { flex: 1; background: transparent; color: var(--text-primary); border: none; outline: none; padding: 0.75rem 1rem; font: inherit; resize: none; max-height: 180px; }
-    .send-btn { width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(59,130,246,0.4); background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(59,130,246,0.4); cursor: pointer; }
-    .send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .ask-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .ask-chip { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: var(--accent-light); padding: 0.45rem 0.7rem; border-radius: 999px; font-size: 0.85rem; cursor: pointer; }
-    .ask-status { color: var(--text-muted); font-size: 0.9rem; text-align: center; margin-top: 0.5rem; }
-    .btn-disabled { opacity: 0.6; cursor: not-allowed; }
-    @media (max-width: 900px) { .ask-grid { grid-template-columns: 1fr; } .ask-panel.output { min-height: 260px; } }
+        .links-row .btn {
+          min-width: 140px;
+          width: auto;
+        }
+      }
+    </style>
+  </head>
 
-    /* Copy button (subtle) */
-    .copy-btn {
-      position: absolute; top: 10px; right: 10px;
-      width: 34px; height: 34px;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(2,6,23,0.4);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-secondary);
-      opacity: 0.8;
-      transition: opacity 0.15s ease, border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-    }
-    .copy-btn:hover { opacity: 1; border-color: var(--accent); color: var(--text-primary); background: rgba(15,23,42,0.6); }
-    .copy-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
-  </style>
-</head>
-
-<body>
-  <div class="bg-animated"></div>
-  <div class="grid-overlay"></div>
-
-  <nav id="navbar">
-    <div class="nav-container">
-      <a href="#" class="logo">Vir Sanghavi</a>
-      <ul class="nav-links" id="primary-navigation" role="menubar">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#ask-ai">Ask AI</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-  <div class="menu-overlay" id="menu-overlay" hidden></div>
-
-  <main>
-    <section class="hero">
+  <body>
+    <div class="wrap">
       <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <div class="status-dot"></div>
-            <span>Carnegie Vanguard HS, Class of 2028</span>
-          </div>
-          <h1>Building the future with AI</h1>
-          <p class="hero-subtitle">
-            I'm <span class="typed-text" id="typed"></span>, creating AI-powered solutions that solve real-world problems. Currently scaling <a href="#tilt-experience" style="color: var(--accent-light); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--accent-light); transition: all 0.3s ease;">Tilt</a> — the AI-powered debate platform with 2,000+ users across 6 continents, now in public beta and raising a pre-seed — and leading <a href="#uptheratios-experience" style="color: var(--accent-light); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--accent-light); transition: all 0.3s ease;">Up the Ratios</a> — a nonprofit bridging the STEM divide with $10K+ in donations.
-          </p>
-        </div>
-      </div>
-    </section>
+        <header>
+          <img class="avatar" src="/vir2.png" alt="Vir Sanghavi" />
+          <h1>VIR SANGHAVI</h1>
+          <p class="subtitle">Founder &amp; Engineer</p>
 
-    <section id="ask-ai" class="section ask-ai">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">Ask about me (AI)</h2>
-          <p class="section-subtitle">Curious about my background, projects, or goals? Ask a question and an AI will answer using the info on this site.</p>
-        </div>
+          <address class="contact">
+            <a href="mailto:Virrsanghavi@gmail.com">Virrsanghavi@gmail.com</a><br />
+            <a href="tel:+18329074410">+1 (832) 907-4410</a><br />
+            <a href="https://github.com/VirSanghavi" target="_blank" rel="noreferrer">github.com/VirSanghavi</a><br />
+            <a href="https://linkedin.com/in/vir-sanghavi" target="_blank" rel="noreferrer">linkedin.com/in/vir-sanghavi</a><br />
+            <a href="https://instagram.com/vir.sanghavi13" target="_blank" rel="noreferrer">instagram.com/vir.sanghavi13</a><br />
+            <a href="https://x.com/virsanghavi13" target="_blank" rel="noreferrer">x.com/virsanghavi13</a>
+          </address>
+        </header>
 
-        <div class="ask-grid fade-in">
-          <div class="ask-panel output">
-            <div class="ask-output-shell">
-              <div id="ask-output" class="ask-output">Ask a question to get started.</div>
-            </div>
-            <div id="ask-status" class="ask-status"></div>
-            <div class="ask-input-wrap" style="width: 100%; max-width: 800px; margin-top: 1rem;">
-              <div class="ask-input-shell">
-                <textarea id="ask-input" class="ask-input" placeholder="Message AI about Vir… (Enter to send, Shift+Enter for newline)" rows="1"></textarea>
-                <button id="ask-button" class="send-btn" title="Send" aria-label="Send">➤</button>
-              </div>
-            </div>
-          </div>
-          <div class="ask-panel">
-            <div class="skill-name" style="text-align: left; margin-bottom: 0.5rem;">Try one of these:</div>
-            <div class="ask-suggest">
-              <button class="ask-chip" data-q="Give me a concise overview of Vir Sanghavi in 3 bullet points.">Overview in 3 bullets</button>
-              <button class="ask-chip" data-q="What is Tilt? Who uses it, and what stage is it at?">What is Tilt?</button>
-              <button class="ask-chip" data-q="Summarize Vir's leadership and nonprofit work.">Leadership & nonprofit</button>
-              <button class="ask-chip" data-q="List Vir's major awards and what they represent.">Awards</button>
-              <button class="ask-chip" data-q="What technical skills does Vir have and how are they applied?">Technical skills</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        <main>
+          <section class="section" aria-labelledby="background">
+            <h2 id="background">Background</h2>
+            <ul>
+              <li>
+                Founder and CEO of Tilt, a real-time debate and decision platform with 5,000+ users
+                across 6 continents
+              </li>
+              <li>
+                Founder and Executive Director of
+                <a href="https://uptheratios.org" target="_blank" rel="noreferrer">Up the Ratios</a>,
+                a nonprofit expanding STEM access through robotics donations and education
+              </li>
+              <li>Built and deployed production-grade web and data systems end to end</li>
+              <li>Carnegie Vanguard High School, Class of 2028 with 4.00 unweighted GPA</li>
+            </ul>
+          </section>
 
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">About Me</h2>
-          <p class="section-subtitle">
-            Passionate about leveraging technology to create meaningful impact through AI, startups, and social initiatives.
-          </p>
-        </div>
+          <section class="section" aria-labelledby="recognition">
+            <h2 id="recognition">Recognition</h2>
+            <ul>
+              <li>
+                Accepted to Antler US Residency F25 with under 3 percent acceptance rate and
+                potential 500K funding
+              </li>
+              <li>YC Agent Jam 25 third place, in-person competition at Y Combinator SF</li>
+            </ul>
+          </section>
 
-        <div class="stats-grid fade-in">
-          <div class="stat">
-            <div class="stat-number" data-target="4.0">0</div>
-            <div class="stat-label">Unweighted GPA</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="4.66">0</div>
-            <div class="stat-label">Weighted GPA</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="2">0</div>
-            <div class="stat-label">AP Exams Taken</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="25" data-suffix="+">0</div>
-            <div class="stat-label">Students Taught</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="50000" data-suffix="+">0</div>
-            <div class="stat-label">Website Visitors</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="10" data-suffix="K+">0</div>
-            <div class="stat-label">Donations ($)</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="9000" data-suffix="+">0</div>
-            <div class="stat-label">Site Interactions</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="25" data-suffix="+">0</div>
-            <div class="stat-label">Day Duolingo Streak</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="6">0</div>
-            <div class="stat-label">Continents Reached</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number" data-target="6">0</div>
-            <div class="stat-label">Languages Spoken</div>
-          </div>
-        </div>
+          <section class="section" aria-labelledby="selected-work">
+            <h2 id="selected-work">Selected Work</h2>
+            <div class="links-row">
+              <a class="btn" href="https://tilt.vote" target="_blank" rel="noreferrer">Tilt</a>
+              <a class="btn" href="https://linkedin.com/in/vir-sanghavi" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+          </section>
+        </main>
 
-        <div class="cards-grid">
-          <div class="card fade-in">
-            <div class="card-icon">🚀</div>
-            <h3>Founder & CEO - Tilt</h3>
-            <p>Real-time debate platform with AI-powered summaries. Built with TypeScript, React, and Supabase. 2,000+ users across 6 continents in public beta. <a href="https://tilt.vote" target="_blank" style="color: var(--accent-light); text-decoration: none; font-weight: 600;">Try it live →</a></p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">📈</div>
-            <h3>CEO - BestBuds Shop</h3>
-            <p>Fully automated e-commerce platform with dropshipping model. Reached 25K+ customers with 10% conversion rate and 98% satisfaction.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🎯</div>
-            <h3>Executive Director - Up the Ratios</h3>
-            <p>Nonprofit bridging STEM divide. $10K+ in donations, 10+ school partnerships, 80% cost reduction for new robotics teams.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🦅</div>
-            <h3>Lead Engineer - RAPTOR</h3>
-            <p>AI bird strike prevention system using YOLOv8 and predatory call deterrents. Preparing field tests at small airfields.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">💰</div>
-            <h3>Director of Finance - Jain Fellowship</h3>
-            <p>Managed $4K+ in annual transactions for 300+ member youth group. Increased YOY funds by $800+ through strategic planning.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🎨</div>
-            <h3>Lead Researcher - ShirtColorAI</h3>
-            <p>ML classifier for shirt color prediction from raw images. 740-image curated dataset with high accuracy for embedded deployment.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🎭</div>
-            <h3>Machine Learning Developer - Celebrity Face Recognition</h3>
-            <p>Built browser-based celebrity face scanner using Google Teachable Machine with 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed offline via TensorFlow.js.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🌐</div>
-            <h3>Global Tech Education Leader</h3>
-            <p>International programming outreach across 6 continents. Teaching coding to underserved communities while maintaining 1600-day Duolingo streak for self-directed Spanish mastery.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🔬</div>
-            <h3>Research & Innovation</h3>
-            <p>Published research-level projects in AI/ML including computer vision, natural language processing, and embedded systems. Building solutions for real-world accessibility and safety challenges.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience" class="section">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">Experience</h2>
-          <p class="section-subtitle">
-            A journey through leadership, innovation, and impact across multiple domains.
-          </p>
-        </div>
-
-        <div class="timeline fade-in">
-          <div class="timeline-item" id="tilt-experience">
-            <div class="timeline-title">Founder & CEO - Tilt</div>
-            <div class="timeline-period">2025 - Present</div>
-            <div class="timeline-description">
-              Founded real-time debate platform with TypeScript, React, and Supabase. Implemented AI-powered summaries, logic-based voting, and friend-only modes. Scaled to 2,000+ users across 6 continents with 50,000+ interactions; launched public beta and currently raising a pre-seed round.
-            </div>
-            <div style="margin-top: 1rem;">
-              <a href="https://tilt.vote" target="_blank" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
-                <span>Try Tilt Live</span>
-                <span>🚀</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="timeline-item" id="uptheratios-experience">
-            <div class="timeline-title">Executive Director - Up the Ratios</div>
-            <div class="timeline-period">2024 - Present</div>
-            <div class="timeline-description">
-              Founded nonprofit increasing STEM access for underprivileged students. Secured $10K+ in donations, partnered with 10+ schools across 3 districts. Taught coding to 100+ students in India. Built SEO-optimized website drawing 15K+ annual visitors.
-            </div>
-            <div style="margin-top: 1rem;">
-              <a href="https://uptheratios.org" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
-                <span>Visit Up the Ratios</span>
-                <span>🎯</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-title">Project Lead - RAPTOR (AI Bird Strike Prevention)</div>
-            <div class="timeline-period">2025 - Present</div>
-            <div class="timeline-description">
-              Leading AI-based bird strike prevention system using YOLOv8 for real-time detection and species classification. Integrated predatory call deterrents with automated CSV export pipeline. Coordinating field testing at small airfields.
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-title">CEO & Founder - BestBuds Shop</div>
-            <div class="timeline-period">2024 - Present</div>
-            <div class="timeline-description">
-              Built fully automated dropshipping e-commerce platform. Executed targeted marketing campaigns reaching 25K+ customers with 10% conversion rate. Managed team of 4 virtual assistants, achieving 98% customer satisfaction and 20% reduced cart abandonment.
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-title">Director of Finance - Jain Fellowship of Houston</div>
-            <div class="timeline-period">2023 - Present</div>
-            <div class="timeline-description">
-              Managed $4K+ in annual transactions for 300+ member youth group. Increased YOY funds by $800+ through strategic expense management and fundraising. Oversaw financial planning for events and community activities.
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-title">Machine Learning Developer - Celebrity Face Recognition Model</div>
-            <div class="timeline-period">2025</div>
-            <div class="timeline-description">
-              Built a local, browser-based celebrity face scanner using Google Teachable Machine, trained on a custom dataset of 30,000+ face images across 50+ celebrities. Achieved high-precision classification with live webcam input, deployed fully offline via TensorFlow.js for privacy and speed. Explored model bias, confidence thresholds, and UX design to create an engaging, interactive experience.
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-title">Lead Researcher - ShirtColorAI</div>
-            <div class="timeline-period">2024</div>
-            <div class="timeline-description">
-              Developed ML classifier predicting shirt colors from raw images using LAB color space. Curated 740-image dataset across 10 color classes. Engineered preprocessing pipeline for embedded deployment in accessibility tools.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">Featured Projects</h2>
-          <p class="section-subtitle">
-            Innovative solutions at the intersection of AI, social impact, and engineering excellence.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <div class="card fade-in">
-            <div class="card-icon">🚀</div>
-            <h3>CVHS Rocketry Team - Captain & Founder</h3>
-            <p>Founded 10-member team, raised $3.5K+ through sponsorships. Built and tested 4 rockets, placed top 15% in American Rocketry Challenge regional qualifiers.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🤖</div>
-            <h3>CVHS Robotics Team - Scouting Lead</h3>
-            <p>Led 4-student scouting team for data-driven match strategies. Built regional championship-qualifying robot with optimized mechanical design and coding.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🛡️</div>
-            <h3>White-Hat Hacking Club - Co-Founder & President</h3>
-            <p>Led 15-member cybersecurity club. Secured 3 refurbished laptops for hands-on practice, increased member proficiency by 60% through weekly labs.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🎓</div>
-            <h3>International Programming Outreach</h3>
-            <p>Led HTML and QBasic courses for 100+ students in India. Developed curriculum, taught week-long programs, and donated robotics equipment to underserved communities.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🎤</div>
-            <h3>Speech & Debate Excellence</h3>
-            <p>2023 TJSDA State Champion, NSDA National 5th place. Won 4 tournaments, qualified for state championships in Congressional and Public Forum Debate.</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card-icon">🌍</div>
-            <h3>World Affairs Club</h3>
-            <p>Competed in Academic WorldQuest, ranking 4th out of 64 Houston-area teams. Demonstrated expertise in global affairs and international relations.</p>
-          </div>
-        </div>
-
-        <div class="section-header fade-in" style="margin-top: 3rem;">
-          <h3 class="section-title" style="font-size: 2rem;">Awards & Honors</h3>
-        </div>
-
-        <div class="cards-grid fade-in">
-          <div class="card">
-            <div class="card-icon">🏆</div>
-            <h3>TJSDA Congressional Debate State Champion</h3>
-            <p>2023 champion with 3x State Finalist recognition in Texas Junior State Debate Association competitions.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">🥉</div>
-            <h3>NSDA National 5th Place</h3>
-            <p>Top 5 finish at 2023 National Middle School Congressional Debate Tournament with 2x National Finalist status.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">🤖</div>
-            <h3>VEX Robotics Regional Finalist</h3>
-            <p>Texas Region 3 Finalist in VEX IQ (2023, 2024) and VEX V5 (2025) competitions demonstrating consistent excellence.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">💡</div>
-            <h3>Houston EdTalk Innovation Challenge</h3>
-            <p>Ranked 2nd out of 50 teams in City of Houston Youth Innovation Challenge showcasing entrepreneurial solutions.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">📚</div>
-            <h3>AP Scholar Achievement</h3>
-            <p>5 on AP Human Geography, 4 on AP Spanish Language and Culture (self-taught through 1600-day Duolingo streak).</p>
-          </div>
-        </div>
-
-        <div class="section-header fade-in" style="margin-top: 3rem;">
-          <h3 class="section-title" style="font-size: 2rem;">Technical Skills</h3>
-        </div>
-
-        <div class="skills-grid fade-in">
-          <div class="skill-item">
-            <div class="skill-name">Python (PyTorch, NumPy, Pandas)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="95%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">JavaScript & TypeScript</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="90%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">React & Full-Stack Development</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="88%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">AI/ML (TensorFlow, SciKit-Learn)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="92%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">YOLOv8 & Computer Vision</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="85%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Java & C++</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="82%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">HTML/CSS Web Development</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="90%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Entrepreneurship & Leadership</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="96%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Public Speaking & Debate</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="98%"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-header fade-in" style="margin-top: 3rem;">
-          <h3 class="section-title" style="font-size: 2rem;">Languages</h3>
-        </div>
-
-        <div class="skills-grid fade-in">
-          <div class="skill-item">
-            <div class="skill-name">English (Native)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="100%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Gujarati (Native)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="100%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Hindi (Fluent)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="90%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Spanish (AP Level)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="85%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">French (Intermediate)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="70%"></div>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-name">Russian (Learning)</div>
-            <div class="skill-level">
-              <div class="skill-progress" data-width="45%"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">Let's Connect</h2>
-          <p class="section-subtitle">
-            Seeking funding for Tilt, YC application partnerships, and mentorship from experienced founders. Ready to scale AI-powered discourse globally.
-          </p>
-        </div>
-
-        <div class="contact-grid fade-in">
-          <a href="mailto:Virrsanghavi@gmail.com" class="contact-item">
-            <div class="contact-icon">✉️</div>
-            <div>
-              <div style="font-weight: 600;">Email</div>
-              <div style="color: var(--text-secondary); font-size: 0.875rem;">Virrsanghavi@gmail.com</div>
-            </div>
-          </a>
-
-          <a href="https://linkedin.com/in/vir-sanghavi" target="_blank" class="contact-item">
-            <div class="contact-icon">💼</div>
-            <div>
-              <div style="font-weight: 600;">LinkedIn</div>
-              <div style="color: var(--text-secondary); font-size: 0.875rem;">Professional Network</div>
-            </div>
-          </a>
-
-          <a href="https://github.com/VirSanghavi" target="_blank" class="contact-item">
-            <div class="contact-icon">💻</div>
-            <div>
-              <div style="font-weight: 600;">GitHub</div>
-              <div style="color: var(--text-secondary); font-size: 0.875rem;">Code Portfolio</div>
-            </div>
-          </a>
-
-          <a href="https://instagram.com/vir.sanghavi13" target="_blank" class="contact-item">
-            <div class="contact-icon">📸</div>
-            <div>
-              <div style="font-weight: 600;">Instagram</div>
-              <div style="color: var(--text-secondary); font-size: 0.875rem;">Behind the Scenes</div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <p>&copy; 2025 Vir Sanghavi. Engineered with precision. Powered by ambition.</p>
+        <footer>
+          <nav class="social" aria-label="Social links">
+            <a href="https://linkedin.com/in/vir-sanghavi" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <span class="sr-only">LinkedIn</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6.5 9.5V18"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M6.5 6.5h.01"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M10 18v-4.2c0-1.5.8-2.4 2.1-2.4 1.25 0 1.9.85 1.9 2.4V18"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 9.5v8.5"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </a>
+            <a href="https://github.com/VirSanghavi" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <span class="sr-only">GitHub</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M9.3 19.2c-3 .9-3.8-1.5-3.8-1.5-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.1 0 0 0"
+                  stroke="currentColor"
+                  stroke-width="1.35"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M9.3 19.2c.05-.8.3-1.35.55-1.7-2.4-.3-4.9-1.2-4.9-5.3 0-1.15.4-2.1 1.1-2.85-.1-.3-.5-1.45.1-3 0 0 .9-.3 3 .95.85-.25 1.75-.35 2.65-.35s1.8.1 2.65.35c2.1-1.25 3-.95 3-.95.6 1.55.2 2.7.1 3 .7.75 1.1 1.7 1.1 2.85 0 4.1-2.5 5-4.9 5.3.4.35.65 1.05.65 2.15v2.4"
+                  stroke="currentColor"
+                  stroke-width="1.35"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a href="https://instagram.com/vir.sanghavi13" target="_blank" rel="noreferrer" aria-label="Instagram">
+              <span class="sr-only">Instagram</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M8 3.8h8c2.3 0 4.2 1.9 4.2 4.2v8c0 2.3-1.9 4.2-4.2 4.2H8c-2.3 0-4.2-1.9-4.2-4.2V8c0-2.3 1.9-4.2 4.2-4.2Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                />
+                <path
+                  d="M12 16.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                />
+                <path
+                  d="M17.4 6.6h.01"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </a>
+            <a href="https://x.com/virsanghavi13" target="_blank" rel="noreferrer" aria-label="X">
+              <span class="sr-only">X</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 5h3.8l4.3 5.8L18 5h1.9l-5.8 7.1L20 19h-3.8l-4.6-6.2L6.3 19H4.4l6.4-7.7L5 5Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </nav>
+        </footer>
       </div>
     </div>
-  </footer>
-
-  <!-- Structured profile data for the AI to ground responses -->
-  <script id="profile-data" type="application/json">
-  {
-    "name": "Vir Sanghavi",
-    "education": {"highSchool": "Carnegie Vanguard HS", "classOf": 2028},
-    "contact": {
-      "email": "Virrsanghavi@gmail.com",
-      "linkedin": "https://linkedin.com/in/vir-sanghavi",
-      "github": "https://github.com/VirSanghavi",
-      "instagram": "https://instagram.com/vir.sanghavi13"
-    },
-  "goals": { "universities": ["Stanford", "Rice"], "ycApplied": true },
-    "highlights": [
-      "Building the future with AI",
-      "Founder & CEO of Tilt (AI-powered debate platform) — 2,000+ users across 6 continents, public beta, raising pre-seed",
-      "Executive Director of Up the Ratios — nonprofit bridging the STEM divide ($10K+ donations, 10+ school partnerships, 100+ students taught)"
-    ],
-    "stats": {
-      "gpaUnweighted": 4.0,
-      "gpaWeighted": 4.66,
-      "apExams": 2,
-      "studentsTaught": 100,
-      "websiteVisitors": 90000,
-      "siteInteractions": 50000,
-      "duolingoStreakDays": 1600,
-      "continentsReached": 6,
-      "languagesSpoken": 6
-    },
-    "roles": [
-      {"title": "Founder & CEO", "org": "Tilt", "years": "2025–Present", "summary": "Real-time debate platform; AI summaries, logic-based voting, friend-only modes; 2,000+ users across 6 continents; public beta; raising pre-seed", "link": "https://tilt.vote"},
-      {"title": "Executive Director", "org": "Up the Ratios", "years": "2024–Present", "summary": "$10K+ donations; 10+ school partnerships across 3 districts; 100+ students taught in India", "link": "https://uptheratios.org"},
-      {"title": "CEO & Founder", "org": "BestBuds Shop", "years": "2024–Present", "summary": "Automated e-commerce; reached 25K+ customers; 10% conversion; 98% satisfaction"},
-      {"title": "Lead Engineer", "org": "RAPTOR", "years": "2025–Present", "summary": "AI bird strike prevention with YOLOv8; predatory call deterrents; field tests planned"},
-      {"title": "Director of Finance", "org": "Jain Fellowship of Houston", "years": "2023–Present", "summary": "$4K+ annual transactions; 300+ members; +$800 YOY"},
-      {"title": "Lead Researcher", "org": "ShirtColorAI", "years": "2024", "summary": "ML classifier; 740-image dataset; embedded pipeline"},
-      {"title": "ML Developer", "org": "Celebrity Face Recognition", "years": "2025", "summary": "30,000+ face images; offline TensorFlow.js; bias/confidence explored"},
-      {"title": "Rocketry Captain & Founder", "org": "CVHS Rocketry Team", "years": "—", "summary": "$3.5K+ sponsorships; 4 rockets; top 15% in ARC regionals"},
-      {"title": "Scouting Lead", "org": "CVHS Robotics Team", "years": "—", "summary": "Data-driven match strategies; regional championship-qualifying robot"},
-      {"title": "Co-Founder & President", "org": "White-Hat Hacking Club", "years": "—", "summary": "15 members; 3 laptops secured; +60% proficiency via labs"}
-    ],
-    "awards": [
-      "TJSDA Congressional Debate State Champion (2023); 3x State Finalist",
-      "NSDA National 5th Place (2023 Middle School); 2x National Finalist",
-      "VEX Robotics Regional Finalist (VEX IQ 2023, 2024; VEX V5 2025)",
-      "Houston EdTalk Innovation Challenge — 2nd of 50 teams",
-      "AP Scholar: 5 (AP Human Geography), 4 (AP Spanish)"
-    ],
-    "skills": [
-      "Python (PyTorch, NumPy, Pandas)",
-      "JavaScript & TypeScript",
-      "React & Full-Stack Development",
-      "AI/ML (TensorFlow, SciKit-Learn)",
-      "YOLOv8 & Computer Vision",
-      "Java & C++",
-      "HTML/CSS Web Development",
-      "Entrepreneurship & Leadership",
-      "Public Speaking & Debate"
-    ],
-    "languages": [
-      "English (Native)", "Gujarati (Native)", "Hindi (Fluent)", "Spanish (AP Level)", "French (Intermediate)", "Russian (Learning)"
-    ]
-  }
-  </script>
-
-  <script>
-  // Helpers
-  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Typed.js effect
-    const typedStrings = [
-      "an AI founder",
-      "a full-stack engineer", 
-      "a nonprofit leader",
-      "a state debate champion",
-      "a problem solver",
-      "an entrepreneur",
-      "a cybersecurity enthusiast",
-      "a rocketry captain"
-    ];
-    
-    let currentString = 0;
-    let currentChar = 0;
-    let isDeleting = false;
-    const typedElement = document.getElementById('typed');
-    
-    function typeEffect() {
-      const current = typedStrings[currentString];
-      
-      if (isDeleting) {
-        typedElement.textContent = current.substring(0, currentChar - 1);
-        currentChar--;
-      } else {
-        typedElement.textContent = current.substring(0, currentChar + 1);
-        currentChar++;
-      }
-      
-      let speed = isDeleting ? 50 : 100;
-      
-      if (!isDeleting && currentChar === current.length) {
-        speed = 2000;
-        isDeleting = true;
-      } else if (isDeleting && currentChar === 0) {
-        isDeleting = false;
-        currentString = (currentString + 1) % typedStrings.length;
-        speed = 500;
-      }
-      
-      setTimeout(typeEffect, speed);
-    }
-    
-    typeEffect();
-
-    // Navbar scroll effect
-  window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-  }, { passive: true });
-
-  // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Animated counters for stats
-    function animateValue(element, start, end, duration) {
-      let startTimestamp = null;
-      const suffix = element.getAttribute('data-suffix') || '';
-      
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        
-        let currentValue;
-        if (end === 4.0) {
-          currentValue = (progress * (end - start) + start).toFixed(1);
-        } else if (end === 4.66) {
-          currentValue = (progress * (end - start) + start).toFixed(2);
-        } else if (end >= 1000) {
-          currentValue = Math.floor(progress * (end - start) + start).toLocaleString();
-        } else {
-          currentValue = Math.floor(progress * (end - start) + start);
-        }
-        
-        element.textContent = currentValue + suffix;
-        
-        if (progress < 1) {
-          window.requestAnimationFrame(step);
-        }
-      };
-      window.requestAnimationFrame(step);
-    }
-
-    // Trigger counter animations when stats come into view
-    const statsObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = parseFloat(entry.target.getAttribute('data-target'));
-          animateValue(entry.target, 0, target, 2000);
-          statsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.stat-number').forEach(el => {
-      statsObserver.observe(el);
-    });
-
-    // Skill progress bars animation
-    const skillsObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const progressBar = entry.target.querySelector('.skill-progress');
-          const width = progressBar.getAttribute('data-width');
-          setTimeout(() => {
-            progressBar.style.width = width;
-          }, 200);
-          skillsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.skill-item').forEach(el => {
-      skillsObserver.observe(el);
-    });
-
-    // Card hover and tap ripple effects
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-8px) scale(1.02)';
-      });
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(-4px) scale(1)';
-      });
-      card.style.position = 'relative';
-      card.style.overflow = 'hidden';
-      card.addEventListener('pointerdown', function(e) {
-        try {
-          if (prefersReducedMotion) return;
-          const rect = this.getBoundingClientRect();
-          const size = Math.max(rect.width, rect.height) * 0.6;
-          const ripple = document.createElement('span');
-          ripple.className = 'ripple';
-          ripple.style.width = ripple.style.height = size + 'px';
-          ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-          ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-          this.appendChild(ripple);
-          ripple.addEventListener('animationend', () => ripple.remove());
-        } catch {}
-      }, { passive: true });
-    });
-
-    // Contact items interaction
-    document.querySelectorAll('.contact-item').forEach(item => {
-      item.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-4px) scale(1.05)';
-      });
-      
-      item.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(-2px) scale(1)';
-      });
-    });
-
-    // Timeline items stagger animation
-    const timelineObserver = new IntersectionObserver(function(entries) {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateX(0)';
-          }, index * 200);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    document.querySelectorAll('.timeline-item').forEach((item, index) => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateX(-50px)';
-      item.style.transition = 'all 0.6s ease';
-      timelineObserver.observe(item);
-    });
-
-    // Add cursor following effect for hero section
-    const hero = document.querySelector('.hero');
-    if (!prefersReducedMotion && hero) {
-      let mouseX = 0, mouseY = 0;
-      let ballX = 0, ballY = 0;
-      const speed = 0.1;
-
-      function animate() {
-        ballX += (mouseX - ballX) * speed;
-        ballY += (mouseY - ballY) * speed;
-        hero.style.background = `radial-gradient(600px at ${ballX}px ${ballY}px, rgba(59, 130, 246, 0.15), transparent 80%)`;
-        requestAnimationFrame(animate);
-      }
-
-      hero.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      }, { passive: true });
-
-      animate();
-    }
-
-    // Add particle effect (subtle)
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.style.position = 'absolute';
-      particle.style.width = '2px';
-      particle.style.height = '2px';
-      particle.style.background = 'rgba(59, 130, 246, 0.5)';
-      particle.style.borderRadius = '50%';
-      particle.style.pointerEvents = 'none';
-      particle.style.left = Math.random() * window.innerWidth + 'px';
-      particle.style.top = window.innerHeight + 'px';
-      particle.style.zIndex = '-1';
-      
-      document.body.appendChild(particle);
-      
-      const duration = Math.random() * 3000 + 2000;
-      const drift = (Math.random() - 0.5) * 100;
-      
-      particle.animate([
-        { transform: 'translateY(0px) translateX(0px)', opacity: 0 },
-        { transform: `translateY(-${window.innerHeight + 100}px) translateX(${drift}px)`, opacity: 1 },
-        { transform: `translateY(-${window.innerHeight + 200}px) translateX(${drift * 2}px)`, opacity: 0 }
-      ], {
-        duration: duration,
-        easing: 'linear'
-      }).onfinish = () => particle.remove();
-    }
-
-    // Create particles occasionally
-    if (!prefersReducedMotion) {
-      let particleTimer = null;
-      const startParticles = () => { particleTimer = setInterval(createParticle, (window.innerWidth <= 480 ? 5000 : 3000)); };
-      const stopParticles = () => { if (particleTimer) { clearInterval(particleTimer); particleTimer = null; } };
-      startParticles();
-      window.addEventListener('visibilitychange', () => document.hidden ? stopParticles() : startParticles());
-      window.addEventListener('resize', () => { stopParticles(); startParticles(); }, { passive: true });
-    }
-
-    // Add loading animation
-    window.addEventListener('load', function() {
-      document.body.style.opacity = '0';
-      document.body.style.transition = 'opacity 0.5s ease';
-      
-      setTimeout(() => {
-        document.body.style.opacity = '1';
-      }, 100);
-    });
-
-    // Accessible Mobile Menu
-  (function initMobileMenu() {
-      const navContainer = document.querySelector('.nav-container');
-      const navLinks = document.getElementById('primary-navigation');
-      const overlay = document.getElementById('menu-overlay');
-      if (!navContainer || !navLinks || !overlay) return;
-
-      // Create toggle if not present
-      let toggle = document.querySelector('.mobile-menu-toggle');
-      if (!toggle) {
-        toggle = document.createElement('button');
-        toggle.className = 'mobile-menu-toggle';
-        toggle.setAttribute('aria-controls', 'primary-navigation');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Toggle navigation');
-    const bars = document.createElement('div');
-    bars.className = 'bars';
-    bars.innerHTML = '<span class="bar"></span><span class="bar"></span><span class="bar"></span>';
-    toggle.appendChild(bars);
-        navContainer.appendChild(toggle);
-      }
-
-      const openMenu = () => {
-        navLinks.classList.add('active');
-        document.body.classList.add('nav-open');
-        overlay.hidden = false;
-        overlay.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
-        toggle.classList.add('open');
-        const firstLink = navLinks.querySelector('a');
-        if (firstLink) firstLink.focus();
-      };
-      const closeMenu = () => {
-        navLinks.classList.remove('active');
-        document.body.classList.remove('nav-open');
-        overlay.classList.remove('show');
-        // delay hiding to allow fade-out
-        setTimeout(() => { overlay.hidden = true; }, 200);
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.classList.remove('open');
-      };
-      const toggleMenu = () => {
-        const isOpen = navLinks.classList.contains('active');
-        isOpen ? closeMenu() : openMenu();
-      };
-
-      toggle.addEventListener('click', toggleMenu);
-      overlay.addEventListener('click', closeMenu);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMenu();
-      });
-      navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
-      const handleResize = () => {
-        if (window.innerWidth > 768) {
-          // Ensure desktop state
-          closeMenu();
-          navLinks.style.display = 'flex';
-        } else {
-          navLinks.style.display = '';
-        }
-      };
-      window.addEventListener('resize', handleResize, { passive: true });
-      handleResize();
-    })();
-
-    // Ask AI logic
-    (function initAskAI() {
-      const input = document.getElementById('ask-input');
-      const button = document.getElementById('ask-button');
-      const output = document.getElementById('ask-output');
-      const status = document.getElementById('ask-status');
-      const suggest = document.querySelectorAll('.ask-chip');
-      const profileEl = document.getElementById('profile-data');
-      let profile = {};
-      try { if (profileEl) profile = JSON.parse(profileEl.textContent || '{}'); } catch {}
-
-  const systemPrompt = `You are a helpful assistant.\n\nTone:\n- Friendly, neutral, and factual. Do NOT use subjective traits or value judgments about Vir (e.g., grounded, amazing, ambitious, inspiring, exceptional, etc.).\n\nContext:\n- A JSON profile is provided to ground answers about Vir. Prefer this profile for questions specifically about Vir.\n- For general questions not about Vir (or beyond the profile), answer using your own knowledge.\n\nFacts to reflect when relevant:\n- Vir aims to attend Stanford or Rice.\n- Vir has applied to YC.\n- Tilt is in public beta with 2,000+ users across 6 continents and is raising a pre-seed.\n\nOutput format:\n- Plain text only. No Markdown. Use simple hyphen bullets for lists.\n\nRules:\n- If information about Vir is not in the profile, say you don’t have that info rather than guessing.\n- Keep answers concise; use short sentences; prefer bullets for lists.\n- If asked for contact, prefer the email in the profile.\n`;
-
-      function escapeHTML(s) {
-        return (s || '').replace(/[&<>"]|'/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
-      }
-      function renderPlainOrMarkdownToHTML(mdText) {
-        // Render minimal markdown (lists/paragraphs) to clean HTML; strip other markers.
-        const text = mdText || '';
-        const lines = text.split('\n');
-        let html = '';
-        let inList = false;
-        const flushList = () => { if (inList) { html += '</ul>'; inList = false; } };
-        for (let raw of lines) {
-          // strip code fences/backticks visually
-          if (/^\s*```/.test(raw)) { continue; }
-          const li = raw.match(/^\s*[-*]\s+(.*)/);
-          if (li) {
-            if (!inList) { html += '<ul class="ai-list">'; inList = true; }
-            html += '<li>' + escapeHTML(li[1]) + '</li>';
-            continue;
-          }
-          flushList();
-          const trimmed = raw.trim();
-          if (!trimmed) { html += '<div class="ai-spacer"></div>'; continue; }
-          // Remove leftover markdown emphasis markers
-          const cleaned = trimmed.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/^#+\s*/,'');
-          html += '<p>' + escapeHTML(cleaned) + '</p>';
-        }
-        flushList();
-        return html || '<p></p>';
-      }
-
-      async function ask() {
-        const q = (input?.value || '').trim();
-        if (!q) return;
-        button.classList.add('btn-disabled');
-        button.disabled = true;
-        status.textContent = 'Thinking…';
-        output.innerHTML = '';
-        let controller = null;
-        try {
-          // Streaming fetch (if supported by backend)
-          controller = new AbortController();
-          const res = await fetch('/api/ask', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: q, profile, systemPrompt, stream: true }),
-            signal: controller.signal
-          });
-          if (res.body && res.headers.get('content-type')?.includes('text/event-stream')) {
-            // SSE streaming
-            const reader = res.body.getReader();
-            let buffer = '';
-            let done = false;
-            let lastFlush = 0;
-            while (!done) {
-              const { value, done: d } = await reader.read();
-              done = d;
-              if (value) {
-                buffer += new TextDecoder().decode(value);
-                // Parse SSE lines
-                let lines = buffer.split('\n');
-                buffer = lines.pop();
-                for (let line of lines) {
-                  if (line.startsWith('data:')) {
-                    let chunk = line.slice(5).trim();
-                    if (chunk === '[DONE]') { done = true; break; }
-                    if (chunk) {
-                      // Append chunk and render
-                      let prev = output.dataset.raw || '';
-                      prev += chunk;
-                      output.dataset.raw = prev;
-                      output.innerHTML = renderPlainOrMarkdownToHTML(prev);
-                    }
-                  }
-                }
-              }
-            }
-            delete output.dataset.raw;
-          } else {
-            // Fallback: non-streaming
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Request failed');
-            const answer = (data.answer || '').trim();
-            output.innerHTML = renderPlainOrMarkdownToHTML(answer);
-          }
-        } catch (err) {
-          output.innerHTML = '<p>Sorry, I could not answer right now.</p>';
-          console.error(err);
-        } finally {
-          status.textContent = '';
-          button.disabled = false;
-          button.classList.remove('btn-disabled');
-        }
-      }
-
-  if (button) button.addEventListener('click', ask);
-      if (input) input.addEventListener('keydown', (e) => {
-        // Enter sends, Shift+Enter for newline
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          ask();
-        }
-        // Auto-resize textarea
-        setTimeout(() => {
-          input.style.height = 'auto';
-          input.style.height = (input.scrollHeight) + 'px';
-        }, 0);
-      });
-      // Copy-to-clipboard button (subtle icon)
-      const copyBtn = document.createElement('button');
-      copyBtn.className = 'copy-btn';
-      copyBtn.title = 'Copy answer';
-      copyBtn.setAttribute('aria-label', 'Copy answer');
-      copyBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <rect x="2" y="2" width="13" height="13" rx="2" ry="2"></rect>
-        </svg>`;
-      copyBtn.onclick = () => {
-        const text = output.textContent || '';
-        navigator.clipboard.writeText(text).then(() => {
-          copyBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>`;
-          setTimeout(() => {
-            copyBtn.innerHTML = `
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <rect x="2" y="2" width="13" height="13" rx="2" ry="2"></rect>
-              </svg>`;
-          }, 1200);
-        });
-      };
-      const outputShell = document.querySelector('.ask-output-shell');
-      outputShell && outputShell.appendChild(copyBtn);
-      suggest.forEach(chip => chip.addEventListener('click', () => { if (!input) return; input.value = chip.getAttribute('data-q') || ''; input.focus(); }));
-    })();
-  </script>
-  
-  <!-- Vercel Web Analytics -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments) }
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-</body>
+  </body>
 </html>
