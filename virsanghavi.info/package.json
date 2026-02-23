@@ -1,0 +1,12 @@
+{
+  "name": "virsanghavi.info",
+  "private": true,
+  "scripts": {
+    "dev": "serve . -p 3000",
+    "start": "serve . -p 3000",
+    "build": "node manage-blog.js"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
