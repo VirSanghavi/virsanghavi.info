@@ -3,11 +3,18 @@
   <channel>
     <title>Vir Sanghavi</title>
     <link>https://virsanghavi.info/</link>
-    <description>CTO @ Tilt, building logic markets.</description>
+    <description>CTO @ Ravioli, building logic markets.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 15:15:18 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 05:28:56 GMT</lastBuildDate>
     <atom:link href="https://virsanghavi.info/feed.xml" rel="self" type="application/rss+xml"/>
     
+    <item>
+      <title>My experience attending two YC hackathons back-to-back</title>
+      <link>https://virsanghavi.info/posts/2-yc-hackathons-in-a-row.html</link>
+      <guid>https://virsanghavi.info/posts/2-yc-hackathons-in-a-row.html</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Feeling super blessed. Attended Browser-Use and Manufact hackathons in the span of two weeks and learned a lot.</description>
+    </item>
     <item>
       <title>What I learned from WAC's Academic WorldQuest 2026</title>
       <link>https://virsanghavi.info/posts/academic-worldquest-2026.html</link>

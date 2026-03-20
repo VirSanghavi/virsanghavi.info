@@ -1,6 +1,12 @@
 (function () {
   var posts = [
   {
+    "title": "My experience attending two YC hackathons back-to-back",
+    "url": "/posts/2-yc-hackathons-in-a-row.html",
+    "desc": "Feeling super blessed. Attended Browser-Use and Manufact hackathons in the span of two weeks and learned a lot.",
+    "date": "01 Mar, 2026"
+  },
+  {
     "title": "What I learned from WAC's Academic WorldQuest 2026",
     "url": "/posts/academic-worldquest-2026.html",
     "desc": "Today was a rough day. High expectations met a lack of sufficient preparation.",
