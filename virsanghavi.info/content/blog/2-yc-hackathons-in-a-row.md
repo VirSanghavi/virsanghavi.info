@@ -15,7 +15,7 @@ At this hackathon, my team tried to build a Kalshi/Polymarket arbitrage bot that
 
 Going forward there are a couple of changes I want to make:
 - Scope down aggressively. Pick the one thing that demos well and nail it. You can always build more later.
-- Prepare for the demo, not the actual product. Even if the product works 90% of the time if it breaks or is dysfunctional during the demo there's little possibility of you winning.
+- Prepare for the demo, not the actual product. Even if the product works 90% of the time, if it breaks or is dysfunctional during the demo there's little possibility of you winning.
 
 Beyond the project itself, the best part of this hackathon was the people I got to talk to. I had a long conversation with Pietro Zullo, a cofounder of MCP Use (Manufact), who gave me a ton of life advice and real talk about what building a company actually looks like.
 
@@ -35,7 +35,7 @@ In 24 hours, my partner and I built [Browser-Swarm](https://browser-swarm.com/) 
 
 We demo'd a full Tokyo trip planned with 92% confidence in real time. Applications go way beyond travel.
 
-Honestly, most of the technical stuff we figured out at 3am through trial and error — getting the agents to not step on each other, recovering when one broke, and making sure they could actually share what they found. It was messy, but by morning we had 8 browsers collaborating in real time, which felt kind of surreal.
+Honestly, most of the technical stuff we figured out at 3am through trial and error - getting the agents to not step on each other, recovering when one broke, and making sure they could actually share what they found. It was messy, but by morning we had 8 browsers collaborating in real time, which felt kind of surreal.
 
 At this hackathon, I learned 2 super important lessons:
 - When you ask a potential judge for feedback, ensure you follow through with it. One of the sponsors of the hackathon built an easy eval framework for models, and he ended up judging us. During the build phase, he told us we should run evals on our project. We didn't get time to do it. In hindsight, that should have been the priority the moment he said it. When someone who's going to evaluate your work tells you exactly what they want to see, drop what you're doing and make it happen.
