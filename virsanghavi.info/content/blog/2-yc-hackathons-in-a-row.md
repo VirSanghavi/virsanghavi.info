@@ -5,7 +5,7 @@ description: "Feeling super blessed. Attended Browser-Use and Manufact hackathon
 readingTime: 7
 ---
 
-I recently had the chance to attend two YC hackathons within two weeks of each other, and I want to share what I took away from each one.
+I recently was selected to attend two YC hackathons within two weeks of each other, and I want to share what I took away from each one.
 
 ## Hackathon #1: Don't bite off more than you can chew.
 
