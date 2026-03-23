@@ -11,7 +11,7 @@ I started small. A phishing-detection browser extension. A Gmail auto-response a
 
 Then Tilt happened, and as we scaled, we pivoted into **Ravioli**—the prediction economy platform we're building now. Suddenly the scale changed completely. Real users giving real feedback creating real pressure. It was a different game.
 
-Antler accepted me into the US Residency (under 3% acceptance rate, which still feels surreal). YC Agent Jam in San Francisco confirmed something I'd been feeling: the problems I'm working on actually matter to people who see a lot of pitches.
+Antler accepted me into the US Residency (under 3% acceptance rate, which still feels surreal). Conversations and experiences at YC events in San Francisco confirmed something I'd been feeling: the problems I'm working on actually matter to people who see a lot of pitches.
 
 
 The spark isn't inspiration. It's momentum. Once you start building, every shipped product opens three new doors. I just keep following the doors.
