@@ -2,7 +2,7 @@
 title: "Finding My Spark"
 pubDatetime: 2025-11-05
 description: "How I went from messing around with code to Antler, YC, and building real products."
-readingTime: 5
+readingTime: 1
 ---
 
 There wasn't a single moment. It was more like a slow pile-up of frustration with how things work, and then one day I realized I could just... change them.
