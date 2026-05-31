@@ -1,73 +1,18 @@
-# OS
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# Node
+# Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-.npm
-.yarn/
-*.tsbuildinfo
 
-# Env / secrets
-.env
-.env.local
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Build output
+dgo
 
-# IDE / editor
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.project
-.settings/
-*.sublime-*
+# OS / editor
+.DS_Store
+.claude
 
-# Build / output
-dist/
-build/
-out/
-.cache/
-.parcel-cache/
-.next/
-.vercel/
+# Playwright / local QA artifacts
+.playwright-mcp/
+*-screenshot-test.png
+copybtn.png
 
-# Logs & temp
-*.log
-logs/
-tmp/
-temp/
-*.tmp
-*.bak
-*.cache
-
-# Python (if you use scripts)
-__pycache__/
-*.py[cod]
-*$py.class
-.Python
-.venv/
-venv/
-env/
-*.egg-info/
-.eggs/
-
-# Coverage / test
-coverage/
-.nyc_output/
-*.lcov
-
-# Optional: lockfiles (uncomment to ignore)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-#readmes
+# Internal notes
 HOW_TO_POST.md
+virsanghavi.info/HOW_TO_POST.md
