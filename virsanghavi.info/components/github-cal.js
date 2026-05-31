@@ -35,8 +35,10 @@
       return nonzero[Math.min(nonzero.length - 1, Math.floor(nonzero.length * p))];
     }
     var q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75);
-    function level(c) {
-      // No fully-empty squares: floor every day to at least the lightest shade.
+    // Specific days to never show as empty (floored to the lightest shade).
+    var FILL_EMPTY = { "2026-05-06": true, "2026-05-21": true };
+    function level(c, ds) {
+      if (c <= 0) return FILL_EMPTY[ds] ? 1 : 0;
       if (c <= q1) return 1;
       if (c <= q2) return 2;
       if (c <= q3) return 3;
@@ -62,7 +64,7 @@
         if (cell < first || cell > today) continue;
         var ds = iso(cell);
         var cnt = byDate[ds] || 0;
-        var lv = level(cnt);
+        var lv = level(cnt, ds);
         var x = col * (CELL + GAP) + 1;
         var y = row * (CELL + GAP) + 1;
         var label = cnt + " contribution" + (cnt === 1 ? "" : "s") + " on " + ds;

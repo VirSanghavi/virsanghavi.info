@@ -41,8 +41,12 @@ def build_svg(data, today):
 
     q1, q2, q3 = pct(0.25), pct(0.5), pct(0.75)
 
-    def level(c):
-        # No fully-empty squares: floor every day to at least the lightest shade.
+    # Specific days to never show as empty (floored to the lightest shade).
+    FILL_EMPTY = {"2026-05-06", "2026-05-21"}
+
+    def level(c, ds):
+        if c <= 0:
+            return 1 if ds in FILL_EMPTY else 0
         if c <= q1:
             return 1
         if c <= q2:
@@ -66,7 +70,7 @@ def build_svg(data, today):
                 continue
             ds = cur.isoformat()
             cnt = bydate.get(ds, 0)
-            lv = level(cnt)
+            lv = level(cnt, ds)
             x = col * (CELL + GAP) + 1
             y = row * (CELL + GAP) + 1
             label = f"{cnt} contribution{'s' if cnt != 1 else ''} on {ds}"
