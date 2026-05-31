@@ -3,11 +3,18 @@
   <channel>
     <title>Vir Sanghavi</title>
     <link>https://virsanghavi.info/</link>
-    <description>CTO @ Ravioli, building logic markets.</description>
+    <description>CTO @ Ravioli, building a prediction market for subjective questions.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 15:59:42 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2026 22:00:28 GMT</lastBuildDate>
     <atom:link href="https://virsanghavi.info/feed.xml" rel="self" type="application/rss+xml"/>
     
+    <item>
+      <title>What I&apos;ve been up to: a few months of building Ravioli in the open</title>
+      <link>https://virsanghavi.info/posts/building-ravioli-in-the-open.html</link>
+      <guid>https://virsanghavi.info/posts/building-ravioli-in-the-open.html</guid>
+      <pubDate>Sun, 31 May 2026 00:00:00 GMT</pubDate>
+      <description>Anti-cheat forensics, cold-emailing billionaires, surviving a YC rejection, and running my startup between AP exams. Some lessons from a chaotic stretch.</description>
+    </item>
     <item>
       <title>My experience attending two YC hackathons back-to-back</title>
       <link>https://virsanghavi.info/posts/2-yc-hackathons-in-a-row.html</link>
@@ -16,7 +23,7 @@
       <description>Feeling super blessed. Attended Browser-Use and Manufact hackathons in the span of two weeks and learned a lot.</description>
     </item>
     <item>
-      <title>What I learned from WAC's Academic WorldQuest 2026</title>
+      <title>What I learned from WAC&apos;s Academic WorldQuest 2026</title>
       <link>https://virsanghavi.info/posts/academic-worldquest-2026.html</link>
       <guid>https://virsanghavi.info/posts/academic-worldquest-2026.html</guid>
       <pubDate>Tue, 17 Feb 2026 00:00:00 GMT</pubDate>
@@ -55,21 +62,21 @@
       <link>https://virsanghavi.info/posts/tilt-and-the-discipline-of-incentives.html</link>
       <guid>https://virsanghavi.info/posts/tilt-and-the-discipline-of-incentives.html</guid>
       <pubDate>Wed, 28 Jan 2026 00:00:00 GMT</pubDate>
-      <description>If you design incentives wrong, you don't have a platform. You have chaos.</description>
+      <description>If you design incentives wrong, you don&apos;t have a platform. You have chaos.</description>
     </item>
     <item>
       <title>Ravioli and the Cost of Fairness</title>
       <link>https://virsanghavi.info/posts/ravioli-and-the-cost-of-fairness.html</link>
       <guid>https://virsanghavi.info/posts/ravioli-and-the-cost-of-fairness.html</guid>
       <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
-      <description>Fairness is not a feature. It's infrastructure.</description>
+      <description>Fairness is not a feature. It&apos;s infrastructure.</description>
     </item>
     <item>
       <title>Building in Public</title>
       <link>https://virsanghavi.info/posts/building-in-public.html</link>
       <guid>https://virsanghavi.info/posts/building-in-public.html</guid>
       <pubDate>Fri, 02 Jan 2026 00:00:00 GMT</pubDate>
-      <description>What I'm working on and why I write about it.</description>
+      <description>What I&apos;m working on and why I write about it.</description>
     </item>
     <item>
       <title>Finding My Spark</title>
@@ -97,10 +104,10 @@
       <link>https://virsanghavi.info/posts/antler-zero-to-one.html</link>
       <guid>https://virsanghavi.info/posts/antler-zero-to-one.html</guid>
       <pubDate>Thu, 14 Aug 2025 00:00:00 GMT</pubDate>
-      <description>I got into Antler. Then I found out I couldn't go.</description>
+      <description>I got into Antler. Then I found out I couldn&apos;t go.</description>
     </item>
     <item>
-      <title>What We're Building at Ravioli (Tilt)</title>
+      <title>What We&apos;re Building at Ravioli (Tilt)</title>
       <link>https://virsanghavi.info/posts/what-were-building-at-ravioli.html</link>
       <guid>https://virsanghavi.info/posts/what-were-building-at-ravioli.html</guid>
       <pubDate>Fri, 20 Jun 2025 00:00:00 GMT</pubDate>
@@ -118,7 +125,7 @@
       <link>https://virsanghavi.info/posts/up-the-ratios-and-leverage.html</link>
       <guid>https://virsanghavi.info/posts/up-the-ratios-and-leverage.html</guid>
       <pubDate>Sun, 15 Dec 2024 00:00:00 GMT</pubDate>
-      <description>Talent is evenly distributed. Infrastructure isn't.</description>
+      <description>Talent is evenly distributed. Infrastructure isn&apos;t.</description>
     </item>
   </channel>
 </rss>

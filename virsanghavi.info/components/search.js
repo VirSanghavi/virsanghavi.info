@@ -1,6 +1,12 @@
 (function () {
   var posts = [
   {
+    "title": "What I've been up to: a few months of building Ravioli in the open",
+    "url": "/posts/building-ravioli-in-the-open.html",
+    "desc": "Anti-cheat forensics, cold-emailing billionaires, surviving a YC rejection, and running my startup between AP exams. Some lessons from a chaotic stretch.",
+    "date": "30 May, 2026"
+  },
+  {
     "title": "My experience attending two YC hackathons back-to-back",
     "url": "/posts/2-yc-hackathons-in-a-row.html",
     "desc": "Feeling super blessed. Attended Browser-Use and Manufact hackathons in the span of two weeks and learned a lot.",
