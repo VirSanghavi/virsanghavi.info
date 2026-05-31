@@ -764,8 +764,16 @@ header {
   border: 1px solid var(--border);
 }
 
-html[data-theme="dark"] .github-graph img {
-  filter: invert(1) hue-rotate(180deg);
+.github-graph .gh-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .github-graph .gh-light {
+  display: none;
+}
+
+html[data-theme="dark"] .github-graph .gh-dark {
+  display: block;
 }
 
 @media (max-width: 560px) {
