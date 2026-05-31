@@ -36,7 +36,7 @@
     }
     var q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75);
     function level(c) {
-      if (c <= 0) return 0;
+      // No fully-empty squares: floor every day to at least the lightest shade.
       if (c <= q1) return 1;
       if (c <= q2) return 2;
       if (c <= q3) return 3;

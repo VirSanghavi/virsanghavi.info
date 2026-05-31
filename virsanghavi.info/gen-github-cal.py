@@ -42,8 +42,7 @@ def build_svg(data, today):
     q1, q2, q3 = pct(0.25), pct(0.5), pct(0.75)
 
     def level(c):
-        if c <= 0:
-            return 0
+        # No fully-empty squares: floor every day to at least the lightest shade.
         if c <= q1:
             return 1
         if c <= q2:
