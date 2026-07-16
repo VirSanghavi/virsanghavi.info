@@ -213,7 +213,7 @@ function updateFeed(posts) {
   <channel>
     <title>Vir Sanghavi</title>
     <link>https://virsanghavi.info/</link>
-    <description>CTO @ Ravioli, building a prediction market for subjective questions.</description>
+    <description>CEO @ Ravioli, building a free-to-play prediction market, with real prizes.</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="https://virsanghavi.info/feed.xml" rel="self" type="application/rss+xml"/>
