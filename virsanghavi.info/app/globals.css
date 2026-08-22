@@ -710,6 +710,14 @@ header {
   padding: 0;
 }
 
+/* On a phone a scroll box hides the end of a command; wrap instead. */
+@media (max-width: 520px) {
+  .article-body pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* ===== About page ===== */
 .about-section {
   padding: 1rem 0 0.75rem;
