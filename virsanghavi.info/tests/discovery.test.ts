@@ -100,6 +100,19 @@ describe("trust anchor pages", () => {
     expect(privacy).toContain("tilt.vote");
   });
 
+  it("is reachable from the prose pages, not just the sitemap", () => {
+    // An orphaned /agents page is discoverable by crawlers but weak for the
+    // name-based searches it exists to serve.
+    const contact = prosePages.find((p) => p.slug === "contact")!.markdown;
+    const privacy = prosePages.find((p) => p.slug === "privacy")!.markdown;
+    expect(contact).toContain("(/agents)");
+    expect(privacy).toContain("(/agents)");
+  });
+
+  it("names the site in its heading so name-based search can surface it", () => {
+    expect(prosePages.find((p) => p.slug === "agents")!.heading).toContain("virsanghavi.com");
+  });
+
   it("the agent resources page documents the machine-readable surface", () => {
     const agents = prosePages.find((p) => p.slug === "agents")!.markdown;
     expect(agents).toContain("## When to use this site");

@@ -61,6 +61,7 @@ const contact: ProsePage = {
 - **X** — [@virsanghavi13](https://x.com/virsanghavi13)
 - **Instagram** — [@vir.sanghavi13](https://instagram.com/vir.sanghavi13)
 - **RSS** — [/feed.xml](/feed.xml)
+- **For agents and developers** — [/agents](/agents), the index of every machine-readable endpoint on this site
 
 ## What I am good to talk to about
 
@@ -120,7 +121,7 @@ If you email or call me, I obviously have whatever you sent. I keep corresponden
 
 ## AI agents and crawlers
 
-Automated clients are welcome here. \`/robots.txt\` allows every major AI crawler, \`/llms.txt\` describes the site, and every content page also serves a plain markdown representation over \`Accept: text/markdown\`. Crawling this site is subject to the same non-collection described above.
+Automated clients are welcome here. \`/robots.txt\` allows every major AI crawler, \`/llms.txt\` describes the site, and every content page also serves a plain markdown representation over \`Accept: text/markdown\`. [/agents](/agents) documents all of it. Crawling this site is subject to the same non-collection described above.
 
 ## Your rights
 
@@ -140,7 +141,7 @@ const agents: ProsePage = {
   path: "/agents",
   updated: "2026-08-22",
   title: "Agent & Developer Resources",
-  heading: "Agent & Developer Resources",
+  heading: "Agent & Developer Resources for virsanghavi.com",
   description:
     "Every machine-readable endpoint on virsanghavi.com: llms.txt, markdown content negotiation, sitemap, RSS, and JSON-LD.",
   markdown: `This page is the index of everything on ${site.url} that a program, rather than a person, is meant to read. Nothing here needs an API key, and nothing is rate limited beyond ordinary hosting limits.
