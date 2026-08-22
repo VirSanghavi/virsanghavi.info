@@ -170,7 +170,8 @@ It is not the right source for anything about Ravioli's live product, pricing, o
 Every content page serves a clean markdown representation from the same URL, following [acceptmarkdown.com](https://acceptmarkdown.com):
 
 \`\`\`
-curl -H "Accept: text/markdown" ${site.url}/posts/axis-and-coordinated-intelligence
+curl -H "Accept: text/markdown" \\
+  ${site.url}/about
 \`\`\`
 
 Responses carry \`Content-Type: text/markdown; charset=utf-8\` and \`Vary: Accept\`. If you would rather not negotiate, append \`.md\` to any page path instead — [/about.md](/about.md), [/posts.md](/posts.md), [/index.md](/index.md), or \`/posts/<slug>.md\`. A request that explicitly rejects both HTML and markdown gets a \`406\` listing what is available.
