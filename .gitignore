@@ -1,8 +1,14 @@
 # Dependencies
 node_modules/
 
-# Build output
-dgo
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Vercel
+.vercel/
 
 # OS / editor
 .DS_Store
@@ -16,3 +22,4 @@ copybtn.png
 # Internal notes
 HOW_TO_POST.md
 virsanghavi.info/HOW_TO_POST.md
+.vercel
