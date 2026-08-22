@@ -1,15 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
-  "headers": [
-    {
-      "source": "/((?!_next/static|_next/image).*)",
-      "headers": [
-        {
-          "key": "Vary",
-          "value": "Accept, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch"
-        }
-      ]
-    }
-  ]
+  "framework": "nextjs"
 }

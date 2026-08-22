@@ -54,6 +54,15 @@ these things drift:
   from the same URL for `Accept: text/markdown`, per
   [acceptmarkdown.com](https://acceptmarkdown.com), with `Vary: Accept` and a
   spec-correct `406`. Appending `.md` to any page path works too.
+
+  One caveat, and it is a framework constraint rather than a choice: the HTML
+  representation does *not* carry `Vary: Accept`. Next.js overwrites `Vary` on
+  every App Router page response with its own RSC routing tokens, after
+  middleware headers are merged, so no middleware, `next.config`, or
+  `vercel.json` header survives. Nothing depends on it here — a request that
+  prefers Markdown is rewritten to `/api/markdown/...` before the CDN cache
+  lookup, so the two representations never share a cache key. See the comment
+  in `proxy.ts`.
 - **JSON-LD** on every page: `Person`, `Organization` (with `contactPoint` and
   a `PostalAddress`), `WebSite`, a page node, and `BlogPosting` on posts.
   Node `@id`s are stable across pages.

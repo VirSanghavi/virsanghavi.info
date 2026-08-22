@@ -1,16 +1,6 @@
 import type { NextConfig } from "next";
 
 /**
- * `Vary` for every negotiable page response.
- *
- * Next.js sets its own `Vary` on App Router page responses (the RSC routing
- * headers) and overwrites anything proxy.ts put there, so `Accept` has to be
- * declared alongside those tokens rather than appended to them.
- */
-const VARY_VALUE =
-  "Accept, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch";
-
-/**
  * Legacy `.html` URLs from the hand-written version of this site are kept
  * working with permanent redirects so links and search results that predate
  * the Next.js rewrite still resolve.
@@ -45,13 +35,6 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      {
-        // acceptmarkdown.com requires `Vary: Accept` on every negotiable
-        // response. Middleware cannot reliably add it to statically
-        // prerendered pages, so it is declared here for all page routes.
-        source: "/((?!_next/static|_next/image).*)",
-        headers: [{ key: "Vary", value: VARY_VALUE }],
-      },
       {
         // Machine-readable discovery files should never be stale for long and
         // are safe to share cross-origin so agents can fetch them directly.

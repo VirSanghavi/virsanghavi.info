@@ -25,6 +25,14 @@ function check(name, condition, detail = "") {
   return false;
 }
 
+/** True only for an exact `Accept` token; `Accept-Encoding` must not count. */
+function varyHasAccept(response) {
+  return (response.headers.get("vary") ?? "")
+    .split(",")
+    .map((token) => token.trim().toLowerCase())
+    .includes("accept");
+}
+
 async function get(path, { accept, redirect = "manual" } = {}) {
   const headers = { "user-agent": UA };
   if (accept !== undefined) headers.accept = accept;
@@ -113,7 +121,7 @@ async function run() {
     );
     check(
       `Accept: text/markdown ${path} sets Vary: Accept`,
-      /\baccept\b/i.test(response.headers.get("vary") ?? ""),
+      varyHasAccept(response),
       response.headers.get("vary") ?? "none",
     );
     check(`Accept: text/markdown ${path} body starts with a heading`, body.trimStart().startsWith("#"));
@@ -156,9 +164,21 @@ async function run() {
       "406 lists the available representations",
       unacceptable.body.includes("text/html") && unacceptable.body.includes("text/markdown"),
     );
+    check("406 sets Vary: Accept", varyHasAccept(unacceptable.response));
+  }
+
+  // --- Static assets must not claim to vary on Accept ----------------------
+  // Guards against re-introducing a blanket Vary rule, which fragments the CDN
+  // cache for images that have exactly one representation.
+  for (const path of ["/vir2.png", "/favicon.ico", "/Vir-Sanghavi-Resume.pdf"]) {
+    const { response } = await get(path, { redirect: "follow" });
+    const tokens = (response.headers.get("vary") ?? "")
+      .split(",")
+      .map((token) => token.trim().toLowerCase());
     check(
-      "406 sets Vary: Accept",
-      /\baccept\b/i.test(unacceptable.response.headers.get("vary") ?? ""),
+      `${path} does not advertise Vary: Accept`,
+      !tokens.includes("accept"),
+      response.headers.get("vary") ?? "none",
     );
   }
 

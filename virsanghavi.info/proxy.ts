@@ -70,7 +70,20 @@ export function proxy(request: NextRequest) {
     );
   }
 
-  // 3. HTML, with Vary so caches key on Accept.
+  // 3. HTML.
+  //
+  // `Vary: Accept` is set here, but Next.js overwrites `Vary` on every App
+  // Router page response with its own RSC routing tokens — a plain
+  // `setHeader`, run after middleware headers are merged, so nothing in
+  // middleware, `next.config`, or `vercel.json` survives it. Verified against
+  // Next 16.3 (`app-page` runtime, called from
+  // `renderToResponseWithComponentsImpl`) on both static and dynamic pages.
+  //
+  // This is safe here regardless: a request that prefers Markdown is rewritten
+  // to `/api/markdown/...` above, so the two representations occupy different
+  // cache keys and a CDN can never serve one in place of the other. The
+  // Markdown responses — the ones that actually vary — set `Vary: Accept`
+  // themselves, as does the 406 above.
   const response = NextResponse.next();
   appendVaryAccept(response.headers);
   return response;
