@@ -79,6 +79,14 @@ async function run() {
   // --- HTML pages -----------------------------------------------------------
   for (const path of HTML_PAGES) {
     const { response, status, body } = await get(path, { accept: "text/html" });
+    if (path === "/posts/launching-antifailure") {
+      // The Tilt embed is pinned to a hand-written proposition; without the
+      // attribute it auto-generates one, and on this page that produced the title.
+      check(
+        `${path} pins its Tilt debate`,
+        body.includes('id="tilt-root" style="margin-top:2rem" data-debate-id="bd8a6b15-db40-44de-ba34-028968b1fa03"'),
+      );
+    }
     check(`GET ${path} → 200`, status === 200, `got ${status}`);
     check(
       `GET ${path} content-type`,

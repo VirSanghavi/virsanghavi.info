@@ -27,7 +27,25 @@ export type Post = {
   url: string;
   /** Optional film shown above the body, from `video` and `poster` frontmatter. */
   video?: PostVideo;
+  /**
+   * Optional Tilt debate to pin under the post, from `tiltDebateId` frontmatter.
+   * Without it the embed auto-generates a proposition from the page on first
+   * view and keeps whatever it produced; when generation fails it keeps the
+   * page title, which is not a claim anyone can agree or disagree with.
+   */
+  tiltDebateId?: string;
 };
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function toTiltDebateId(data: Record<string, unknown>): string | undefined {
+  if (data.tiltDebateId === undefined || data.tiltDebateId === null) return undefined;
+  const id = String(data.tiltDebateId).trim();
+  if (!UUID.test(id)) {
+    throw new Error(`\`tiltDebateId\` must be the debate's UUID, got ${JSON.stringify(id)}.`);
+  }
+  return id;
+}
 
 export type PostVideo = {
   /** Site-relative path to an MP4 under `public/`. */
@@ -96,6 +114,7 @@ export function getAllPosts(): Post[] {
     const date = toIsoDate(data.pubDatetime);
     const markdown = content.trim();
     const video = toPostVideo(data);
+    const tiltDebateId = toTiltDebateId(data);
 
     return {
       slug,
@@ -109,6 +128,7 @@ export function getAllPosts(): Post[] {
       html: renderMarkdown(markdown),
       url: `/posts/${slug}`,
       ...(video ? { video } : {}),
+      ...(tiltDebateId ? { tiltDebateId } : {}),
     } satisfies Post;
   });
 

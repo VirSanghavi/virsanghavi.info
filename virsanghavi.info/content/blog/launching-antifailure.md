@@ -5,6 +5,7 @@ description: "Know what happens before you deploy. A disposable copy of producti
 readingTime: 4
 video: /antifailure-launch.mp4
 poster: /antifailure-launch-poster.jpg
+tiltDebateId: bd8a6b15-db40-44de-ba34-028968b1fa03
 ---
 
 Antifailure launches today. The short version: it builds a disposable copy of your production stack for every pull request, runs your change there first, tells you what would have broken, and then deletes everything. The site is [antifailure.dev](https://antifailure.dev) and the engine is open source.

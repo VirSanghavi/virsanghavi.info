@@ -74,7 +74,11 @@ export default async function PostPage({ params }: Params) {
           // Rendered from this repo's own markdown, not from user input.
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
-        <div id="tilt-root" style={{ marginTop: "2rem" }} />
+        <div
+          id="tilt-root"
+          style={{ marginTop: "2rem" }}
+          {...(post.tiltDebateId ? { "data-debate-id": post.tiltDebateId } : {})}
+        />
         <Script
           src="https://data.tilt.vote/tilt-embed.js"
           strategy="lazyOnload"

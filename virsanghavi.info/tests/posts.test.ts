@@ -10,6 +10,7 @@ import {
   postToMarkdown,
   toIsoDate,
   toPostVideo,
+  toTiltDebateId,
 } from "@/lib/posts";
 
 describe("toIsoDate", () => {
@@ -99,6 +100,21 @@ describe("getAllPosts", () => {
     expect(() => toPostVideo({ video: "/a.mp4" })).toThrow(/poster/);
     expect(() => toPostVideo({ poster: "/a.jpg" })).toThrow(/video/);
     expect(toPostVideo({})).toBeUndefined();
+  });
+
+  it("pins the Tilt debate only where the frontmatter names one", () => {
+    expect(getPost("launching-antifailure")!.tiltDebateId).toBe(
+      "bd8a6b15-db40-44de-ba34-028968b1fa03",
+    );
+    expect(getPost("building-in-public")!.tiltDebateId).toBeUndefined();
+  });
+
+  it("refuses a tiltDebateId that is not a UUID", () => {
+    expect(() => toTiltDebateId({ tiltDebateId: "launching-antifailure" })).toThrow(/UUID/);
+    expect(toTiltDebateId({})).toBeUndefined();
+    expect(toTiltDebateId({ tiltDebateId: " BD8A6B15-DB40-44DE-BA34-028968B1FA03 " })).toBe(
+      "BD8A6B15-DB40-44DE-BA34-028968B1FA03",
+    );
   });
 
   it("links the video from the markdown twin, above the rule", () => {

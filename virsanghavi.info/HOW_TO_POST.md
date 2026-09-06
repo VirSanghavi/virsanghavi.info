@@ -34,6 +34,12 @@ Write the post here in normal Markdown.
   controls, no autoplay, and the poster as its first frame; the poster is also
   the link-preview image for that post. Keep the file well under 20 MB (an
   H.264 MP4 at 1600 wide is plenty for the column).
+- **tiltDebateId** (optional) — the UUID of a Tilt debate to pin under the
+  post. Leave it out and the embed writes its own proposition from the page
+  the first time anyone opens it, then keeps it forever; if its generation
+  fails it keeps the page title, which nobody can agree or disagree with. To
+  choose the statement yourself, create the debate on Tilt first (manual
+  mode, with the claim as the title) and put its id here.
 
 Do not add a `# Heading` for the title; the title comes from the frontmatter.
 Any `#` heading inside the body is rendered as an H2 so the page keeps one H1.
