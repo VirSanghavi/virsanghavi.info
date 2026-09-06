@@ -47,10 +47,7 @@ export default function HomePage() {
               </a>
               , I&apos;m @{site.handle}.
             </h1>
-            <p>
-              CEO @ <a href="https://ravioli.live">Ravioli</a>, building a free-to-play prediction
-              market, with real prizes
-            </p>
+            <p>{site.tagline}</p>
             <SocialRow className="hero-socials" />
           </div>
         </div>

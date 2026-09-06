@@ -19,7 +19,7 @@ export const site = {
   name: "Vir Sanghavi",
   handle: "virsanghavi",
   jobTitle: "Co-Founder & CEO, Ravioli",
-  tagline: "CEO @ Ravioli, building a free-to-play prediction market, with real prizes.",
+  tagline: "Prev. CTO, Tilt (5k+ users) | 2x YC hackathon winner",
   description:
     "Personal site of Vir Sanghavi — co-founder and CEO of Ravioli, a free-to-play prediction market with real prizes. Essays on building startups young, prediction-market design, multi-agent AI orchestration, and shipping fast.",
   email: "Virrsanghavi@gmail.com",

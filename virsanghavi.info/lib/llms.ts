@@ -14,7 +14,7 @@ export function buildLlmsTxt(): string {
   const lines: string[] = [
     `# ${site.name}`,
     "",
-    `> ${site.tagline} Personal site and blog of ${site.name} — co-founder and CEO of Ravioli (a free-to-play prediction market with real prizes), based in ${site.locality}, ${site.region}, US. Essays on prediction-market design, multi-agent AI orchestration, and building a company while still in high school.`,
+    `> ${site.tagline}. Personal site and blog of ${site.name} — co-founder and CEO of Ravioli (a free-to-play prediction market with real prizes), based in ${site.locality}, ${site.region}, US. Essays on prediction-market design, multi-agent AI orchestration, and building a company while still in high school.`,
     "",
     "Every page below is available as clean markdown: append `.md` to any URL, or send `Accept: text/markdown` to the canonical URL. Responses set `Vary: Accept`. The whole corpus in one fetch is at /llms-full.txt.",
     "",
