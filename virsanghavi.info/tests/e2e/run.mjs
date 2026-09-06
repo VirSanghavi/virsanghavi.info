@@ -42,6 +42,7 @@ async function get(path, { accept, redirect = "manual" } = {}) {
 }
 
 const POSTS = [
+  "launching-antifailure",
   "building-ravioli-in-the-open",
   "2-yc-hackathons-in-a-row",
   "academic-worldquest-2026",

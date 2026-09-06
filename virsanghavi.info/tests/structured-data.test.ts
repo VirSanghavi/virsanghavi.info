@@ -86,6 +86,26 @@ describe("BlogPosting node", () => {
     expect(node.wordCount).toBeGreaterThan(50);
     expect(node.author).toEqual({ "@id": "https://www.virsanghavi.com/#person" });
   });
+
+  it("attaches a VideoObject and uses the poster as the image when the post opens with a film", () => {
+    const node = blogPostingNode(getPost("launching-antifailure")!);
+    expect(node.image).toBe("https://www.virsanghavi.com/antifailure-launch-poster.jpg");
+    expect(node.video).toEqual({
+      "@type": "VideoObject",
+      name: "Launching Antifailure",
+      description: expect.stringContaining("Know what happens before you deploy"),
+      contentUrl: "https://www.virsanghavi.com/antifailure-launch.mp4",
+      thumbnailUrl: "https://www.virsanghavi.com/antifailure-launch-poster.jpg",
+      uploadDate: "2026-09-06",
+      inLanguage: "en",
+    });
+  });
+
+  it("leaves posts without a film on the avatar image and with no video node", () => {
+    const node = blogPostingNode(getPost("shipping-fast")!);
+    expect(node.image).toBe("https://www.virsanghavi.com/vir2.png");
+    expect(node).not.toHaveProperty("video");
+  });
 });
 
 describe("breadcrumbs", () => {

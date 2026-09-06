@@ -627,6 +627,18 @@ header {
   }
 }
 
+/* A post's opening film. Same frame as an in-body image, sized by the column. */
+.article-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 1.25rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--border);
+  background: var(--muted);
+}
+
 .article-body {
   max-width: var(--content-max);
 }

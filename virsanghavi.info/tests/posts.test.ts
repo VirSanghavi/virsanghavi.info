@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   formatDate,
@@ -7,6 +9,7 @@ import {
   getPostsByYear,
   postToMarkdown,
   toIsoDate,
+  toPostVideo,
 } from "@/lib/posts";
 
 describe("toIsoDate", () => {
@@ -72,6 +75,38 @@ describe("getAllPosts", () => {
     expect(getPost("academic-worldquest-2026")?.html).toContain(
       "<h2>Preparation is Culture</h2>",
     );
+  });
+
+  it("carries a video only when the frontmatter names one, with its poster", () => {
+    const launch = getPost("launching-antifailure")!;
+    expect(launch.video).toEqual({
+      src: "/antifailure-launch.mp4",
+      poster: "/antifailure-launch-poster.jpg",
+    });
+    expect(getPost("building-in-public")!.video).toBeUndefined();
+  });
+
+  it("ships the video and poster files a post points at", () => {
+    for (const post of posts) {
+      if (!post.video) continue;
+      for (const file of [post.video.src, post.video.poster]) {
+        expect(fs.existsSync(path.join(process.cwd(), "public", file))).toBe(true);
+      }
+    }
+  });
+
+  it("refuses a video without a poster, and a poster without a video", () => {
+    expect(() => toPostVideo({ video: "/a.mp4" })).toThrow(/poster/);
+    expect(() => toPostVideo({ poster: "/a.jpg" })).toThrow(/video/);
+    expect(toPostVideo({})).toBeUndefined();
+  });
+
+  it("links the video from the markdown twin, above the rule", () => {
+    const md = postToMarkdown(getPost("launching-antifailure")!);
+    const link = md.indexOf("[Watch the video](/antifailure-launch.mp4)");
+    expect(link).toBeGreaterThan(-1);
+    expect(link).toBeLessThan(md.indexOf("\n---\n"));
+    expect(postToMarkdown(getPost("building-in-public")!)).not.toContain("[Watch the video]");
   });
 
   it("opens external links in a new tab and keeps internal ones in place", () => {

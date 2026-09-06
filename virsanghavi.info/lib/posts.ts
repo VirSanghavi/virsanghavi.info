@@ -25,7 +25,31 @@ export type Post = {
   markdown: string;
   html: string;
   url: string;
+  /** Optional film shown above the body, from `video` and `poster` frontmatter. */
+  video?: PostVideo;
 };
+
+export type PostVideo = {
+  /** Site-relative path to an MP4 under `public/`. */
+  src: string;
+  /** Site-relative path to the poster frame under `public/`. */
+  poster: string;
+};
+
+/**
+ * A post may open with a video. Both fields are required together: a poster
+ * is what keeps the player from painting a black box before metadata loads,
+ * and it is also what link previews and the BlogPosting node show.
+ */
+export function toPostVideo(data: Record<string, unknown>): PostVideo | undefined {
+  const src = typeof data.video === "string" ? data.video.trim() : "";
+  const poster = typeof data.poster === "string" ? data.poster.trim() : "";
+  if (!src && !poster) return undefined;
+  if (!src || !poster) {
+    throw new Error("A post with a video needs both `video` and `poster` in its frontmatter.");
+  }
+  return { src, poster };
+}
 
 /**
  * Normalise a frontmatter date to `YYYY-MM-DD`.
@@ -71,6 +95,7 @@ export function getAllPosts(): Post[] {
     const slug = file.replace(/\.md$/, "");
     const date = toIsoDate(data.pubDatetime);
     const markdown = content.trim();
+    const video = toPostVideo(data);
 
     return {
       slug,
@@ -83,6 +108,7 @@ export function getAllPosts(): Post[] {
       markdown,
       html: renderMarkdown(markdown),
       url: `/posts/${slug}`,
+      ...(video ? { video } : {}),
     } satisfies Post;
   });
 
@@ -117,6 +143,7 @@ export function postToMarkdown(post: Post): string {
     "",
     post.description,
     "",
+    ...(post.video ? [`[Watch the video](${post.video.src})`, ""] : []),
     "---",
     "",
     post.markdown,

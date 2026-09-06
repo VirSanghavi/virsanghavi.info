@@ -28,6 +28,12 @@ Write the post here in normal Markdown.
 - **pubDatetime** — `YYYY-MM-DD`. This exact day is what the site displays.
 - **description** — the summary on the home page, in the RSS feed, and in link previews.
 - **readingTime** — minutes, a whole number.
+- **video** and **poster** (optional, always together) — site-relative paths
+  under `public/`, e.g. `/antifailure-launch.mp4` and
+  `/antifailure-launch-poster.jpg`. The video renders above the body with
+  controls, no autoplay, and the poster as its first frame; the poster is also
+  the link-preview image for that post. Keep the file well under 20 MB (an
+  H.264 MP4 at 1600 wide is plenty for the column).
 
 Do not add a `# Heading` for the title; the title comes from the frontmatter.
 Any `#` heading inside the body is rendered as an H2 so the page keeps one H1.

@@ -161,7 +161,20 @@ export function blogPostingNode(post: Post) {
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: absoluteUrl(post.url),
-    image: absoluteUrl(site.avatar),
+    image: absoluteUrl(post.video?.poster ?? site.avatar),
+    ...(post.video
+      ? {
+          video: {
+            "@type": "VideoObject",
+            name: post.title,
+            description: post.description,
+            contentUrl: absoluteUrl(post.video.src),
+            thumbnailUrl: absoluteUrl(post.video.poster),
+            uploadDate: post.date,
+            inLanguage: site.language,
+          },
+        }
+      : {}),
   };
 }
 

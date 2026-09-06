@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.description,
       ogType: "article",
       publishedTime: post.date,
+      ...(post.video ? { image: post.video.poster, imageAlt: post.title } : {}),
     }),
     authors: [{ name: site.name, url: absoluteUrl("/about") }],
   };
@@ -57,6 +58,17 @@ export default async function PostPage({ params }: Params) {
           <span className="meta-dot">{post.readingTime} min read</span>
           <CopyPostButton text={`${post.title}\n\n${post.markdown}`} />
         </div>
+        {post.video && (
+          <video
+            className="article-video"
+            src={post.video.src}
+            poster={post.video.poster}
+            controls
+            playsInline
+            preload="metadata"
+            aria-label={`${post.title}, video`}
+          />
+        )}
         <div
           className="article-body"
           // Rendered from this repo's own markdown, not from user input.
