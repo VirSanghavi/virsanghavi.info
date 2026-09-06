@@ -50,6 +50,6 @@ af down           # every resource it created, gone
 
 ## Where it stands
 
-The engine is MIT licensed, except the separately licensed `ee/` directory, and it runs in your own CI today. The hosted control plane is invitation only while it is in development. A passing run tells you how your change behaved at the fidelity the copy reached. It does not promise that no deployment can fail, and I would rather say that plainly than have you find out the other way.
+The engine is MIT licensed, except the separately licensed `ee/` directory, and it runs in your own CI today. The hosted control plane is open: signing up is a GitHub exchange, no card and no invitation, and it lands you in your own organization on the free plan. A passing run tells you how your change behaved at the fidelity the copy reached. It does not promise that no deployment can fail, and I would rather say that plainly than have you find out the other way.
 
 Docs, the quickstart and the source are at [antifailure.dev](https://antifailure.dev). If you try it and something is wrong, tell me. That is the whole point of doing this in the open.
