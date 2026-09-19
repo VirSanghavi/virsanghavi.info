@@ -86,7 +86,7 @@ describe("trust anchor pages", () => {
 
   it("contact names an email, a phone number, and a location", () => {
     const contact = prosePages.find((p) => p.slug === "contact")!.markdown;
-    expect(contact).toContain("Virrsanghavi@gmail.com");
+    expect(contact).toContain("vir@virsanghavi.com");
     expect(contact).toContain("(832) 907-4410");
     expect(contact).toContain("Houston");
   });

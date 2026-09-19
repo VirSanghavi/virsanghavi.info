@@ -22,7 +22,7 @@ export const site = {
   tagline: "Prev. CTO, Tilt (5k+ users) | 2x YC hackathon winner",
   description:
     "Personal site of Vir Sanghavi — co-founder and CEO of Ravioli, a free-to-play prediction market with real prizes. Essays on building startups young, prediction-market design, multi-agent AI orchestration, and shipping fast.",
-  email: "Virrsanghavi@gmail.com",
+  email: "vir@virsanghavi.com",
   phone: "+1-832-907-4410",
   locality: "Houston",
   region: "TX",

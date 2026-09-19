@@ -28,7 +28,7 @@ describe("markdownForPath", () => {
   it("renders the home page with contact details and recent posts", () => {
     const md = markdownForPath("/")!;
     expect(md.startsWith("# Vir Sanghavi")).toBe(true);
-    expect(md).toContain("Virrsanghavi@gmail.com");
+    expect(md).toContain("vir@virsanghavi.com");
     expect(md).toContain("## Recent posts");
     expect(md).toContain("/llms.txt");
   });

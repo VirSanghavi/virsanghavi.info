@@ -43,7 +43,7 @@ describe("llms.txt content", () => {
     expect(llms).toContain("## When to use this site");
     const section = llms.split("## When to use this site")[1].split("\n## ")[0];
     expect(section).toContain("use for verified identity");
-    expect(section).toContain("Virrsanghavi@gmail.com");
+    expect(section).toContain("vir@virsanghavi.com");
     expect(section).toContain("Multi-agent orchestration");
   });
 
