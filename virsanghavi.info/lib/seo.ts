@@ -62,7 +62,8 @@ export function pageMetadata(options: PageMetaOptions): Metadata {
       ...(publishedTime && ogType === "article" ? { publishedTime } : {}),
     },
     twitter: {
-      card: "summary",
+      // A page with its own picture gets the large card; the avatar stays small.
+      card: image === site.avatar ? "summary" : "summary_large_image",
       site: "@virsanghavi13",
       creator: "@virsanghavi13",
       title: fullTitle,

@@ -9,6 +9,8 @@ import {
   getPostsByYear,
   postToMarkdown,
   toIsoDate,
+  postPreviewImage,
+  toPostImage,
   toPostVideo,
   toTiltDebateId,
 } from "@/lib/posts";
@@ -43,7 +45,7 @@ describe("getAllPosts", () => {
   const posts = getAllPosts();
 
   it("finds every markdown source", () => {
-    expect(posts.length).toBeGreaterThanOrEqual(17);
+    expect(posts.length).toBeGreaterThanOrEqual(18);
   });
 
   it("sorts newest first", () => {
@@ -96,6 +98,35 @@ describe("getAllPosts", () => {
     }
   });
 
+  it("carries a hero image only when the frontmatter names one, with its alt text", () => {
+    expect(getPost("we-were-promised-the-future")!.image).toEqual({
+      src: "/we-were-promised-the-future.jpg",
+      alt: expect.stringMatching(/Starship/),
+    });
+    expect(getPost("building-in-public")!.image).toBeUndefined();
+  });
+
+  it("ships the hero image file a post points at", () => {
+    for (const post of posts) {
+      if (!post.image) continue;
+      expect(fs.existsSync(path.join(process.cwd(), "public", post.image.src))).toBe(true);
+    }
+  });
+
+  it("refuses an image without alt text, alt text without an image, and a non-site path", () => {
+    expect(() => toPostImage({ image: "/a.jpg" })).toThrow(/imageAlt/);
+    expect(() => toPostImage({ imageAlt: "A thing" })).toThrow(/image/);
+    expect(() => toPostImage({ image: "https://elsewhere.example/a.jpg", imageAlt: "x" })).toThrow(/site-relative/);
+    expect(toPostImage({})).toBeUndefined();
+    expect(toPostImage({ image: " /a.jpg ", imageAlt: " A thing " })).toEqual({ src: "/a.jpg", alt: "A thing" });
+  });
+
+  it("picks the hero, then the video poster, as the post's preview picture", () => {
+    expect(postPreviewImage(getPost("we-were-promised-the-future")!)).toBe("/we-were-promised-the-future.jpg");
+    expect(postPreviewImage(getPost("launching-antifailure")!)).toBe("/antifailure-launch-poster.jpg");
+    expect(postPreviewImage(getPost("building-in-public")!)).toBeUndefined();
+  });
+
   it("refuses a video without a poster, and a poster without a video", () => {
     expect(() => toPostVideo({ video: "/a.mp4" })).toThrow(/poster/);
     expect(() => toPostVideo({ poster: "/a.jpg" })).toThrow(/video/);
@@ -123,6 +154,14 @@ describe("getAllPosts", () => {
     expect(link).toBeGreaterThan(-1);
     expect(link).toBeLessThan(md.indexOf("\n---\n"));
     expect(postToMarkdown(getPost("building-in-public")!)).not.toContain("[Watch the video]");
+  });
+
+  it("puts the hero image in the markdown twin, above the rule", () => {
+    const md = postToMarkdown(getPost("we-were-promised-the-future")!);
+    const img = md.indexOf("](/we-were-promised-the-future.jpg)");
+    expect(img).toBeGreaterThan(-1);
+    expect(img).toBeLessThan(md.indexOf("\n---\n"));
+    expect(postToMarkdown(getPost("building-in-public")!)).not.toContain("![");
   });
 
   it("opens external links in a new tab and keeps internal ones in place", () => {

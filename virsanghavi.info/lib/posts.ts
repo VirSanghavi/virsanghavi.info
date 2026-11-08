@@ -27,6 +27,8 @@ export type Post = {
   url: string;
   /** Optional film shown above the body, from `video` and `poster` frontmatter. */
   video?: PostVideo;
+  /** Optional hero image shown above the body, from `image` and `imageAlt` frontmatter. */
+  image?: PostImage;
   /**
    * Optional Tilt debate to pin under the post, from `tiltDebateId` frontmatter.
    * Without it the embed auto-generates a proposition from the page on first
@@ -67,6 +69,36 @@ export function toPostVideo(data: Record<string, unknown>): PostVideo | undefine
     throw new Error("A post with a video needs both `video` and `poster` in its frontmatter.");
   }
   return { src, poster };
+}
+
+export type PostImage = {
+  /** Site-relative path to the image under `public/`. */
+  src: string;
+  /** What the image shows, for screen readers and link previews. */
+  alt: string;
+};
+
+/**
+ * A post may open with a hero image. `imageAlt` is required with it: the hero
+ * is also the link-preview image, and an unlabeled image is a hole for anyone
+ * reading with a screen reader.
+ */
+export function toPostImage(data: Record<string, unknown>): PostImage | undefined {
+  const src = typeof data.image === "string" ? data.image.trim() : "";
+  const alt = typeof data.imageAlt === "string" ? data.imageAlt.trim() : "";
+  if (!src && !alt) return undefined;
+  if (!src || !alt) {
+    throw new Error("A post with an image needs both `image` and `imageAlt` in its frontmatter.");
+  }
+  if (!src.startsWith("/")) {
+    throw new Error(`\`image\` must be a site-relative path under public/, got ${JSON.stringify(src)}.`);
+  }
+  return { src, alt };
+}
+
+/** The picture that represents a post anywhere one picture is needed. */
+export function postPreviewImage(post: Pick<Post, "image" | "video">): string | undefined {
+  return post.image?.src ?? post.video?.poster;
 }
 
 /**
@@ -114,6 +146,7 @@ export function getAllPosts(): Post[] {
     const date = toIsoDate(data.pubDatetime);
     const markdown = content.trim();
     const video = toPostVideo(data);
+    const image = toPostImage(data);
     const tiltDebateId = toTiltDebateId(data);
 
     return {
@@ -128,6 +161,7 @@ export function getAllPosts(): Post[] {
       html: renderMarkdown(markdown),
       url: `/posts/${slug}`,
       ...(video ? { video } : {}),
+      ...(image ? { image } : {}),
       ...(tiltDebateId ? { tiltDebateId } : {}),
     } satisfies Post;
   });
@@ -163,6 +197,7 @@ export function postToMarkdown(post: Post): string {
     "",
     post.description,
     "",
+    ...(post.image ? [`![${post.image.alt}](${post.image.src})`, ""] : []),
     ...(post.video ? [`[Watch the video](${post.video.src})`, ""] : []),
     "---",
     "",

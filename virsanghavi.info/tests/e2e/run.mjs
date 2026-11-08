@@ -42,6 +42,7 @@ async function get(path, { accept, redirect = "manual" } = {}) {
 }
 
 const POSTS = [
+  "we-were-promised-the-future",
   "launching-antifailure",
   "building-ravioli-in-the-open",
   "2-yc-hackathons-in-a-row",
@@ -98,6 +99,19 @@ async function run() {
     check(`GET ${path} has a canonical link`, /rel="canonical"/.test(body));
     check(`GET ${path} has og:type`, /property="og:type"/.test(body));
     check(`GET ${path} has og:image`, /property="og:image"/.test(body));
+    if (path.startsWith("/posts/")) {
+      const slug = path.slice("/posts/".length);
+      check(
+        `${path} previews with its own share card`,
+        body.includes(`property="og:image" content="${BASE}/posts/${slug}/og.png"`) ||
+          body.includes(`property="og:image" content="https://www.virsanghavi.com/posts/${slug}/og.png"`),
+      );
+      check(`${path} uses the large Twitter card`, /name="twitter:card" content="summary_large_image"/.test(body));
+      check(`${path} has the share row`, body.includes('class="share-row"') && body.includes("x.com/intent/post"));
+    }
+    if (path === "/posts/we-were-promised-the-future") {
+      check(`${path} renders its hero image`, /<img[^>]+class="article-hero"[^>]+src="\/we-were-promised-the-future\.jpg"/.test(body));
+    }
     check(`GET ${path} has JSON-LD`, /application\/ld\+json/.test(body));
     check(
       `GET ${path} advertises its markdown twin`,
@@ -117,6 +131,28 @@ async function run() {
     check("home renders 500+ chars without JS", text.length >= 500, `${text.length} chars`);
     const levels = [...body.matchAll(/<h([1-3])[\s>]/g)].map((m) => Number(m[1]));
     check("home heading structure is h1 → h2 → h3", levels[0] === 1 && levels.includes(2) && levels.includes(3));
+  }
+
+  // --- Share cards ---------------------------------------------------------
+  for (const slug of POSTS) {
+    for (const [file, width, height] of [["og.png", 1200, 630], ["story.png", 1080, 1920]]) {
+      const response = await fetch(`${BASE}/posts/${slug}/${file}`, { headers: { "user-agent": UA } });
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      check(`GET /posts/${slug}/${file} → 200`, response.status === 200, `got ${response.status}`);
+      check(
+        `GET /posts/${slug}/${file} is a PNG`,
+        (response.headers.get("content-type") ?? "").startsWith("image/png") && bytes[0] === 0x89 && bytes[1] === 0x50,
+      );
+      // PNG IHDR: width and height are big-endian u32 at bytes 16 and 20.
+      const view = new DataView(bytes.buffer);
+      const w = view.getUint32(16);
+      const h = view.getUint32(20);
+      check(`GET /posts/${slug}/${file} is ${width}x${height}`, w === width && h === height, `${w}x${h}`);
+    }
+  }
+  {
+    const response = await fetch(`${BASE}/posts/no-such-post/og.png`, { headers: { "user-agent": UA } });
+    check("share card for a missing post is 404", response.status === 404, `got ${response.status}`);
   }
 
   // --- Markdown content negotiation ----------------------------------------
@@ -179,7 +215,7 @@ async function run() {
   // --- Static assets must not claim to vary on Accept ----------------------
   // Guards against re-introducing a blanket Vary rule, which fragments the CDN
   // cache for images that have exactly one representation.
-  for (const path of ["/vir2.png", "/favicon.ico", "/Vir-Sanghavi-Resume.pdf"]) {
+  for (const path of ["/vir3.png", "/favicon.ico", "/Vir-Sanghavi-Resume.pdf"]) {
     const { response } = await get(path, { redirect: "follow" });
     const tokens = (response.headers.get("vary") ?? "")
       .split(",")

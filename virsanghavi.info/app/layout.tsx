@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: site.tagline,
     url: SITE_URL,
     locale: "en_US",
-    images: [{ url: site.avatar, width: 400, height: 400, alt: site.name }],
+    images: [{ url: site.avatar, width: 512, height: 512, alt: site.name }],
   },
   twitter: {
     card: "summary",

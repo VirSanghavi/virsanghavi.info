@@ -62,6 +62,21 @@ describe("pageMetadata", () => {
     expect(page.openGraph).not.toHaveProperty("publishedTime");
   });
 
+  it("uses the small Twitter card for the avatar and the large one for a page's own picture", () => {
+    const plain = metaFor("/about", "About", "About Vir.");
+    expect((plain.twitter as { card?: string }).card).toBe("summary");
+    const pictured = pageMetadata({
+      path: "/posts/x",
+      title: "X",
+      description: "d",
+      image: "/posts/x/og.png",
+      imageAlt: "X",
+    });
+    expect((pictured.twitter as { card?: string }).card).toBe("summary_large_image");
+    expect(pictured.twitter?.images).toEqual(["/posts/x/og.png"]);
+    expect(pictured.openGraph?.images).toEqual([{ url: "/posts/x/og.png", alt: "X" }]);
+  });
+
   it("marks a page noindex only when asked", () => {
     expect(metaFor("/about", "About", "d").robots).toBeUndefined();
     expect(

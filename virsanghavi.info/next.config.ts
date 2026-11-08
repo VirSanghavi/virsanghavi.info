@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
   // bundler does not walk up past the git root looking for a lockfile.
   turbopack: { root: import.meta.dirname },
   outputFileTracingIncludes: {
-    "/**": ["./content/blog/**/*.md"],
+    "/**": ["./content/blog/**/*.md", "./lib/fonts/*.ttf"],
   },
   async redirects() {
     return [

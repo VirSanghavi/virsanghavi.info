@@ -1,5 +1,5 @@
 import { absoluteUrl, site } from "./site";
-import type { Post } from "./posts";
+import { postPreviewImage, type Post } from "./posts";
 
 /**
  * JSON-LD graph for the site.
@@ -161,7 +161,7 @@ export function blogPostingNode(post: Post) {
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: absoluteUrl(post.url),
-    image: absoluteUrl(post.video?.poster ?? site.avatar),
+    image: absoluteUrl(postPreviewImage(post) ?? site.avatar),
     ...(post.video
       ? {
           video: {

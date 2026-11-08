@@ -85,7 +85,7 @@ describe("Accept negotiation", () => {
 
 describe("static assets", () => {
   it.each([
-    "/vir2.png",
+    "/vir3.png",
     "/favicon.ico",
     "/Vir-Sanghavi-Resume.pdf",
     "/robots.txt",

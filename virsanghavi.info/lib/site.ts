@@ -28,7 +28,7 @@ export const site = {
   region: "TX",
   country: "US",
   resumePath: "/Vir-Sanghavi-Resume.pdf",
-  avatar: "/vir2.png",
+  avatar: "/vir3.png",
   photo: "/IMG_2235.jpeg",
   github: "VirSanghavi",
   language: "en",

@@ -28,6 +28,11 @@ Write the post here in normal Markdown.
 - **pubDatetime** — `YYYY-MM-DD`. This exact day is what the site displays.
 - **description** — the summary on the home page, in the RSS feed, and in link previews.
 - **readingTime** — minutes, a whole number.
+- **image** and **imageAlt** (optional, always together) — a hero picture shown
+  above the body and used as the top of the post's share cards. `image` is a
+  site-relative path under `public/`, e.g. `/we-were-promised-the-future.jpg`
+  (a JPEG around 1400 wide is plenty for the column); `imageAlt` says what it
+  shows. Put the file in `public/` next to the other post assets.
 - **video** and **poster** (optional, always together) — site-relative paths
   under `public/`, e.g. `/antifailure-launch.mp4` and
   `/antifailure-launch-poster.jpg`. The video renders above the body with
@@ -40,6 +45,13 @@ Write the post here in normal Markdown.
   fails it keeps the page title, which nobody can agree or disagree with. To
   choose the statement yourself, create the debate on Tilt first (manual
   mode, with the claim as the title) and put its id here.
+
+Every post gets two share cards generated from its frontmatter, nothing to
+make by hand: `/posts/<slug>/og.png` (1200x630, the link preview on X,
+LinkedIn, iMessage, Slack, and the Instagram link sticker) and
+`/posts/<slug>/story.png` (1080x1920, the Instagram / TikTok story frame the
+"Story" button on the post hands to the phone's share sheet). Open both after
+`npm run dev` to see what a share of the post will look like.
 
 Do not add a `# Heading` for the title; the title comes from the frontmatter.
 Any `#` heading inside the body is rendered as an H2 so the page keeps one H1.

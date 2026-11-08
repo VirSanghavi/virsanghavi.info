@@ -101,9 +101,15 @@ describe("BlogPosting node", () => {
     });
   });
 
+  it("uses the hero image when the post opens with one", () => {
+    const node = blogPostingNode(getPost("we-were-promised-the-future")!);
+    expect(node.image).toBe("https://www.virsanghavi.com/we-were-promised-the-future.jpg");
+    expect(node).not.toHaveProperty("video");
+  });
+
   it("leaves posts without a film on the avatar image and with no video node", () => {
     const node = blogPostingNode(getPost("shipping-fast")!);
-    expect(node.image).toBe("https://www.virsanghavi.com/vir2.png");
+    expect(node.image).toBe("https://www.virsanghavi.com/vir3.png");
     expect(node).not.toHaveProperty("video");
   });
 });

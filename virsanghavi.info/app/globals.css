@@ -627,6 +627,17 @@ header {
   }
 }
 
+/* A post's opening picture. Same frame as an in-body image, sized by the column. */
+.article-hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 1.25rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--border);
+  background: var(--muted);
+}
+
 /* A post's opening film. Same frame as an in-body image, sized by the column. */
 .article-video {
   display: block;
@@ -641,6 +652,98 @@ header {
 
 .article-body {
   max-width: var(--content-max);
+}
+
+/* ===== Share row (under every post) =====
+   Plain text actions in the same voice as the meta row's Copy button:
+   icon + word, no boxes, accent on hover. */
+.share-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
+}
+
+.share-label {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.25rem;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--foreground);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, var(--foreground) 40%, transparent);
+  cursor: pointer;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+.share-btn:hover,
+.share-btn.done {
+  color: var(--accent);
+  text-decoration-style: solid;
+  text-decoration-color: var(--accent);
+}
+
+.share-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.share-btn:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.share-btn svg {
+  display: block;
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+}
+
+.share-notice {
+  flex-basis: 100%;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.share-notice:empty {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .share-row {
+    gap: 0.25rem 1rem;
+  }
+
+  .share-btn {
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+  }
 }
 
 .article-body p {

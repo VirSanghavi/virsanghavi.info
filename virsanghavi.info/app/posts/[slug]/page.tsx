@@ -5,6 +5,7 @@ import { getAllPosts, getPost } from "@/lib/posts";
 import { absoluteUrl, site } from "@/lib/site";
 import { CalendarIcon } from "@/components/icons";
 import { CopyPostButton } from "@/components/copy-post-button";
+import { SharePost } from "@/components/share-post";
 import { JsonLd } from "@/components/json-ld";
 import { blogPostingNode, breadcrumbNode, graph } from "@/lib/structured-data";
 import { pageMetadata } from "@/lib/seo";
@@ -27,7 +28,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.description,
       ogType: "article",
       publishedTime: post.date,
-      ...(post.video ? { image: post.video.poster, imageAlt: post.title } : {}),
+      // Every post previews as a rendered card (title, hero, byline), so a
+      // shared link never falls back to the avatar thumbnail.
+      image: `${post.url}/og.png`,
+      imageAlt: post.image?.alt ?? post.title,
     }),
     authors: [{ name: site.name, url: absoluteUrl("/about") }],
   };
@@ -58,6 +62,17 @@ export default async function PostPage({ params }: Params) {
           <span className="meta-dot">{post.readingTime} min read</span>
           <CopyPostButton text={`${post.title}\n\n${post.markdown}`} />
         </div>
+        {post.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="article-hero"
+            src={post.image.src}
+            alt={post.image.alt}
+            width={1396}
+            height={556}
+            fetchPriority="high"
+          />
+        )}
         {post.video && (
           <video
             className="article-video"
@@ -74,6 +89,13 @@ export default async function PostPage({ params }: Params) {
           // Rendered from this repo's own markdown, not from user input.
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
+        <SharePost
+          title={post.title}
+          description={post.description}
+          url={absoluteUrl(post.url)}
+          storyImage={absoluteUrl(`${post.url}/story.png`)}
+          slug={post.slug}
+        />
         <div
           id="tilt-root"
           style={{ marginTop: "2rem" }}
@@ -83,6 +105,9 @@ export default async function PostPage({ params }: Params) {
           src="https://data.tilt.vote/tilt-embed.js"
           strategy="lazyOnload"
           data-api-key="tilt_QAYumCHxHlNOlpYio6Gec1Sh6JzdP2L_uOJOONKkbtg"
+          // The embed treats any `localhost` page as a Tilt dev host and
+          // points its API at the page's own origin, which 404s here. Pin it.
+          data-api-base="https://data.tilt.vote/api/v1"
           data-theme="midnight"
         />
       </article>
