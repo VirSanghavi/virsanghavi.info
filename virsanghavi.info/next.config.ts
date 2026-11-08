@@ -12,6 +12,11 @@ const LEGACY_PAGES: Array<[string, string]> = [
   ["/search.html", "/search"],
 ];
 
+/** Old slug → current slug, for posts renamed after they were published. */
+const RENAMED_POSTS: Array<[string, string]> = [
+  ["we-were-promised-the-future", "the-future-is-ours-to-build"],
+];
+
 const nextConfig: NextConfig = {
   // The repo root sits one level above this app directory; pin it so the
   // bundler does not walk up past the git root looking for a lockfile.
@@ -31,6 +36,13 @@ const nextConfig: NextConfig = {
         destination: "/posts/:slug",
         permanent: true,
       },
+      // Renamed posts. The old slug was shared before the rename, so it and
+      // everything under it (the markdown twin, og.png, story.png) keep working.
+      ...RENAMED_POSTS.flatMap(([from, to]) => [
+        { source: `/posts/${from}`, destination: `/posts/${to}`, permanent: true },
+        { source: `/posts/${from}.md`, destination: `/posts/${to}.md`, permanent: true },
+        { source: `/posts/${from}/:path*`, destination: `/posts/${to}/:path*`, permanent: true },
+      ]),
     ];
   },
   async headers() {

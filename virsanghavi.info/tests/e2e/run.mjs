@@ -42,7 +42,7 @@ async function get(path, { accept, redirect = "manual" } = {}) {
 }
 
 const POSTS = [
-  "we-were-promised-the-future",
+  "the-future-is-ours-to-build",
   "launching-antifailure",
   "building-ravioli-in-the-open",
   "2-yc-hackathons-in-a-row",
@@ -109,8 +109,8 @@ async function run() {
       check(`${path} uses the large Twitter card`, /name="twitter:card" content="summary_large_image"/.test(body));
       check(`${path} has the share row`, body.includes('class="share-row"') && body.includes("x.com/intent/post"));
     }
-    if (path === "/posts/we-were-promised-the-future") {
-      check(`${path} renders its hero image`, /<img[^>]+class="article-hero"[^>]+src="\/we-were-promised-the-future\.jpg"/.test(body));
+    if (path === "/posts/the-future-is-ours-to-build") {
+      check(`${path} renders its hero image`, /<img[^>]+class="article-hero"[^>]+src="\/the-future-is-ours-to-build\.jpg"/.test(body));
     }
     check(`GET ${path} has JSON-LD`, /application\/ld\+json/.test(body));
     check(
@@ -131,6 +131,18 @@ async function run() {
     check("home renders 500+ chars without JS", text.length >= 500, `${text.length} chars`);
     const levels = [...body.matchAll(/<h([1-3])[\s>]/g)].map((m) => Number(m[1]));
     check("home heading structure is h1 → h2 → h3", levels[0] === 1 && levels.includes(2) && levels.includes(3));
+  }
+
+  // --- Renamed post keeps its old URLs -------------------------------------
+  for (const [from, to] of [
+    ["/posts/we-were-promised-the-future", "/posts/the-future-is-ours-to-build"],
+    ["/posts/we-were-promised-the-future.md", "/posts/the-future-is-ours-to-build.md"],
+    ["/posts/we-were-promised-the-future/og.png", "/posts/the-future-is-ours-to-build/og.png"],
+  ]) {
+    const { response, status } = await get(from);
+    const location = response.headers.get("location") ?? "";
+    check(`${from} redirects permanently`, status === 308 || status === 301, `got ${status}`);
+    check(`${from} → ${to}`, location.endsWith(to), location);
   }
 
   // --- Cron route is locked down -------------------------------------------

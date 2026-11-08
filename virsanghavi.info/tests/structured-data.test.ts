@@ -102,8 +102,8 @@ describe("BlogPosting node", () => {
   });
 
   it("uses the hero image when the post opens with one", () => {
-    const node = blogPostingNode(getPost("we-were-promised-the-future")!);
-    expect(node.image).toBe("https://www.virsanghavi.com/we-were-promised-the-future.jpg");
+    const node = blogPostingNode(getPost("the-future-is-ours-to-build")!);
+    expect(node.image).toBe("https://www.virsanghavi.com/the-future-is-ours-to-build.jpg");
     expect(node).not.toHaveProperty("video");
   });
 

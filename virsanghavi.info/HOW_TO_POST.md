@@ -30,7 +30,7 @@ Write the post here in normal Markdown.
 - **readingTime** — minutes, a whole number.
 - **image** and **imageAlt** (optional, always together) — a hero picture shown
   above the body and used as the top of the post's share cards. `image` is a
-  site-relative path under `public/`, e.g. `/we-were-promised-the-future.jpg`
+  site-relative path under `public/`, e.g. `/the-future-is-ours-to-build.jpg`
   (a JPEG around 1400 wide is plenty for the column); `imageAlt` says what it
   shows. Put the file in `public/` next to the other post assets.
 - **video** and **poster** (optional, always together) — site-relative paths

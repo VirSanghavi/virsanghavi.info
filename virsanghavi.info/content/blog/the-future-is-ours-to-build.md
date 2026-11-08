@@ -3,7 +3,7 @@ title: "The Future Is Ours to Build"
 pubDatetime: 2026-11-08
 description: "We reached the moon, flew passengers at Mach 2, and made nuclear power commercial decades ago. Concorde, data centers, and the internet show why breakthroughs stall before they reach everyday life, and what it takes to make the possible accessible."
 readingTime: 10
-image: /we-were-promised-the-future.jpg
+image: /the-future-is-ours-to-build.jpg
 imageAlt: "A Starship stacked on its launch tower at Starbase at sunset"
 tiltDebateId: 76334ef1-e93e-4687-8031-9e412c9bd6e1
 ---

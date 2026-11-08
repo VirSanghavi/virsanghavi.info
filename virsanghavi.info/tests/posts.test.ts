@@ -99,8 +99,8 @@ describe("getAllPosts", () => {
   });
 
   it("carries a hero image only when the frontmatter names one, with its alt text", () => {
-    expect(getPost("we-were-promised-the-future")!.image).toEqual({
-      src: "/we-were-promised-the-future.jpg",
+    expect(getPost("the-future-is-ours-to-build")!.image).toEqual({
+      src: "/the-future-is-ours-to-build.jpg",
       alt: expect.stringMatching(/Starship/),
     });
     expect(getPost("building-in-public")!.image).toBeUndefined();
@@ -122,7 +122,7 @@ describe("getAllPosts", () => {
   });
 
   it("picks the hero, then the video poster, as the post's preview picture", () => {
-    expect(postPreviewImage(getPost("we-were-promised-the-future")!)).toBe("/we-were-promised-the-future.jpg");
+    expect(postPreviewImage(getPost("the-future-is-ours-to-build")!)).toBe("/the-future-is-ours-to-build.jpg");
     expect(postPreviewImage(getPost("launching-antifailure")!)).toBe("/antifailure-launch-poster.jpg");
     expect(postPreviewImage(getPost("building-in-public")!)).toBeUndefined();
   });
@@ -157,8 +157,8 @@ describe("getAllPosts", () => {
   });
 
   it("puts the hero image in the markdown twin, above the rule", () => {
-    const md = postToMarkdown(getPost("we-were-promised-the-future")!);
-    const img = md.indexOf("](/we-were-promised-the-future.jpg)");
+    const md = postToMarkdown(getPost("the-future-is-ours-to-build")!);
+    const img = md.indexOf("](/the-future-is-ours-to-build.jpg)");
     expect(img).toBeGreaterThan(-1);
     expect(img).toBeLessThan(md.indexOf("\n---\n"));
     expect(postToMarkdown(getPost("building-in-public")!)).not.toContain("![");
