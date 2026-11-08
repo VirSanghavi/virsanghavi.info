@@ -8,11 +8,11 @@ imageAlt: "A Starship stacked on its launch tower at Starbase at sunset"
 tiltDebateId: 76334ef1-e93e-4687-8031-9e412c9bd6e1
 ---
 
+As a kid, I genuinely thought I'd be on Mars by now. I would watch videos about 'the world in 2030' or 'top 10 coolest inventions coming in the 2020s' imagining how what I saw would change my life. I explicitly remember seeing and dreaming about flying cars, the elimination of cancer, Harry Potter-style quidditch, and teleportation. Yet, at the end of 2026, although (some of) these technologies exist, they're hard to come by for the average Joe, and in some cases, impossible. In fact, the need for compute to train AI is now a political issue. Banning artificial superintelligence is what some think the solution to our problems is.
+
 We, as a species, reached the moon in mid-1969 with computers less powerful than the TI-84 I use daily in Calculus. We, as a species, began supersonic passenger air travel in 1976 through Concorde, long before the airliners as powerful and advanced as the ones we ride today were as developed. We, as a species, made nuclear power commercially viable more than half a century ago.
 
 Humanity proved to ourselves that we were extraordinarily capable long before 'Attention is All You Need' was published in 2017, long before the International Space Station started being built in 1998, and long before the internet became the cornerstone of nearly all of our daily lives.
-
-As a kid, I genuinely thought I'd be on Mars by now. I would watch videos about 'the world in 2030' or 'top 10 coolest inventions coming in the 2020s' imagining how what I saw would change my life. I explicitly remember seeing and dreaming about flying cars, the elimination of cancer, Harry Potter-style quidditch, and teleportation. Yet, at the end of 2026, although (some of) these technologies exist, they're hard to come by for the average Joe, and in some cases, impossible. In fact, the need for compute to train AI is now a political issue. Banning artificial superintelligence is what some think the solution to our problems is.
 
 We are now more capable than ever before. Even so, we just sent the first humans beyond low-earth orbit since the Apollo era. Supersonic passenger travel isn't even an option today, although the technology for it has progressed rapidly since the Concorde era (credits to [Boom Supersonic](https://x.com/boomsupersonic)). Humanity has figured out quantum computing and is on the edge of artificial superintelligence, and while these technological advances are tremendous, they just aren't visible to most beyond the confines of Silicon Valley, NYC, Austin, Shenzhen, or other tech epicenters around the world.
 
