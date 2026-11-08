@@ -1,5 +1,5 @@
 ---
-title: "We were promised the future. Where is it?"
+title: "The Future Is Ours to Build"
 pubDatetime: 2026-11-08
 description: "We reached the moon, flew passengers at Mach 2, and made nuclear power commercial decades ago. Concorde, data centers, and the internet show why breakthroughs stall before they reach everyday life, and what it takes to make the possible accessible."
 readingTime: 10
