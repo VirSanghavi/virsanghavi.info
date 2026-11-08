@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { pageMetadata } from "@/lib/seo";
 import { prosePages } from "@/lib/pages";
 import { getAllPosts } from "@/lib/posts";
-import { site } from "@/lib/site";
+import { site, xHandleOn, X_HANDLE_SWITCH_DATE } from "@/lib/site";
 
 /**
  * The audit's "metadata completeness" check wants four signals on every page:
@@ -103,5 +103,21 @@ describe("every real page gets the four metadata signals", () => {
     expect((meta.openGraph as { type?: string }).type).toBeTruthy();
     expect((meta.openGraph?.images as Array<{ url: string }>)[0].url).toBeTruthy();
     expect(meta.description).toBe(description);
+  });
+});
+
+describe("X handle switch", () => {
+  it("moves from @virsanghavi13 to @VirSanghavi on the switch date, in UTC", () => {
+    expect(X_HANDLE_SWITCH_DATE).toBe("2026-11-13");
+    expect(xHandleOn(new Date("2026-11-12T23:59:59Z"))).toBe("virsanghavi13");
+    expect(xHandleOn(new Date("2026-11-13T00:00:00Z"))).toBe("VirSanghavi");
+    expect(xHandleOn(new Date("2027-01-01T00:00:00Z"))).toBe("VirSanghavi");
+  });
+
+  it("threads the current handle through every surface that names it", () => {
+    expect(site.xUrl).toBe(`https://x.com/${site.xHandle}`);
+    expect(site.sameAs).toContain(site.xUrl);
+    const meta = pageMetadata({ path: "/about", title: "About", description: "d" });
+    expect((meta.twitter as { creator?: string }).creator).toBe(`@${site.xHandle}`);
   });
 });

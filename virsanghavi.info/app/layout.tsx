@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: site.name,
     description: site.tagline,
-    creator: "@virsanghavi13",
+    creator: `@${site.xHandle}`,
     images: [site.avatar],
   },
   icons: { icon: "/favicon.ico?v=2" },

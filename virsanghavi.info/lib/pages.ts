@@ -58,7 +58,7 @@ const contact: ProsePage = {
 
 - **GitHub** — [github.com/VirSanghavi](https://github.com/VirSanghavi)
 - **LinkedIn** — [linkedin.com/in/vir-sanghavi](https://linkedin.com/in/vir-sanghavi)
-- **X** — [@virsanghavi13](https://x.com/virsanghavi13)
+- **X** — [@${site.xHandle}](${site.xUrl})
 - **Instagram** — [@vir.sanghavi13](https://instagram.com/vir.sanghavi13)
 - **RSS** — [/feed.xml](/feed.xml)
 - **For agents and developers** — [/agents](/agents), the index of every machine-readable endpoint on this site

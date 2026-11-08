@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { CheckIcon, InstagramIcon, LinkIcon, LinkedInIcon, ShareIcon, XIcon } from "./icons";
 
 export type SharePostProps = {
+  /** X handle without the `@`, credited on the X intent. */
+  xHandle: string;
   title: string;
   description: string;
   /** Absolute URL of the post. */
@@ -27,7 +29,7 @@ type Notice = "copied" | "saved" | "shared" | null;
  * - Share: the native sheet with title + URL, where one exists.
  * - Copy link.
  */
-export function SharePost({ title, description, url, storyImage, slug }: SharePostProps) {
+export function SharePost({ xHandle, title, description, url, storyImage, slug }: SharePostProps) {
   const [notice, setNotice] = useState<Notice>(null);
   const [canShare, setCanShare] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -106,7 +108,7 @@ export function SharePost({ title, description, url, storyImage, slug }: SharePo
   const xIntent = `https://x.com/intent/post?${new URLSearchParams({
     text: title,
     url,
-    via: "virsanghavi13",
+    via: xHandle,
   }).toString()}`;
   const linkedInIntent = `https://www.linkedin.com/sharing/share-offsite/?${new URLSearchParams({
     url,

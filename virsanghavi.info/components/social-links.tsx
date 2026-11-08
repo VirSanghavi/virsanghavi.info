@@ -36,7 +36,7 @@ export const socialLinks: SocialLink[] = [
     external: true,
     icon: <InstagramIcon />,
   },
-  { href: "https://x.com/virsanghavi13", title: "X", external: true, icon: <XIcon /> },
+  { href: site.xUrl, title: "X", external: true, icon: <XIcon /> },
   {
     href: `https://github.com/${site.github}`,
     title: "GitHub",

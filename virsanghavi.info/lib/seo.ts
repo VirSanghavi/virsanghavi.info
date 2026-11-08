@@ -64,8 +64,8 @@ export function pageMetadata(options: PageMetaOptions): Metadata {
     twitter: {
       // A page with its own picture gets the large card; the avatar stays small.
       card: image === site.avatar ? "summary" : "summary_large_image",
-      site: "@virsanghavi13",
-      creator: "@virsanghavi13",
+      site: `@${site.xHandle}`,
+      creator: `@${site.xHandle}`,
       title: fullTitle,
       description,
       images: [image],

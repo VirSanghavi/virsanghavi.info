@@ -133,6 +133,12 @@ async function run() {
     check("home heading structure is h1 → h2 → h3", levels[0] === 1 && levels.includes(2) && levels.includes(3));
   }
 
+  // --- Cron route is locked down -------------------------------------------
+  {
+    const response = await fetch(`${BASE}/api/cron/rebuild-if-stale`, { headers: { "user-agent": UA } });
+    check("cron route without the secret is 401", response.status === 401, `got ${response.status}`);
+  }
+
   // --- Share cards ---------------------------------------------------------
   for (const slug of POSTS) {
     for (const [file, width, height] of [["og.png", 1200, 630], ["story.png", 1080, 1920]]) {

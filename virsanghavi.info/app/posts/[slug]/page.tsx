@@ -90,6 +90,7 @@ export default async function PostPage({ params }: Params) {
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
         <SharePost
+          xHandle={site.xHandle}
           title={post.title}
           description={post.description}
           url={absoluteUrl(post.url)}
