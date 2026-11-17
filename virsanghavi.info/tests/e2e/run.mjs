@@ -145,12 +145,6 @@ async function run() {
     check(`${from} → ${to}`, location.endsWith(to), location);
   }
 
-  // --- Cron route is locked down -------------------------------------------
-  {
-    const response = await fetch(`${BASE}/api/cron/rebuild-if-stale`, { headers: { "user-agent": UA } });
-    check("cron route without the secret is 401", response.status === 401, `got ${response.status}`);
-  }
-
   // --- Share cards ---------------------------------------------------------
   for (const slug of POSTS) {
     for (const [file, width, height] of [["og.png", 1200, 630], ["story.png", 1080, 1920]]) {
