@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { GameOverlay } from "@/components/game-overlay";
+import { AnalyticsBeacon } from "@/components/analytics-beacon";
 import { JsonLd } from "@/components/json-ld";
 import { themeScript } from "@/lib/theme-script";
 import { site, SITE_URL } from "@/lib/site";
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SiteFooter />
         </div>
         <GameOverlay />
+        <AnalyticsBeacon />
       </body>
     </html>
   );

@@ -43,6 +43,11 @@ export function proxy(request: NextRequest) {
   // Static assets and already-machine-readable files pass straight through.
   if (NON_NEGOTIABLE.test(pathname)) return NextResponse.next();
 
+  // Only reads are negotiated. A POST is a form submit or a Server Action
+  // (`Accept: text/x-component`), and refusing it with a 406 would break the
+  // page that sent it.
+  if (request.method !== "GET" && request.method !== "HEAD") return NextResponse.next();
+
   const accept = request.headers.get("accept");
   const chosen = preferredType(accept, PRODUCES);
 

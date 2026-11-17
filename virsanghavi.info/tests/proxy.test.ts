@@ -97,3 +97,19 @@ describe("static assets", () => {
     expect(rewritten(response)).toBeNull();
   });
 });
+
+describe("writes are never negotiated", () => {
+  it("lets a Server Action POST (Accept: text/x-component) through instead of answering 406", () => {
+    const req = new NextRequest(new URL("/admin", "https://www.virsanghavi.com"), {
+      method: "POST",
+      headers: { accept: "text/x-component", "next-action": "abc" },
+    });
+    const response = proxy(req);
+    expect(response.status).toBe(200);
+    expect(rewritten(response)).toBeNull();
+  });
+
+  it("still answers 406 to a GET that rules out everything we produce", () => {
+    expect(proxy(request("/admin", { accept: "image/png" })).status).toBe(406);
+  });
+});

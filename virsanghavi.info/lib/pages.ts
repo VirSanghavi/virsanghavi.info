@@ -80,29 +80,36 @@ I am based in ${site.locality}, ${site.region} and generally reply within a coup
 const privacy: ProsePage = {
   slug: "privacy",
   path: "/privacy",
-  updated: "2026-08-22",
+  updated: "2026-11-17",
   title: "Privacy",
   heading: "Privacy",
   description:
-    "What this site does and does not collect: no analytics, no tracking cookies, no accounts. A plain description of every third party involved.",
-  markdown: `_Last updated: 22 August 2026._
+    "What this site collects: anonymous page counts with no cookies and no IP addresses, kept in a spreadsheet I run. A plain description of every third party involved.",
+  markdown: `_Last updated: 17 November 2026._
 
-This is a personal website. It has no accounts, no sign-up form, no newsletter, no shopping cart, and no advertising. The short version: I do not collect anything about you, and I do not want to.
+This is a personal website. It has no accounts, no sign-up form, no newsletter, no shopping cart, and no advertising. The short version: I count page views without identifying anyone, and that is all.
 
 ## What I collect
 
-Nothing. There is no analytics script, no tag manager, no tracking pixel, and no A/B testing tool on any page of this site. I do not know who visits, how many people visit, or which posts get read.
+Each time a page is shown, your browser sends my own server one small message: the page's path, the site that linked you here (just its domain), how long the page stayed open, and a random id for the tab that resets when you close it. The server adds the country from the request, a coarse device type (phone, tablet or desktop), and the browser and operating system family. It does **not** store your IP address or your user agent string.
+
+To tell visitors apart within a day, the server hashes the day, the IP address and the user agent together with a secret. The result cannot be turned back into an address, and tomorrow the same person counts as someone new. Nothing is stored about you across days.
+
+These rows go into a spreadsheet in my Google Drive that only I can read. There is no analytics vendor, no tracking pixel, no tag manager, and no A/B testing tool.
+
+If your browser sends a Do Not Track or Global Privacy Control signal, the beacon never runs and nothing is counted.
 
 ## Cookies
 
-This site sets no cookies of its own.
+This site sets no cookies for visitors.
 
-Two small values are stored in your browser's \`localStorage\`, which never leaves your device and is never sent to me or to anyone else:
+Three small values live in your browser's own storage, which never leaves your device:
 
 - \`theme\` and \`themeSetTimestamp\` — remembers whether you chose light or dark mode, and expires itself after 24 hours so the site can fall back to your system preference.
 - \`game_high_score\` — your best score in the ASCII game behind the "Play" button.
+- \`vs_s\` — the per-tab id described above, in session storage, gone when the tab closes.
 
-You can clear both at any time from your browser's site-data settings, and the site will work exactly the same afterwards.
+You can clear them at any time from your browser's site-data settings, and the site will work exactly the same afterwards.
 
 ## Third parties that see your request
 
@@ -110,6 +117,7 @@ Serving a web page necessarily involves a few other companies. Here is the compl
 
 - **Vercel** hosts this site. Like any web host, its servers process the IP address and user agent of each request in order to deliver a response, and it keeps operational logs. See [Vercel's privacy policy](https://vercel.com/legal/privacy-policy).
 - **Google Fonts** serves the Atkinson Hyperlegible typeface. Your browser requests the font files from \`fonts.googleapis.com\` and \`fonts.gstatic.com\`, which means Google receives your IP address. See [Google's privacy policy](https://policies.google.com/privacy).
+- **Google Sheets** stores the anonymous page counts described above. Your browser never talks to Google for this; my server writes the rows. See [Google's privacy policy](https://policies.google.com/privacy).
 - **Tilt** (\`data.tilt.vote\`) provides the reaction widget at the bottom of blog posts. It loads on post pages only. If you do not interact with it, it still sees the request that loads its script.
 - **GitHub contribution data** on the About page is fetched by this site's own server, not by your browser, so no third party sees your request for it.
 
@@ -121,11 +129,11 @@ If you email or call me, I obviously have whatever you sent. I keep corresponden
 
 ## AI agents and crawlers
 
-Automated clients are welcome here. \`/robots.txt\` allows every major AI crawler, \`/llms.txt\` describes the site, and every content page also serves a plain markdown representation over \`Accept: text/markdown\`. [/agents](/agents) documents all of it. Crawling this site is subject to the same non-collection described above.
+Automated clients are welcome here. \`/robots.txt\` allows every major AI crawler, \`/llms.txt\` describes the site, and every content page also serves a plain markdown representation over \`Accept: text/markdown\`. [/agents](/agents) documents all of it. Known crawlers and automated clients are not counted in the page statistics.
 
 ## Your rights
 
-Since I hold no data about visitors, there is nothing to request, correct, or delete. If you have emailed me and want that correspondence deleted, ask and I will delete it.
+The page counts hold nothing that identifies you, so there is nothing to look up, correct, or delete. If you have emailed me and want that correspondence deleted, ask and I will delete it.
 
 ## Changes
 

@@ -66,8 +66,11 @@ describe("robots.txt", () => {
     }
   });
 
-  it("disallows nothing", () => {
-    for (const rule of rules) expect(rule.disallow).toBeUndefined();
+  it("keeps every crawler out of the admin and nothing else", () => {
+    for (const rule of rules) {
+      expect(rule.allow).toBe("/");
+      expect(rule.disallow).toBe("/admin");
+    }
   });
 
   it("points at the sitemap", () => {

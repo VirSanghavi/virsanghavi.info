@@ -33,6 +33,8 @@ function varyHasAccept(response) {
     .includes("accept");
 }
 
+const get_ = (path) => get(path, { accept: "text/html" });
+
 async function get(path, { accept, redirect = "manual" } = {}) {
   const headers = { "user-agent": UA };
   if (accept !== undefined) headers.accept = accept;
@@ -131,6 +133,30 @@ async function run() {
     check("home renders 500+ chars without JS", text.length >= 500, `${text.length} chars`);
     const levels = [...body.matchAll(/<h([1-3])[\s>]/g)].map((m) => Number(m[1]));
     check("home heading structure is h1 → h2 → h3", levels[0] === 1 && levels.includes(2) && levels.includes(3));
+  }
+
+  // --- Analytics beacon and the admin gate ---------------------------------
+  {
+    const phone = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
+    const beacon = (body, ua = phone) =>
+      fetch(`${BASE}/api/t`, { method: "POST", headers: { "user-agent": ua, "content-type": "text/plain" }, body: JSON.stringify(body) });
+    const ok = await beacon({ e: "view", p: "/posts/shipping-fast", r: "https://t.co/x", s: "e2e" + Date.now().toString(36), u: `${BASE}/posts/shipping-fast` });
+    check("beacon view → 204", ok.status === 204, `got ${ok.status}`);
+    const bad = await beacon({ e: "nope" });
+    check("malformed beacon is still 204 (never a visible error)", bad.status === 204, `got ${bad.status}`);
+    const get = await fetch(`${BASE}/api/t`, { headers: { "user-agent": UA } });
+    check("beacon endpoint has no GET", get.status === 405 || get.status === 404, `got ${get.status}`);
+
+    const admin = await get_(`/admin`);
+    check("GET /admin → 200", admin.status === 200, `got ${admin.status}`);
+    check("/admin shows the password form", /name="password"/.test(admin.body) && /id="admin-password"/.test(admin.body));
+    check("/admin is noindex", /name="robots" content="noindex/.test(admin.body), "no noindex meta");
+    check("/admin does not leak the dashboard", !/class="admin-stats"/.test(admin.body));
+
+    const robots = await get_(`/robots.txt`);
+    check("robots.txt disallows /admin", /Disallow: \/admin/.test(robots.body));
+    const sitemap = await get_(`/sitemap.xml`);
+    check("sitemap does not list /admin", !sitemap.body.includes("/admin<"));
   }
 
   // --- Renamed post keeps its old URLs -------------------------------------

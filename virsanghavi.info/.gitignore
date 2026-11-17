@@ -1,0 +1,5 @@
+
+# Local secrets (analytics, admin). Never committed.
+.env
+.env.*.local
+.env.local

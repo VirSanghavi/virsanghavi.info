@@ -9,8 +9,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       // Every AI crawler is named explicitly so the allowance is unambiguous
       // even to parsers that do not fall through to the wildcard group.
-      { userAgent: [...AI_CRAWLERS], allow: "/" },
-      { userAgent: "*", allow: "/" },
+      { userAgent: [...AI_CRAWLERS], allow: "/", disallow: "/admin" },
+      { userAgent: "*", allow: "/", disallow: "/admin" },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
     host: absoluteUrl("/").replace(/\/$/, ""),

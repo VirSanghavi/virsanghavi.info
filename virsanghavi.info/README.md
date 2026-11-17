@@ -31,6 +31,8 @@ BASE_URL=https://www.virsanghavi.com npm run test:e2e
 | `proxy.ts` | Request-time routing: `/resume`, markdown negotiation, `Vary`. |
 | `app/globals.css` | The whole stylesheet. Design tokens at the top. |
 | `tests/` | Unit tests plus the end-to-end endpoint harness. |
+| `lib/analytics/` | First-party page counting: the beacon policy, the Google Sheets client, the batching queue, the aggregation the admin page shows. |
+| `lib/admin/` | The `/admin` password gate: constant-time check, signed 30-day cookie, in-memory attempt limit. |
 
 Single sources of truth worth knowing about, because duplicating them is how
 these things drift:
@@ -71,6 +73,37 @@ these things drift:
 - **`robots.txt`** names every major AI crawler and allows all of them. The
   Vercel firewall's `ai_bots` managed ruleset is deliberately off; turning it
   back on would 403 the crawlers this site is written for.
+
+## Analytics and the admin page
+
+There is no analytics vendor. `components/analytics-beacon.tsx` inlines a
+sub-kilobyte script that posts one small JSON body to `/api/t` when a page
+is shown and when it is hidden (with the time it was open). The route drops
+bots, Do Not Track and Global Privacy Control, reduces the user agent to
+device/browser/OS families, hashes day + IP + user agent into a visitor id
+that cannot be reversed and changes daily, and appends the row to the
+current month's tab of a Google Sheet. Rows arriving within 1.5 s share one
+Sheets call (`lib/analytics/queue.ts`), so a busy hour stays inside the
+300-writes-a-minute quota.
+
+`/admin` is gated by `ADMIN_PASSWORD`; a correct guess sets an HttpOnly cookie
+signed with `ADMIN_SESSION_SECRET` for 30 days. The dashboard reads the month
+tabs a range spans (cached per instance for a minute), and computes visitors,
+views, sessions, median time on page, bounce, a trend, and the top pages,
+referrers, countries, devices and browsers in `lib/analytics/aggregate.ts`.
+
+Environment (all set on the Vercel project; `.env.local` for a local run, never
+committed):
+
+| Variable | What it is |
+| --- | --- |
+| `ANALYTICS_SHEET_ID` | The spreadsheet in Drive ("virsanghavi.com analytics"). |
+| `GOOGLE_SA_EMAIL`, `GOOGLE_SA_PRIVATE_KEY` | A service account the sheet is shared with as an editor (GCP project `virsanghavi-site-0833`). |
+| `ANALYTICS_SECRET` | Salt for the daily visitor hash. Rotating it only changes the ids from that moment on. |
+| `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` | The admin gate. Changing the session secret signs every browser out. |
+
+`/privacy` describes all of this to readers; keep it in step with
+`lib/analytics/policy.ts` when anything changes.
 
 ## Deploying
 
