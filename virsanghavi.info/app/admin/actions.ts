@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ADMIN_COOKIE, clearAttempts, cookieOptions, issueToken, passwordMatches, recordAttempt, requestIp, tooManyAttempts } from "@/lib/admin/auth";
+import { EXCLUDE_COOKIE } from "@/lib/analytics/policy";
 
 export type LoginState = { error?: string };
 
@@ -19,6 +20,8 @@ export async function login(_prev: LoginState, form: FormData): Promise<LoginSta
   clearAttempts(ip);
   const jar = await cookies();
   jar.set(ADMIN_COOKIE, token, cookieOptions(30 * 24 * 3600));
+  // The owner's browser is never counted, on any page, for a year: survives sign-out.
+  jar.set(EXCLUDE_COOKIE, "1", { path: "/", maxAge: 365 * 24 * 3600, sameSite: "lax", secure: process.env.NODE_ENV === "production", httpOnly: false });
   redirect("/admin");
 }
 

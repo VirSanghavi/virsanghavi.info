@@ -36,6 +36,8 @@ export const site = {
   /** X handle, without the `@`. */
   xHandle,
   xUrl: `https://x.com/${xHandle}`,
+  /** Booking page, for the social rows and the contact page. */
+  calUrl: "https://cal.com/virsanghavi",
   language: "en",
   /** Profiles used for JSON-LD `sameAs` and the social rows in the UI. */
   sameAs: [

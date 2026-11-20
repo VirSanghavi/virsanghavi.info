@@ -15,6 +15,20 @@
 /** Same-origin collector. `proxy.ts` leaves /api alone so beacons are never negotiated. */
 export const COLLECTOR_PATH = "/api/t";
 
+/**
+ * Set (path `/`, a year) by a successful /admin sign-in. A browser carrying
+ * it is the owner's and is never counted, on any page: the beacon stays
+ * silent and the collector drops anything that arrives anyway. Not a secret
+ * and not HttpOnly, since the beacon has to read it; anyone who sets it on
+ * themselves merely opts out of being counted.
+ */
+export const EXCLUDE_COOKIE = "vs_me";
+
+export function isExcluded(cookieHeader: string | null | undefined): boolean {
+  if (!cookieHeader) return false;
+  return new RegExp(`(?:^|;\\s*)${EXCLUDE_COOKIE}=1(?:;|$)`).test(cookieHeader);
+}
+
 /** Event kinds. `leave` carries how long the page was open. */
 export const EVENTS = ["view", "leave"] as const;
 export type EventName = (typeof EVENTS)[number];

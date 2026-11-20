@@ -33,7 +33,7 @@ function countryName(code: string): string {
   }
 }
 
-export function Dashboard({ data, configured, rangeKey }: { data: Overview; configured: boolean; rangeKey: string }) {
+export function Dashboard({ data, configured, rangeKey, excluded }: { data: Overview; configured: boolean; rangeKey: string; excluded: boolean }) {
   const t = data.totals;
   const empty = t.pageviews === 0;
   return (
@@ -93,7 +93,8 @@ export function Dashboard({ data, configured, rangeKey }: { data: Overview; conf
       </div>
 
       <p className="admin-foot">
-        Counted by this site's own beacon: no cookies, no IP addresses, visitor ids reset every day. Rows live in a Google Sheet; the page reads it at most once a minute.
+        {excluded ? "This browser is yours and is not counted on any page. " : "This browser is being counted; sign in again to exclude it. "}
+        Counted by this site's own beacon: no cookies for readers, no IP addresses, visitor ids reset every day. Rows live in a Google Sheet; the page reads it at most once a minute.
       </p>
     </div>
   );

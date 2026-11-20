@@ -1,4 +1,4 @@
-import { COLLECTOR_PATH } from "@/lib/analytics/policy";
+import { COLLECTOR_PATH, EXCLUDE_COOKIE } from "@/lib/analytics/policy";
 
 /**
  * The whole client side of analytics, inlined so there is no extra request:
@@ -7,12 +7,14 @@ import { COLLECTOR_PATH } from "@/lib/analytics/policy";
  * visible when it is hidden. Under a kilobyte, no cookie, no library.
  *
  * It stays silent when the browser asks not to be tracked (Do Not Track or
- * Global Privacy Control) and on the admin pages.
+ * Global Privacy Control), in the owner's own browser (the cookie a sign-in
+ * to /admin leaves behind), and on the admin pages.
  */
 const script = `
 (function(){
   var n=navigator,w=window,d=document;
   if(n.doNotTrack==="1"||w.doNotTrack==="1"||n.globalPrivacyControl===true)return;
+  if(/(?:^|;\\s*)${EXCLUDE_COOKIE}=1(?:;|$)/.test(d.cookie))return;
   var ss;try{ss=w.sessionStorage}catch(e){return}
   var sid=ss.getItem("vs_s");if(!sid){sid=Math.random().toString(36).slice(2,12)+Date.now().toString(36);ss.setItem("vs_s",sid)}
   var path=null,shown=0,visible=0,sent=false;

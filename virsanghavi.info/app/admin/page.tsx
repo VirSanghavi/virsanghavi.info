@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { isAdmin } from "@/lib/admin/auth";
+import { EXCLUDE_COOKIE } from "@/lib/analytics/policy";
 import { loadOverview } from "@/lib/analytics/read";
 import type { Range } from "@/lib/analytics/aggregate";
 import { Dashboard } from "./dashboard";
@@ -46,6 +48,7 @@ export default async function AdminPage({ searchParams }: Props) {
   const to = new Date();
   const range: Range = { from: new Date(to.getTime() - picked[1] * 86_400_000), to };
   const loaded = await loadOverview(range, to).catch((error: unknown) => ({ error: error instanceof Error ? error.message : String(error) }));
+  const excluded = (await cookies()).get(EXCLUDE_COOKIE)?.value === "1";
 
   return (
     <main>
@@ -71,7 +74,7 @@ export default async function AdminPage({ searchParams }: Props) {
               The analytics sheet could not be read: {loaded.error}
             </p>
           ) : (
-            <Dashboard data={loaded.overview} configured={loaded.configured} rangeKey={picked[0] as RangeKey} />
+            <Dashboard data={loaded.overview} configured={loaded.configured} rangeKey={picked[0] as RangeKey} excluded={excluded} />
           )}
         </article>
       </section>

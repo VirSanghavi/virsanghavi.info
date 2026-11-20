@@ -40,7 +40,7 @@ For context, there's more in [Finding My Spark](/posts/finding-my-spark).`,
 const contact: ProsePage = {
   slug: "contact",
   path: "/contact",
-  updated: "2026-08-22",
+  updated: "2026-11-19",
   title: "Contact",
   heading: "Contact",
   description:
@@ -50,6 +50,7 @@ const contact: ProsePage = {
 ## Direct
 
 - **Email** — [${site.email}](mailto:${site.email})
+- **Book a call** — [cal.com/virsanghavi](${site.calUrl}), pick any open slot
 - **Phone** — [(832) 907-4410](tel:+18329074410)
 - **Location** — ${site.locality}, ${site.region}, United States
 - **Résumé** — [Vir-Sanghavi-Resume.pdf](${site.resumePath}) (also at [/resume](/resume))

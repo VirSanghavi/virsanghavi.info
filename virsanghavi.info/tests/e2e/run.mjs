@@ -138,8 +138,9 @@ async function run() {
   // --- Analytics beacon and the admin gate ---------------------------------
   {
     const phone = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
+    // Sent with the owner's exclusion cookie, so a test run never adds a row to the real sheet.
     const beacon = (body, ua = phone) =>
-      fetch(`${BASE}/api/t`, { method: "POST", headers: { "user-agent": ua, "content-type": "text/plain" }, body: JSON.stringify(body) });
+      fetch(`${BASE}/api/t`, { method: "POST", headers: { "user-agent": ua, "content-type": "text/plain", cookie: "vs_me=1" }, body: JSON.stringify(body) });
     const ok = await beacon({ e: "view", p: "/posts/shipping-fast", r: "https://t.co/x", s: "e2e" + Date.now().toString(36), u: `${BASE}/posts/shipping-fast` });
     check("beacon view → 204", ok.status === 204, `got ${ok.status}`);
     const bad = await beacon({ e: "nope" });

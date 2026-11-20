@@ -1,5 +1,5 @@
 import { after } from "next/server";
-import { cleanPath, describeAgent, EVENTS, isBot, isCounted, referrerDomain, utmSource, type EventName, type Row } from "@/lib/analytics/policy";
+import { cleanPath, describeAgent, EVENTS, isBot, isCounted, isExcluded, referrerDomain, utmSource, type EventName, type Row } from "@/lib/analytics/policy";
 import { enqueue } from "@/lib/analytics/queue";
 import { clientCountry, clientIp, visitorId } from "@/lib/analytics/visitor";
 import { site } from "@/lib/site";
@@ -27,6 +27,7 @@ export async function POST(request: Request) {
   const ua = request.headers.get("user-agent") ?? "";
   if (isBot(ua)) return NO_CONTENT();
   if (request.headers.get("dnt") === "1" || request.headers.get("sec-gpc") === "1") return NO_CONTENT();
+  if (isExcluded(request.headers.get("cookie"))) return NO_CONTENT();
 
   let body: Beacon;
   try {

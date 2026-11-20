@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { site } from "@/lib/site";
 import {
+  CalComIcon,
   GitHubIcon,
   InstagramIcon,
   LinkedInIcon,
@@ -24,6 +25,7 @@ export type SocialLink = {
 export const socialLinks: SocialLink[] = [
   { href: `tel:${site.phone.replace(/-/g, "")}`, title: "Phone", icon: <PhoneIcon /> },
   { href: `mailto:${site.email}`, title: "Email", icon: <MailIcon /> },
+  { href: site.calUrl, title: "Book a call", external: true, icon: <CalComIcon /> },
   {
     href: "https://linkedin.com/in/vir-sanghavi",
     title: "LinkedIn",

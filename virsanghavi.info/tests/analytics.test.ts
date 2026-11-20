@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { overview } from "@/lib/analytics/aggregate";
-import { cleanPath, describeAgent, isBot, isCounted, monthTabsBetween, referrerDomain, utmSource, type Row } from "@/lib/analytics/policy";
+import { cleanPath, describeAgent, isBot, isCounted, isExcluded, monthTabsBetween, referrerDomain, utmSource, type Row } from "@/lib/analytics/policy";
 import { visitorId } from "@/lib/analytics/visitor";
 
 describe("beacon policy", () => {
@@ -19,6 +19,15 @@ describe("beacon policy", () => {
     expect(cleanPath("/%2F%2Fevil.example")).toBe("/%2F%2Fevil.example");
     expect(cleanPath("/posts/x\u0000")).toBeNull();
     expect(cleanPath("https://evil.example/posts/x")).toBe("/posts/x");
+  });
+
+  it("recognises the owner's browser by its exclusion cookie", () => {
+    expect(isExcluded("vs_me=1")).toBe(true);
+    expect(isExcluded("theme=dark; vs_me=1; other=2")).toBe(true);
+    expect(isExcluded("vs_me=0")).toBe(false);
+    expect(isExcluded("xvs_me=1")).toBe(false);
+    expect(isExcluded("")).toBe(false);
+    expect(isExcluded(null)).toBe(false);
   });
 
   it("never counts the admin or non-pages", () => {
